@@ -1,0 +1,26 @@
+name: go-test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  go-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.23', '1.24']
+    name: Go ${{ matrix.go }} test
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+      - name: 'Setup go'
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go }}
+      - name: 'Go lint'
+        run: make golint
+      - name: 'Go test'
+        run: make test
