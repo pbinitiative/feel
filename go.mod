@@ -1,4 +1,4 @@
-module github.com/superisaac/FEEL.go
+module github.com/pbinitiative/feel
 
 go 1.23
 

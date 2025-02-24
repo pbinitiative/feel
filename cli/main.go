@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/superisaac/FEEL.go"
+	"github.com/pbinitiative/feel"
 	"io"
 	"os"
 )

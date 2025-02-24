@@ -6,6 +6,10 @@ engine and script support, the FEEL.go module can be imported into
 other go projects or used as command line executable as FEEL
 interpreter.
 
+## Credits
+
+This library is based on work of @superisaac/FEEL.go and many thanks and credits go to him.
+
 ## Build
 * run `make build` to build feel interpreter bin/feel
 * run `make test` to run testing
@@ -13,7 +17,7 @@ interpreter.
 ## Use in golang applications
 ```golang
 import (
-  feel "github.com/superisaac/FEEL.go"
+  feel "github.com/pbinitiative/feel"
 )
 
 res, err := feel.EvalString("5 + 7")
