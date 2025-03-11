@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"math/big"
+	"strings"
 )
 
 const (
@@ -135,8 +136,10 @@ func (n Number) Compare(other Number) int {
 }
 
 func (n Number) String() string {
-	//return n.v.String()
-	return n.v.Text('f', 18)
+	s := n.v.Text('f', 18)
+	s = strings.TrimRight(s, "0")
+	s = strings.TrimRight(s, ".")
+	return s
 }
 
 func (n Number) MarshalJSON() ([]byte, error) {

@@ -40,11 +40,9 @@ func extractList(args map[string]any, argName string) ([]any, error) {
 			}
 			return listV, nil
 		} else {
-			//return nil, NewEvalError(-7002, "cannot extract list")
 			return nil, NewErrTypeMismatch("list")
 		}
 	} else {
-		//return nil, NewEvalError(-7001, "no argument name")
 		return nil, NewErrKeyNotFound(argName)
 	}
 }
