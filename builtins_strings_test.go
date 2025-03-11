@@ -46,6 +46,10 @@ func Test_builtin_string_functions(t *testing.T) {
 			expr:   `"foo" + "bar"`,
 			result: "foobar",
 		},
+		{
+			expr:   `string(123)`, // method implemented, but return type should be native Go type
+			result: "123",
+		},
 
 		//{
 		//	expr:   `string length("foobar")`,    // method implemented, but return type should be native Go type
@@ -70,10 +74,6 @@ func Test_builtin_string_functions(t *testing.T) {
 		//{
 		//	expr:   `split("foo,bar", ",")`, 	// method not yet implemented
 		//	result: []string{"foo", "bar"},
-		//},
-		//{
-		//	expr:   `string(123)`,             // method implemented, but return type should be native Go type
-		//	result: "123",
 		//},
 	}
 	for _, test := range tests {

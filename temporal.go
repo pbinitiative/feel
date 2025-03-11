@@ -437,7 +437,9 @@ func installDatetimeFunctions(prelude *Prelude) {
 	}))
 
 	prelude.Bind("today", wrapTyped(func() (interface{}, error) {
-		return &FEELDate{t: time.Now()}, nil
+		now := time.Now()
+		date := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+		return &FEELDate{t: date}, nil
 	}))
 
 	prelude.Bind("day of week", wrapTyped(func(v HasDate) (interface{}, error) {
