@@ -28,13 +28,13 @@ func NewNumber(strn string) *Number {
 
 func NewNumberFromInt64(input int64) *Number {
 	v := new(big.Float)
-	v.SetPrec(200).SetInt64(input)
+	v.SetPrec(Prec).SetInt64(input)
 	return &Number{v: v}
 }
 
 func NewNumberFromFloat(input float64) *Number {
 	v := new(big.Float)
-	v.SetPrec(200).SetFloat64(input)
+	v.SetPrec(Prec).SetFloat64(input)
 	return &Number{v: v}
 }
 

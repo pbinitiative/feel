@@ -93,12 +93,16 @@ func normalizeValue(v any) any {
 	}
 }
 
-func (self Scope) normalizeScope() Scope {
-	newScp := make(Scope)
-	for key, value := range self {
-		newScp[key] = normalizeValue(value)
+func normalizeScope(scope Scope) Scope {
+	newScope := make(Scope)
+	for key, value := range scope {
+		if nestedScope, ok := value.(map[string]interface{}); ok {
+			newScope[key] = normalizeScope(nestedScope)
+		} else {
+			newScope[key] = normalizeValue(value)
+		}
 	}
-	return newScp
+	return newScope
 }
 
 func NewIntepreter() *Interpreter {
@@ -116,7 +120,7 @@ func (i Interpreter) Len() int {
 }
 
 func (i *Interpreter) Push(scp Scope) {
-	i.ScopeStack = append(i.ScopeStack, scp.normalizeScope())
+	i.ScopeStack = append(i.ScopeStack, normalizeScope(scp))
 }
 
 func (i *Interpreter) PushEmpty() {
@@ -271,7 +275,14 @@ func (dotop DotOp) Eval(intp *Interpreter) (any, error) {
 	if err != nil {
 		return nil, err
 	}
-	if mapVal, ok := leftVal.(map[string]any); ok {
+	if mapVal, ok := leftVal.(Scope); ok {
+		if val, found := mapVal[dotop.Attr]; found {
+			return val, nil
+		} else {
+			return nil, NewErrKeyNotFound(dotop.Attr)
+		}
+	} else if mapVal, ok = leftVal.(map[string]interface{}); ok {
+		// todo: consolidate duplicate code as above, same as for 'Scope'
 		if val, found := mapVal[dotop.Attr]; found {
 			return val, nil
 		} else {
@@ -287,7 +298,6 @@ func (dotop DotOp) Eval(intp *Interpreter) (any, error) {
 		}
 	} else {
 		return nil, NewErrTypeMismatch("map")
-		//return Null, nil
 	}
 }
 
