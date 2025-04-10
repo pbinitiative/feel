@@ -1,5 +1,7 @@
 # feel
 
+![](./artwork/feel-language-logo-128.png)
+
 An interpreter for the FEEL - Friendly Enough Expression Language, written in Go(lang).
 FEEL is broadly used in DMN and BPMN to provide rule engine and script support.
 The `feel` module can be imported into other Go projects or used as command line executable.
