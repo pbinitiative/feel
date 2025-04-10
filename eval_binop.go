@@ -193,11 +193,17 @@ func (binop Binop) typedOp(intp *Interpreter, es evalStrings, en evalNumbers, op
 			if rightString, ok := rightVal.(string); ok {
 				return es(v, rightString), nil
 			}
+			if rightNumber, ok := rightVal.(*Number); ok {
+				return es(v, rightNumber.String()), nil
+			}
 		}
 	case *Number:
 		if en != nil {
 			if rightNumber, ok := rightVal.(*Number); ok {
 				return en(v, rightNumber), nil
+			}
+			if rightString, ok := rightVal.(string); ok {
+				return es(v.String(), rightString), nil
 			}
 		}
 	case *FEELDatetime:
@@ -213,7 +219,6 @@ func (binop Binop) typedOp(intp *Interpreter, es evalStrings, en evalNumbers, op
 			}
 		}
 	}
-	//return nil, NewEvalError(-3101, "invalid types", fmt.Sprintf("bad types in op, %s %s %s", typeName(leftVal), op, typeName(rightVal)))
 	return nil, NewErrBadOp(typeName(leftVal), op, typeName(rightVal))
 }
 
