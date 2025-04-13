@@ -116,11 +116,11 @@ func Test_EvalString(t *testing.T) {
 		{`and([true, 1, true, "ok"])`, true},
 
 		// context/map functions
-		{`get value({a: 2}, "b")`, Null},
+		{`get value({a: 2}, "b")`, null},
 		{`get value({a: 2}, "a")`, N(2)},
 		{`get value({a: {b: {c: 4}}}, ["a", "b", "c"])`, N(4)},
 		{`get value({a: {b: {c: 4}}}, ["a", "b"])`, map[string]any{"c": N(4)}},
-		{`get value({a: {b: {c: 4}}}, ["a", "k"])`, Null},
+		{`get value({a: {b: {c: 4}}}, ["a", "k"])`, null},
 		{`get value(context put({a: false}, ["b", "c", "d"], 4), ["b", "c"])`, map[string]any{"d": N(4)}},
 		{`context merge([{x:1, y: 0}, {y:2}])`, map[string]any{"x": N(1), "y": N(2)}},
 

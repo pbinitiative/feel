@@ -75,6 +75,18 @@ func CompareValues(leftVal, rightVal any) int {
 }
 
 func compareInterfaces(leftVal, rightVal any) (int, error) {
+	if _, ok := leftVal.(*NullValue); ok {
+		if _, ok = rightVal.(*NullValue); ok {
+			return 0, nil
+		}
+		// every (right) value is bigger than NullValue
+		return 1, nil
+	}
+	if _, ok := rightVal.(*NullValue); ok {
+		// every (left) value is bigger than NullValue
+		return -1, nil
+	}
+
 	switch v := leftVal.(type) {
 	case string:
 		if rightString, ok := rightVal.(string); ok {
@@ -83,10 +95,6 @@ func compareInterfaces(leftVal, rightVal any) (int, error) {
 	case *Number:
 		if rightNumber, ok := rightVal.(*Number); ok {
 			return v.Compare(*rightNumber), nil
-		}
-	case *NullValue:
-		if _, ok := rightVal.(*NullValue); ok {
-			return 0, nil
 		}
 	case bool:
 		if rightBool, ok := rightVal.(bool); ok {
@@ -193,11 +201,17 @@ func (binop Binop) typedOp(intp *Interpreter, es evalStrings, en evalNumbers, op
 			if rightString, ok := rightVal.(string); ok {
 				return es(v, rightString), nil
 			}
+			if rightNumber, ok := rightVal.(*Number); ok {
+				return es(v, rightNumber.String()), nil
+			}
 		}
 	case *Number:
 		if en != nil {
 			if rightNumber, ok := rightVal.(*Number); ok {
 				return en(v, rightNumber), nil
+			}
+			if rightString, ok := rightVal.(string); ok {
+				return es(v.String(), rightString), nil
 			}
 		}
 	case *FEELDatetime:
@@ -213,7 +227,6 @@ func (binop Binop) typedOp(intp *Interpreter, es evalStrings, en evalNumbers, op
 			}
 		}
 	}
-	//return nil, NewEvalError(-3101, "invalid types", fmt.Sprintf("bad types in op, %s %s %s", typeName(leftVal), op, typeName(rightVal)))
 	return nil, NewErrBadOp(typeName(leftVal), op, typeName(rightVal))
 }
 

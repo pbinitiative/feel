@@ -6,6 +6,7 @@ import (
 )
 
 // values
+var null = &NullValue{}
 
 type NullValue struct {
 }
@@ -17,8 +18,6 @@ func (self NullValue) Equal(other NullValue) bool {
 func (self NullValue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(nil)
 }
-
-var Null = &NullValue{}
 
 func boolValue(condVal any) bool {
 	switch v := condVal.(type) {
@@ -81,6 +80,9 @@ func typeName(a any) string {
 }
 
 func normalizeValue(v any) any {
+	if v == nil {
+		return null
+	}
 	switch vv := v.(type) {
 	case int:
 		return NewNumberFromInt64(int64(vv))
@@ -183,7 +185,7 @@ func (boolNode BoolNode) Eval(intp *Interpreter) (any, error) {
 }
 
 func (nullNode NullNode) Eval(intp *Interpreter) (any, error) {
-	return Null, nil
+	return null, nil
 }
 
 func (stringNode StringNode) Eval(intp *Interpreter) (any, error) {
@@ -199,7 +201,7 @@ func (v Var) Eval(intp *Interpreter) (any, error) {
 		return v, nil
 	} else {
 		//return nil, NewErrKeyNotFound(v.Name)
-		return Null, nil
+		return null, nil
 	}
 }
 
@@ -581,7 +583,7 @@ func (fc FunCall) EvalFunDef(intp *Interpreter, funDef *FunDef) (any, error) {
 				intp.Bind(argName, v)
 			} else {
 				//return nil, NewEvalError(-5001, "no keyword argument", fmt.Sprintf("no keyword argument %s", argName))
-				intp.Bind(argName, Null)
+				intp.Bind(argName, null)
 			}
 		}
 	} else {
