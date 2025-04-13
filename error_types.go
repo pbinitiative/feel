@@ -35,9 +35,6 @@ func NewErrIndex(msg string) *EvalError {
 func NewErrTypeMismatch(expectType string) *EvalError {
 	return NewEvalError(-4002, "type mismatch", "expect", expectType)
 }
-func NewErrValue(msg string) *EvalError {
-	return NewEvalError(-4003, "value error", msg)
-}
 
 // NewErrKeywordArgument argument errors
 func NewErrKeywordArgument(argName string) *EvalError {
