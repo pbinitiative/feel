@@ -55,14 +55,90 @@ func Test_implicit_type_conversation_in_math_operation(t *testing.T) {
 			expr:   `b + a`,
 			result: "bar2",
 		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.expr, func(t *testing.T) {
+			scope := map[string]any{
+				"a": test.a,
+				"b": test.b,
+			}
+			actual, err := EvalStringWithScope(test.expr, scope)
+			assert.Nil(t, err)
+			assert.Equal(t, test.result, actual)
+		})
+	}
+}
+
+func Test_compare_with_null_values_is_always_true(t *testing.T) {
+	tests := []struct {
+		a      any
+		expr   string
+		result any
+	}{
 		{
-			a:      37,
+			a:      "aString",
 			expr:   `a != null`,
 			result: true,
 		},
 		{
-			b:      "foobar",
-			expr:   `b != null`,
+			a:      42,
+			expr:   `a != null`,
+			result: true,
+		},
+		{
+			a:      true,
+			expr:   `a != null`,
+			result: true,
+		},
+		{
+			a:      false,
+			expr:   `a != null`,
+			result: true,
+		},
+		//{
+		//	a:      time.Now(), // FIXME: this is not detected in compareInterfaces()
+		//	expr:   `a != null`,
+		//	result: true,
+		//},
+		//{
+		//	a:      []string{"x", "y"}, // FIXME: this is not detected in compareInterfaces()
+		//	expr:   `a != null`,
+		//	result: true,
+		//},
+		//{
+		//	a:      map[string]any{"x": 1, "y": true}, // FIXME: this is not detected in compareInterfaces()
+		//	expr:   `a != null`,
+		//	result: true,
+		//},
+	}
+
+	for _, test := range tests {
+		t.Run(test.expr, func(t *testing.T) {
+			scope := map[string]any{
+				"a": test.a,
+			}
+			actual, err := EvalStringWithScope(test.expr, scope)
+			assert.Nil(t, err)
+			assert.Equal(t, test.result, actual)
+		})
+	}
+}
+
+func Test_eval_multiple_operators_with_logical_precedence(t *testing.T) {
+	// FIXME: implement operator precedence
+	t.Skip("implement operator precedence")
+	tests := []struct {
+		a      any
+		b      any
+		expr   string
+		result any
+	}{
+		{
+			a: true,
+			b: 1,
+			// hint: no-equal must be before and
+			expr:   `a and b != null`,
 			result: true,
 		},
 	}
