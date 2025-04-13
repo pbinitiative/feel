@@ -131,6 +131,8 @@ func Test_eval_multiple_operators_with_logical_precedence(t *testing.T) {
 	tests := []struct {
 		a      any
 		b      any
+		x      any
+		y      any
 		expr   string
 		result any
 	}{
@@ -141,6 +143,14 @@ func Test_eval_multiple_operators_with_logical_precedence(t *testing.T) {
 			expr:   `a and b != null`,
 			result: true,
 		},
+		{
+			a:      true,
+			b:      false,
+			x:      true,
+			y:      true,
+			expr:   `a and b or x and y`,
+			result: true,
+		},
 	}
 
 	for _, test := range tests {
@@ -148,6 +158,8 @@ func Test_eval_multiple_operators_with_logical_precedence(t *testing.T) {
 			scope := map[string]any{
 				"a": test.a,
 				"b": test.b,
+				"x": test.x,
+				"y": test.y,
 			}
 			actual, err := EvalStringWithScope(test.expr, scope)
 			assert.Nil(t, err)
