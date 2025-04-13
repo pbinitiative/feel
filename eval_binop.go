@@ -75,26 +75,26 @@ func CompareValues(leftVal, rightVal any) int {
 }
 
 func compareInterfaces(leftVal, rightVal any) (int, error) {
+	if _, ok := leftVal.(*NullValue); ok {
+		if _, ok = rightVal.(*NullValue); ok {
+			return 0, nil
+		}
+		// every (right) value is bigger than NullValue
+		return 1, nil
+	}
+	if _, ok := rightVal.(*NullValue); ok {
+		// every (left) value is bigger than NullValue
+		return -1, nil
+	}
+
 	switch v := leftVal.(type) {
 	case string:
 		if rightString, ok := rightVal.(string); ok {
 			return strings.Compare(v, rightString), nil
 		}
-		if _, ok := rightVal.(*NullValue); ok {
-			// every value is bigger than NullValue
-			return 1, nil
-		}
 	case *Number:
 		if rightNumber, ok := rightVal.(*Number); ok {
 			return v.Compare(*rightNumber), nil
-		}
-		if _, ok := rightVal.(*NullValue); ok {
-			// every value is bigger than NullValue
-			return 1, nil
-		}
-	case *NullValue:
-		if _, ok := rightVal.(*NullValue); ok {
-			return 0, nil
 		}
 	case bool:
 		if rightBool, ok := rightVal.(bool); ok {
@@ -106,10 +106,6 @@ func compareInterfaces(leftVal, rightVal any) (int, error) {
 				return 1, nil
 			}
 		}
-		if _, ok := rightVal.(*NullValue); ok {
-			// every value is bigger than NullValue
-			return 1, nil
-		}
 	case HasTime:
 		if rightHasTime, ok := rightVal.(HasTime); ok {
 			if v.Time().Equal(rightHasTime.Time()) {
@@ -120,25 +116,13 @@ func compareInterfaces(leftVal, rightVal any) (int, error) {
 				return 1, nil
 			}
 		}
-		if _, ok := rightVal.(*NullValue); ok {
-			// every value is bigger than NullValue
-			return 1, nil
-		}
 	case []any:
 		if rightArr, ok := rightVal.([]any); ok {
 			return compareArrays(v, rightArr)
 		}
-		if _, ok := rightVal.(*NullValue); ok {
-			// every value is bigger than NullValue
-			return 1, nil
-		}
 	case map[string]any:
 		if rightMap, ok := rightVal.(map[string]any); ok {
 			return compareMaps(v, rightMap)
-		}
-		if _, ok := rightVal.(*NullValue); ok {
-			// every value is bigger than NullValue
-			return 1, nil
 		}
 	}
 	return 0, NewEvalError(-3106, "invalid types", fmt.Sprintf("bad type in comparation, %T vs. %T", leftVal, rightVal))

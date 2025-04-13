@@ -77,8 +77,23 @@ func Test_compare_with_null_values_is_always_true(t *testing.T) {
 		result any
 	}{
 		{
+			a:      nil,
+			expr:   `a != null`,
+			result: false,
+		},
+		{
+			a:      nil,
+			expr:   `a = null`,
+			result: true,
+		},
+		{
 			a:      "aString",
 			expr:   `a != null`,
+			result: true,
+		},
+		{
+			a:      "aString",
+			expr:   `null != a`,
 			result: true,
 		},
 		{

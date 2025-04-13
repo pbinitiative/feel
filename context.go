@@ -94,13 +94,13 @@ func installContextFunctions(prelude *Prelude) {
 			if v, ok := contextGetByKeys(argsByKeys.Context, argsByKeys.Keys); ok {
 				return v, nil
 			} else {
-				return Null, nil
+				return null, nil
 			}
 		} else {
 			if v, ok := argsByKey.Context[argsByKey.Key]; ok {
 				return v, nil
 			} else {
-				return Null, nil
+				return null, nil
 			}
 		}
 	}).Required("context", "key"))

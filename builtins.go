@@ -560,7 +560,7 @@ func installBuiltinFunctions(prelude *Prelude) {
 			if s, ok := v.(string); ok {
 				strArray = append(strArray, s)
 			} else if _, ok := v.(*NullValue); !ok {
-				return Null, nil
+				return null, nil
 			}
 		}
 		joined := fmt.Sprintf("%s%s%s", args.Prefix, strings.Join(strArray, args.Delimiter), args.Suffix)
