@@ -36,7 +36,7 @@ func Test_compareInterfaces(t *testing.T) {
 	}
 }
 
-func Test_implicit_type_conversation_in_math_operation(t *testing.T) {
+func Test_implicit_type_conversion_in_math_operation(t *testing.T) {
 	tests := []struct {
 		a      any
 		b      any
