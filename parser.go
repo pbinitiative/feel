@@ -80,12 +80,18 @@ func (p Parser) CurrentToken() ScannerToken {
 }
 
 func (p *Parser) Parse() (Node, error) {
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	var exps []Node
 
 	for !p.CurrentToken().Expect(TokenEOF) {
 		if p.CurrentToken().Expect(";") {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 		} else {
 			exp, err := p.parseUnaryTest()
 			if err != nil {
@@ -112,7 +118,10 @@ func (p *Parser) parseUnaryTestElement() (Node, error) {
 	if p.CurrentToken().Expect(">", ">=", "<", "<=", "!=", "=") {
 		textRange := p.startTextRange()
 		op := p.CurrentToken().Kind
-		p.scanner.Next()
+		err := p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		right, err := p.expression()
 		if err != nil {
 			return nil, err
@@ -140,7 +149,10 @@ func (p *Parser) parseUnaryTest() (Node, error) {
 	if p.CurrentToken().Expect(",") {
 		elements := []Node{exp}
 		for p.CurrentToken().Expect(",") {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 
 			uexp, err := p.parseUnaryTestElement()
 			if err != nil {
@@ -169,7 +181,10 @@ func (p *Parser) binop(ops []string, subfunc astFunc) (Node, error) {
 
 	for p.CurrentToken().Expect(ops...) {
 		op := p.CurrentToken().Kind
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 
 		right, err := subfunc()
 		if err != nil {
@@ -190,7 +205,10 @@ func (p *Parser) binopKeywords(ops []string, subfunc astFunc) (Node, error) {
 
 	for p.CurrentToken().ExpectKeywords(ops...) {
 		op := p.CurrentToken().Value
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 
 		right, err := subfunc()
 		if err != nil {
@@ -286,7 +304,10 @@ func (p *Parser) parseFunccallArg() (funcallArg, error) {
 
 	if p.CurrentToken().Expect(":") { // kwargs
 		if varArg, ok := arg.(*Var); ok {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return funcallArg{}, err
+			}
 			argValue, err := p.expression()
 			if err != nil {
 				return funcallArg{}, err
@@ -301,7 +322,10 @@ func (p *Parser) parseFunccallArg() (funcallArg, error) {
 }
 
 func (p *Parser) parseFuncallRest(funExpr Node) (Node, error) {
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	// parse function arguments
 	var args []funcallArg = nil
 	keywordArgs := false
@@ -323,14 +347,20 @@ func (p *Parser) parseFuncallRest(funExpr Node) (Node, error) {
 		}
 		args = append(args, arg)
 		if p.CurrentToken().Expect(",") {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 		} else if !p.CurrentToken().Expect(")") {
 			return nil, p.Unexpected(",", ")")
 		}
 	}
 
 	if p.CurrentToken().Expect(")") {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	textRange := TextRange{Start: funExpr.TextRange().Start, End: p.CurrentToken().Pos}
@@ -343,7 +373,10 @@ func (p *Parser) parseFuncallRest(funExpr Node) (Node, error) {
 }
 
 func (p *Parser) parseIndexRest(exp Node) (Node, error) {
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	// parse index arguments
 	at, err := p.expression()
@@ -354,14 +387,20 @@ func (p *Parser) parseIndexRest(exp Node) (Node, error) {
 		return nil, p.Unexpected("]")
 	}
 
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	textRange := TextRange{Start: exp.TextRange().Start, End: p.CurrentToken().Pos}
 
 	return &Binop{Left: exp, Op: "[]", Right: at, textRange: textRange}, nil
 }
 
 func (p *Parser) parseDotRest(exp Node) (Node, error) {
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	// parse index arguments
 	attr, err := p.parseName()
 	if err != nil {
@@ -433,7 +472,10 @@ func (p *Parser) parseVar() (Node, error) {
 func (p *Parser) parseBool() (Node, error) {
 	textRange := p.startTextRange()
 	v := p.CurrentToken().Value
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	textRange.End = p.CurrentToken().Pos
 	switch v {
 	case "true":
@@ -447,7 +489,10 @@ func (p *Parser) parseBool() (Node, error) {
 
 func (p *Parser) parseNull() (Node, error) {
 	textRange := p.startTextRange()
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	textRange.End = p.CurrentToken().Pos
 	return &NullNode{textRange: textRange}, nil
 }
@@ -467,7 +512,10 @@ func (p *Parser) parseName(stopKeywords ...string) (string, error) {
 	for p.CurrentToken().Expect(TokenName, TokenKeyword) {
 		if p.CurrentToken().Kind == "name" {
 			names = append(names, p.CurrentToken().Value)
-			p.scanner.Next()
+			err := p.scanner.Next()
+			if err != nil {
+				return "", err
+			}
 		} else if p.CurrentToken().Kind == TokenKeyword {
 			// keyworlds
 			//if p.CurrentToken()
@@ -476,7 +524,10 @@ func (p *Parser) parseName(stopKeywords ...string) (string, error) {
 				break
 			} else {
 				names = append(names, kwVal)
-				p.scanner.Next()
+				err := p.scanner.Next()
+				if err != nil {
+					return "", err
+				}
 			}
 		} else {
 			break
@@ -490,30 +541,45 @@ func (p *Parser) parseName(stopKeywords ...string) (string, error) {
 
 func (p *Parser) parseBracketOrRange() (Node, error) {
 	textRange := p.startTextRange()
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	c, err := p.expression()
 	if err != nil {
 		return nil, err
 	}
 	if p.CurrentToken().Kind == ".." {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		d, err := p.expression()
 		if err != nil {
 			return nil, err
 		}
 
 		if p.CurrentToken().Kind == ")" {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 			textRange.End = p.CurrentToken().Pos
 			return &RangeNode{StartOpen: true, Start: c, EndOpen: true, End: d, textRange: textRange}, nil
 		} else if p.CurrentToken().Kind == "]" {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 			textRange.End = p.CurrentToken().Pos
 			return &RangeNode{StartOpen: true, Start: c, EndOpen: false, End: d, textRange: textRange}, nil
 		}
 		return nil, p.Unexpected(")", "]")
 	} else if p.CurrentToken().Expect(")") {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 	} else {
 		return nil, p.Unexpected(")")
 	}
@@ -523,9 +589,15 @@ func (p *Parser) parseBracketOrRange() (Node, error) {
 func (p *Parser) parseRangeOrArray() (Node, error) {
 	rng := p.startTextRange()
 	prefixKind := p.CurrentToken().Kind // prefixKind is '['
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	if p.CurrentToken().Expect("]") {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		// empty array
 		return &ArrayNode{}, nil
 	}
@@ -541,7 +613,10 @@ func (p *Parser) parseRangeOrArray() (Node, error) {
 	if !p.CurrentToken().Expect("..") {
 		return nil, p.Unexpected("..")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	d, err := p.expression()
 	if err != nil {
 		return nil, err
@@ -549,11 +624,17 @@ func (p *Parser) parseRangeOrArray() (Node, error) {
 
 	startOpen := prefixKind == "("
 	if p.CurrentToken().Kind == ")" {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		rng.End = p.CurrentToken().Pos
 		return &RangeNode{StartOpen: startOpen, Start: c, EndOpen: true, End: d, textRange: rng}, nil
 	} else if p.CurrentToken().Kind == "]" {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		rng.End = p.CurrentToken().Pos
 		return &RangeNode{StartOpen: startOpen, Start: c, EndOpen: false, End: d, textRange: rng}, nil
 	}
@@ -564,7 +645,10 @@ func (p *Parser) parseArrayGivenFirst(prefixKind string, firstElem Node) (Node, 
 	rng := p.startTextRange()
 	elements := []Node{firstElem}
 	for p.CurrentToken().Expect(",") {
-		p.scanner.Next()
+		err := p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		elem, err := p.expression()
 		if err != nil {
 			return nil, err
@@ -574,7 +658,10 @@ func (p *Parser) parseArrayGivenFirst(prefixKind string, firstElem Node) (Node, 
 	if !p.CurrentToken().Expect("]") {
 		return nil, p.Unexpected("]")
 	}
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	rng.End = p.CurrentToken().Pos
 	return &ArrayNode{Elements: elements, textRange: rng}, nil
 }
@@ -582,7 +669,10 @@ func (p *Parser) parseArrayGivenFirst(prefixKind string, firstElem Node) (Node, 
 func (p *Parser) parseNumberNode() (Node, error) {
 	rng := p.startTextRange()
 	v := p.CurrentToken().Value
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	rng.End = p.CurrentToken().Pos
 	return &NumberNode{Value: v, textRange: rng}, nil
 }
@@ -590,7 +680,10 @@ func (p *Parser) parseNumberNode() (Node, error) {
 func (p *Parser) parseStringNode() (Node, error) {
 	rng := p.startTextRange()
 	v := p.CurrentToken().Value
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	rng.End = p.CurrentToken().Pos
 	return &StringNode{Value: v, textRange: rng}, nil
 }
@@ -613,14 +706,20 @@ func (p *Parser) parseMapKey() (string, error) {
 func (p *Parser) parseTemporalNode() (Node, error) {
 	rng := p.startTextRange()
 	v := p.CurrentToken().Value
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	rng.End = p.CurrentToken().Pos
 	return &TemporalNode{Value: v, textRange: rng}, nil
 }
 
 func (p *Parser) parseMapNode() (Node, error) {
 	rng := p.startTextRange()
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	var mapValues []mapItem
 
 	for !p.CurrentToken().Expect("}") {
@@ -632,8 +731,10 @@ func (p *Parser) parseMapNode() (Node, error) {
 		if !p.CurrentToken().Expect(":") {
 			return nil, p.Unexpected(":")
 		}
-		p.scanner.Next()
-
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 		exp, err := p.expression()
 		if err != nil {
 			return nil, err
@@ -642,13 +743,19 @@ func (p *Parser) parseMapNode() (Node, error) {
 		mapValues = append(mapValues, mapItem{Name: key, Value: exp})
 
 		if p.CurrentToken().Expect(",") {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 		} else if !p.CurrentToken().Expect("}") {
 			return nil, p.Unexpected(",", "}")
 		}
 	}
 	if p.CurrentToken().Expect("}") {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 	}
 	rng.End = p.CurrentToken().Pos
 	return &MapNode{Values: mapValues, textRange: rng}, nil
@@ -656,7 +763,10 @@ func (p *Parser) parseMapNode() (Node, error) {
 
 func (p *Parser) parseIfExpression() (Node, error) {
 	rng := p.startTextRange()
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	cond, err := p.expression()
 	if err != nil {
 		return nil, err
@@ -664,7 +774,10 @@ func (p *Parser) parseIfExpression() (Node, error) {
 	if !p.CurrentToken().ExpectKeywords("then") {
 		return nil, p.Unexpected("then")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	then_branch, err := p.expression()
 	if err != nil {
@@ -673,7 +786,10 @@ func (p *Parser) parseIfExpression() (Node, error) {
 	if !p.CurrentToken().ExpectKeywords("else") {
 		return nil, p.Unexpected("else")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	else_branch, err := p.expression()
 	if err != nil {
@@ -687,19 +803,24 @@ func (p *Parser) parseIfExpression() (Node, error) {
 
 func (p *Parser) parseForExpr() (Node, error) {
 	rng := p.startTextRange()
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	varName, err := p.parseName("in", "for")
 
 	if !p.CurrentToken().ExpectKeywords("in") {
 		return nil, p.Unexpected("in")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	listExpr, err := p.expression()
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Printf("list expr %s\n", listExpr.Repr())
 
 	if p.CurrentToken().Expect(",") {
 		returnExpr, err := p.parseForExpr()
@@ -716,8 +837,10 @@ func (p *Parser) parseForExpr() (Node, error) {
 	if !p.CurrentToken().ExpectKeywords("return") {
 		return nil, p.Unexpected("return")
 	}
-	p.scanner.Next()
-	//fmt.Printf("return\n")
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	returnExpr, err := p.expression()
 	if err != nil {
@@ -735,7 +858,10 @@ func (p *Parser) parseForExpr() (Node, error) {
 func (p *Parser) parseSomeOrEvery() (Node, error) {
 	rng := p.startTextRange()
 	cmd := p.CurrentToken().Value
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 	// parse variable name
 	varName, err := p.parseName("in")
 	if err != nil {
@@ -745,7 +871,10 @@ func (p *Parser) parseSomeOrEvery() (Node, error) {
 	if !p.CurrentToken().ExpectKeywords("in") {
 		return nil, p.Unexpected("in")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	listExpr, err := p.expression()
 	if err != nil {
@@ -755,7 +884,10 @@ func (p *Parser) parseSomeOrEvery() (Node, error) {
 	if !p.CurrentToken().ExpectKeywords("satisfies") {
 		return nil, p.Unexpected("satisfies")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	filterExpr, err := p.expression()
 	if err != nil {
@@ -782,11 +914,18 @@ func (p *Parser) parseSomeOrEvery() (Node, error) {
 
 func (p *Parser) parseFunDef() (Node, error) {
 	rng := p.startTextRange()
-	p.scanner.Next()
+	err := p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
+
 	if !p.CurrentToken().Expect("(") {
 		return nil, p.Unexpected("(")
 	}
-	p.scanner.Next()
+	err = p.scanner.Next()
+	if err != nil {
+		return nil, err
+	}
 
 	// parse var list
 	var args []string
@@ -799,7 +938,10 @@ func (p *Parser) parseFunDef() (Node, error) {
 		args = append(args, argName)
 
 		if p.CurrentToken().Expect(",") {
-			p.scanner.Next()
+			err = p.scanner.Next()
+			if err != nil {
+				return nil, err
+			}
 		} else if !p.CurrentToken().Expect(")") {
 			return nil, p.Unexpected(")", ",")
 		}
@@ -809,7 +951,10 @@ func (p *Parser) parseFunDef() (Node, error) {
 	}
 
 	if p.CurrentToken().Expect(")") {
-		p.scanner.Next()
+		err = p.scanner.Next()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	exp, err := p.expression()
