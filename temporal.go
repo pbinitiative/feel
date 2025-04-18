@@ -278,8 +278,8 @@ func (duration FEELDuration) Duration() time.Duration {
 	return dv
 }
 
-func (duration *FEELDuration) Negative() *FEELDuration {
-	neg := *duration
+func (duration FEELDuration) Negative() *FEELDuration {
+	neg := duration
 	neg.Neg = !duration.Neg
 	return &neg
 }
