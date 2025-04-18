@@ -2,7 +2,6 @@ package feel
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strings"
 )
@@ -224,6 +223,6 @@ func (scanner *Scanner) Next() error {
 		scanner.currentToken = ScannerToken{Kind: TokenEOF, Pos: scanner.Pos}
 		return nil
 	} else {
-		return errors.New(fmt.Sprintf("at position %d %d, bad input %s", scanner.Pos.Row, scanner.Pos.Column, scanner.rest))
+		return NewErrBadInput(scanner.Pos.Row, scanner.Pos.Column, scanner.rest)
 	}
 }

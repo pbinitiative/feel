@@ -53,3 +53,7 @@ func NewErrTooManyArguments() *EvalError {
 func NewErrBadOp(leftType, op, rightType string) *EvalError {
 	return NewEvalError(-5001, "type mismatch in op", "bad types in op, ", leftType, op, rightType)
 }
+
+func NewErrBadInput(row int, column int, inputText string) *EvalError {
+	return NewEvalError(-6001, "bad input", fmt.Sprintf(`at position row:%d, column:%d, input:%s`, row, column, inputText))
+}
