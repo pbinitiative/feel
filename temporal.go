@@ -269,9 +269,9 @@ func (duration FEELDuration) MarshalJSON() ([]byte, error) {
 
 func (duration FEELDuration) Duration() time.Duration {
 	// duration.Year and duration.Month
-	dv := (time.Duration(duration.Days*24+duration.Hours)*time.Hour +
+	dv := time.Duration(duration.Days*24+duration.Hours)*time.Hour +
 		time.Duration(duration.Minutes)*time.Minute +
-		time.Duration(duration.Seconds)*time.Second)
+		time.Duration(duration.Seconds)*time.Second
 	if duration.Neg {
 		dv = -dv
 	}
