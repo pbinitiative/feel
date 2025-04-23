@@ -79,7 +79,7 @@ func Test_builtin_string_functions(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.expr, func(t *testing.T) {
 			actual, err := EvalString(test.expr)
-			assert.Nil(t, err)
+			assert.NoError(t, err)
 			assert.Equal(t, test.result, actual)
 		})
 	}

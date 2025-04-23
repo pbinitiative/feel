@@ -26,7 +26,7 @@ func TestSimpleScannerFinding(t *testing.T) {
 
 	scanner := NewScanner(input)
 	tokens, err := scanner.Tokens()
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	// tokens is ["<", "name", "+", "name"]
 	assert.Equal(t, "<", tokens[0].Kind)
 
