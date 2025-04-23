@@ -18,6 +18,15 @@ func Test_N(t *testing.T) {
 	assert.Empty(t, cmp.Diff(N(11), res))
 }
 
+func Test_unknown_symbols_raise_error(t *testing.T) {
+	scope := map[string]any{
+		"COUNT": 15,
+	}
+	input := `COUNT <= 20 && COUNT > 10`
+	_, err := EvalStringWithScope(input, scope)
+	assert.ErrorContains(t, err, "bad input")
+}
+
 func Test_EvalString(t *testing.T) {
 	tests := []struct {
 		input  string
