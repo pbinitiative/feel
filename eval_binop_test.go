@@ -30,7 +30,7 @@ func Test_compareInterfaces(t *testing.T) {
 		name := fmt.Sprintf("%s is %v", tt.expr, tt.expected)
 		t.Run(name, func(t *testing.T) {
 			actual, err := EvalStringWithScope(tt.expr, scope)
-			assert.Nil(t, err)
+			assert.NoError(t, err)
 			assert.Equal(t, tt.expected, actual)
 		})
 	}
@@ -64,7 +64,7 @@ func Test_implicit_type_conversion_in_math_operation(t *testing.T) {
 				"b": test.b,
 			}
 			actual, err := EvalStringWithScope(test.expr, scope)
-			assert.Nil(t, err)
+			assert.NoError(t, err)
 			assert.Equal(t, test.result, actual)
 		})
 	}
@@ -134,7 +134,7 @@ func Test_compare_with_null_values_is_always_true(t *testing.T) {
 				"a": test.a,
 			}
 			actual, err := EvalStringWithScope(test.expr, scope)
-			assert.Nil(t, err)
+			assert.NoError(t, err)
 			assert.Equal(t, test.result, actual)
 		})
 	}
@@ -177,7 +177,7 @@ func Test_eval_multiple_operators_with_logical_precedence(t *testing.T) {
 				"y": test.y,
 			}
 			actual, err := EvalStringWithScope(test.expr, scope)
-			assert.Nil(t, err)
+			assert.NoError(t, err)
 			assert.Equal(t, test.result, actual)
 		})
 	}

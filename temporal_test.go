@@ -31,7 +31,7 @@ func Test_time_is_supported_in_evaluation_scope(t *testing.T) {
 				"a": test.a,
 			}
 			actual, err := EvalStringWithScope(test.expr, scope)
-			assert.Nil(t, err)
+			assert.NoError(t, err)
 			assert.Equal(t, test.result, actual)
 		})
 	}
