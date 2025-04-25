@@ -19,7 +19,8 @@ type TckDefinitions struct {
 }
 
 type TckDecision struct {
-	Name              string `xml:"name,attr"`
+	Name string `xml:"name,attr"`
+	// TODO[JSot]: Add support for "contextEntry>literalExpression>text"
 	LiteralExpression string `xml:"literalExpression>text"`
 }
 
