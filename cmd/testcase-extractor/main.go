@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/xml"
+	"errors"
 	"flag"
 	"fmt"
+	"github.com/pbinitiative/feel/cmd/testcase-extractor/tck/model"
 	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
@@ -13,62 +15,12 @@ import (
 )
 
 type TckDefinitions struct {
-	XMLName   xml.Name       `xml:"definitions"`
 	Decisions []*TckDecision `xml:"decision"`
 }
 
 type TckDecision struct {
-	XMLName           xml.Name `xml:"decision"`
-	Name              *string  `xml:"name,attr"`
-	LiteralExpression *string  `xml:"literalExpression>text"`
-}
-
-type TckTestCases struct {
-	XMLName   xml.Name       `xml:"testCases"`
-	ModelName *string        `xml:"modelName"`
-	TestCases []*TckTestCase `xml:"testCase"`
-}
-
-type TckTestCase struct {
-	XMLName     xml.Name             `xml:"testCase"`
-	Id          *string              `xml:"id,attr"`
-	Description *string              `xml:"description"`
-	Results     []*TckTestCaseResult `xml:"resultNode"`
-}
-
-type TckTestCaseResult struct {
-	XMLName  xml.Name      `xml:"resultNode"`
-	Name     *string       `xml:"name,attr"`
-	Expected NilableString `xml:"expected>value"`
-}
-
-type NilableString struct {
-	Value *string
-}
-
-func (ns *NilableString) String() string {
-	return *ns.Value
-}
-
-func (ns *NilableString) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type StringNode struct {
-		Value string `xml:",chardata"`
-		Nil   bool   `xml:"http://www.w3.org/2001/XMLSchema-instance nil,attr"`
-	}
-	var stringNode StringNode
-	if err := d.DecodeElement(&stringNode, &start); err != nil {
-		return err
-	}
-	if stringNode.Nil {
-		ns.Value = nil
-	} else {
-		if stringNode.Value != "" {
-			ns.Value = &stringNode.Value
-		} else {
-			ns.Value = nil // Treat empty string as nil
-		}
-	}
-	return nil
+	Name              string `xml:"name,attr"`
+	LiteralExpression string `xml:"literalExpression>text"`
 }
 
 type TestConfig struct {
@@ -77,24 +29,41 @@ type TestConfig struct {
 }
 
 type TestConfigModel struct {
-	Name *string `yaml:"name"`
 	Dir  *string `yaml:"dir"`
+	Name *string `yaml:"name"`
 }
 
 type TestCase struct {
-	Id          *string          `yaml:"id"`
-	Description *string          `yaml:"description"`
-	Results     []TestCaseResult `yaml:"results"`
+	Id          *string `yaml:"id"`
+	Description *string `yaml:"description"`
+	Tests       []Test  `yaml:"tests"`
 }
 
-type TestCaseResult struct {
-	FeelExpression *string `yaml:"feel-expression"`
-	Expected       *string `yaml:"expected"`
+type Test struct {
+	FeelExpression  *string `yaml:"feel-expression"`
+	*ExpectedResult `yaml:"expected"`
+}
+
+type ExpectedResult struct {
+	Components *[]Component      `yaml:"components,omitempty"`
+	Value      *ExpectedValue    `yaml:"result,omitempty"`
+	Values     *[]ExpectedResult `yaml:"results,omitempty"`
+}
+
+type Component struct {
+	Name            string `yaml:"name"`
+	*ExpectedResult `yaml:"expected"`
+}
+
+type ExpectedValue struct {
+	Value *string `yaml:"value"`
+	Type  *string `yaml:"type,omitempty"`
 }
 
 const (
-	DmnModelFileWildcard = "*-feel-*.dmn"
-	TestCaseFileSuffix   = "-test-01.xml"
+	dmnModelFileWildcard     = "*-feel-*.dmn"
+	testCaseFileSuffix       = "-test-01.xml"
+	xmlSchemaNamespacePrefix = "xsd:"
 )
 
 func parseFlags() (
@@ -173,18 +142,21 @@ func findFiles(dir, wildcard string) []string {
 	return filePaths
 }
 
-func extractTckTestCases(testCasesFilePath string, tckTestCasesCh chan *TckTestCases) {
+func extractTckTestCases(
+	testCasesFilePath string,
+	tckTestCasesCh chan *model.TestCases,
+) {
 	defer close(tckTestCasesCh)
 
 	bytes, err := os.ReadFile(testCasesFilePath)
 	if err != nil {
-		printError("Error: could not read Test Cases file: %v\n", err)
+		printError("Error: could not read Test Cases file %v: %v\n", testCasesFilePath, err)
 	}
 
-	var testCases *TckTestCases
+	var testCases *model.TestCases
 	err = xml.Unmarshal(bytes, &testCases)
 	if err != nil {
-		printError("Error: could not read Test Cases file: %v\n", err)
+		printError("Error: could not read Test Cases file %v: %v\n", testCasesFilePath, err)
 	}
 
 	tckTestCasesCh <- testCases
@@ -226,6 +198,45 @@ func compileTestConfigs(dmnFiles []string, searchDir string) []TestConfig {
 	return testConfigs
 }
 
+func compileExpectedResult(tckValue *model.ValueType) ExpectedResult {
+	switch {
+	case tckValue.Components != nil:
+		components := make([]Component, 0)
+		for _, tckComponent := range *tckValue.Components {
+			expectedResult := compileExpectedResult(tckComponent.ValueType)
+			components = append(
+				components,
+				Component{
+					tckComponent.NameAttr,
+					&expectedResult,
+				},
+			)
+		}
+
+		return ExpectedResult{Components: &components}
+	case tckValue.Value != nil:
+		return ExpectedResult{
+			Value: &ExpectedValue{
+				tckValue.Value.Content,
+				stripNamespacePrefix(tckValue.Value.Type),
+			},
+		}
+	case tckValue.List != nil:
+		results := make([]ExpectedResult, 0)
+		for _, result := range tckValue.List.Items {
+			expectedResult := compileExpectedResult(result)
+			results = append(
+				results,
+				expectedResult,
+			)
+		}
+
+		return ExpectedResult{Values: &results}
+	default:
+		panic(errors.New("unsupported Test Case Result type. Should not happen"))
+	}
+}
+
 func compileTestConfig(
 	dmnFile string,
 	searchDir string,
@@ -235,9 +246,9 @@ func compileTestConfig(
 	testCaseFile := strings.TrimSuffix(
 		dmnFile,
 		filepath.Ext(dmnFile),
-	) + TestCaseFileSuffix
+	) + testCaseFileSuffix
 
-	tckTestCasesCh := make(chan *TckTestCases)
+	tckTestCasesCh := make(chan *model.TestCases)
 	go extractTckTestCases(testCaseFile, tckTestCasesCh)
 
 	tckDecisionsCh := make(chan []*TckDecision)
@@ -249,37 +260,52 @@ func compileTestConfig(
 
 	testCases := make([]TestCase, 0)
 	for _, tckTestCase := range tckTestCases.TestCases {
-		results := make([]TestCaseResult, 0)
-		for _, tckResult := range tckTestCase.Results {
-			tckDecision := tckDecisionsMap[*tckResult.Name]
-			result := TestCaseResult{
-				FeelExpression: tckDecision.LiteralExpression,
-				Expected:       tckResult.Expected.Value,
-			}
-			results = append(results, result)
+		tests := make([]Test, 0)
+		for _, tckResult := range tckTestCase.ResultNodes {
+			tckDecision := tckDecisionsMap[tckResult.NameAttr]
+
+			expectedResult := compileExpectedResult(tckResult.Expected)
+			tests = append(
+				tests,
+				Test{
+					FeelExpression: &tckDecision.LiteralExpression,
+					ExpectedResult: &expectedResult,
+				},
+			)
 		}
 
 		testCase := TestCase{
-			Id:          tckTestCase.Id,
-			Description: tckTestCase.Description,
-			Results:     results,
+			Id:          &tckTestCase.IdAttr,
+			Description: &tckTestCase.Description,
+			Tests:       tests,
 		}
 		testCases = append(testCases, testCase)
 	}
 
 	testConfigsCh <- TestConfig{
 		Model: TestConfigModel{
-			tckTestCases.ModelName,
 			&testCaseDir,
+			&tckTestCases.ModelName,
 		},
 		TestCases: testCases,
+	}
+}
+
+// Strip namespace prefix from `valueType`, if not `nil`.
+// Otherwise, return `nil`.
+func stripNamespacePrefix(valueType *string) *string {
+	if valueType == nil {
+		return nil
+	} else {
+		tmp := strings.TrimPrefix(*valueType, xmlSchemaNamespacePrefix)
+		return &tmp
 	}
 }
 
 func mapTckDecisionsByName(tckDecisions []*TckDecision) map[string]*TckDecision {
 	resultsMap := make(map[string]*TckDecision)
 	for _, tckDecision := range tckDecisions {
-		resultsMap[*tckDecision.Name] = tckDecision
+		resultsMap[tckDecision.Name] = tckDecision
 	}
 
 	return resultsMap
@@ -351,7 +377,7 @@ func main() {
 	searchDir, err := filepath.Abs(*dir)
 	if err != nil {
 		printError("Error getting search dir absolute path: %v\n", err)
-		panic(err)
+		os.Exit(1)
 	}
 
 	outputFile := resolveOutputFile(*outputFilename)
@@ -363,7 +389,7 @@ func main() {
 		}
 	}(outputFile)
 
-	modelFiles := findFiles(searchDir, DmnModelFileWildcard)
+	modelFiles := findFiles(searchDir, dmnModelFileWildcard)
 	testConfigs := compileTestConfigs(modelFiles, searchDir)
 
 	countOfFeelExpressions := 0
