@@ -5,7 +5,9 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/pbinitiative/feel/cmd/testcase-extractor/tck/model"
+	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/dmn"
+	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/tck"
+	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/testconfig"
 	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
@@ -13,53 +15,6 @@ import (
 	"strings"
 	"time"
 )
-
-type TckDefinitions struct {
-	Decisions []*TckDecision `xml:"decision"`
-}
-
-type TckDecision struct {
-	Name string `xml:"name,attr"`
-	// TODO[JSot]: Add support for "contextEntry>literalExpression>text"
-	LiteralExpression string `xml:"literalExpression>text"`
-}
-
-type TestConfig struct {
-	Model     TestConfigModel `yaml:"model"`
-	TestCases []TestCase      `yaml:"test-cases"`
-}
-
-type TestConfigModel struct {
-	Dir  *string `yaml:"dir"`
-	Name *string `yaml:"name"`
-}
-
-type TestCase struct {
-	Id          *string `yaml:"id"`
-	Description *string `yaml:"description"`
-	Tests       []Test  `yaml:"tests"`
-}
-
-type Test struct {
-	FeelExpression  *string `yaml:"feel-expression"`
-	*ExpectedResult `yaml:"expected"`
-}
-
-type ExpectedResult struct {
-	Components *[]Component      `yaml:"components,omitempty"`
-	Value      *ExpectedValue    `yaml:"result,omitempty"`
-	Values     *[]ExpectedResult `yaml:"results,omitempty"`
-}
-
-type Component struct {
-	Name            string `yaml:"name"`
-	*ExpectedResult `yaml:"expected"`
-}
-
-type ExpectedValue struct {
-	Value *string `yaml:"value"`
-	Type  *string `yaml:"type,omitempty"`
-}
 
 const (
 	dmnModelFileWildcard     = "*-feel-*.dmn"
@@ -145,7 +100,7 @@ func findFiles(dir, wildcard string) []string {
 
 func extractTckTestCases(
 	testCasesFilePath string,
-	tckTestCasesCh chan *model.TestCases,
+	tckTestCasesCh chan *tck.TestCases,
 ) {
 	defer close(tckTestCasesCh)
 
@@ -154,7 +109,7 @@ func extractTckTestCases(
 		printError("Error: could not read Test Cases file %v: %v\n", testCasesFilePath, err)
 	}
 
-	var testCases *model.TestCases
+	var testCases *tck.TestCases
 	err = xml.Unmarshal(bytes, &testCases)
 	if err != nil {
 		printError("Error: could not read Test Cases file %v: %v\n", testCasesFilePath, err)
@@ -163,67 +118,67 @@ func extractTckTestCases(
 	tckTestCasesCh <- testCases
 }
 
-func extractTckDecisions(decisionsFilePath string, tckDecisionsCh chan []*TckDecision) {
-	defer close(tckDecisionsCh)
+func extractDmnDecisions(decisionsFilePath string, dmnDecisionsCh chan []*dmn.Decision) {
+	defer close(dmnDecisionsCh)
 
 	bytes, err := os.ReadFile(decisionsFilePath)
 	if err != nil {
 		printError("Error: could not read Test Cases file: %v\n", err)
 	}
 
-	var definitions *TckDefinitions
+	var definitions *dmn.Definitions
 	err = xml.Unmarshal(bytes, &definitions)
 	if err != nil {
 		printError("Error: could not read Test Cases file: %v\n", err)
 	}
 
-	tckDecisionsCh <- definitions.Decisions
+	dmnDecisionsCh <- definitions.Decisions
 }
 
-func compileTestConfigs(dmnFiles []string, searchDir string) []TestConfig {
-	testConfigsCh := make(chan TestConfig)
+func compileTestConfigs(dmnFiles []string, searchDir string) []testconfig.TestConfig {
+	testConfigsCh := make(chan testconfig.TestConfig)
 
 	for _, dmnFile := range dmnFiles {
 		go compileTestConfig(dmnFile, searchDir, testConfigsCh)
 	}
 
-	testConfigs := make([]TestConfig, 0)
-	for _ = range len(dmnFiles) {
+	testConfigs := make([]testconfig.TestConfig, 0)
+	for range len(dmnFiles) {
 		testConfigs = append(testConfigs, <-testConfigsCh)
 	}
 
 	sort.Slice(testConfigs, func(i, j int) bool {
-		return *testConfigs[i].Model.Name < *testConfigs[j].Model.Name
+		return testConfigs[i].Model.Name < testConfigs[j].Model.Name
 	})
 
 	return testConfigs
 }
 
-func compileExpectedResult(tckValue *model.ValueType) ExpectedResult {
+func compileExpectedResult(tckValue *tck.ValueType) testconfig.ExpectedResult {
 	switch {
 	case tckValue.Components != nil:
-		components := make([]Component, 0)
+		components := make([]testconfig.Component, 0)
 		for _, tckComponent := range *tckValue.Components {
 			expectedResult := compileExpectedResult(tckComponent.ValueType)
 			components = append(
 				components,
-				Component{
-					tckComponent.NameAttr,
-					&expectedResult,
+				testconfig.Component{
+					Name:           tckComponent.NameAttr,
+					ExpectedResult: expectedResult,
 				},
 			)
 		}
 
-		return ExpectedResult{Components: &components}
+		return testconfig.ExpectedResult{Components: &components}
 	case tckValue.Value != nil:
-		return ExpectedResult{
-			Value: &ExpectedValue{
-				tckValue.Value.Content,
-				stripNamespacePrefix(tckValue.Value.Type),
+		return testconfig.ExpectedResult{
+			Value: &testconfig.ExpectedValue{
+				Value: tckValue.Value.Content,
+				Type:  stripNamespacePrefix(tckValue.Value.Type),
 			},
 		}
 	case tckValue.List != nil:
-		results := make([]ExpectedResult, 0)
+		results := make([]testconfig.ExpectedResult, 0)
 		for _, result := range tckValue.List.Items {
 			expectedResult := compileExpectedResult(result)
 			results = append(
@@ -232,7 +187,7 @@ func compileExpectedResult(tckValue *model.ValueType) ExpectedResult {
 			)
 		}
 
-		return ExpectedResult{Values: &results}
+		return testconfig.ExpectedResult{Values: &results}
 	default:
 		panic(errors.New("unsupported Test Case Result type. Should not happen"))
 	}
@@ -241,7 +196,7 @@ func compileExpectedResult(tckValue *model.ValueType) ExpectedResult {
 func compileTestConfig(
 	dmnFile string,
 	searchDir string,
-	testConfigsCh chan TestConfig,
+	testConfigsCh chan testconfig.TestConfig,
 ) {
 	testCaseDir := strings.TrimPrefix(filepath.Dir(dmnFile), searchDir)
 	testCaseFile := strings.TrimSuffix(
@@ -249,44 +204,44 @@ func compileTestConfig(
 		filepath.Ext(dmnFile),
 	) + testCaseFileSuffix
 
-	tckTestCasesCh := make(chan *model.TestCases)
+	tckTestCasesCh := make(chan *tck.TestCases)
 	go extractTckTestCases(testCaseFile, tckTestCasesCh)
 
-	tckDecisionsCh := make(chan []*TckDecision)
-	go extractTckDecisions(dmnFile, tckDecisionsCh)
+	dmnDecisionsCh := make(chan []*dmn.Decision)
+	go extractDmnDecisions(dmnFile, dmnDecisionsCh)
 
-	tckTestCases, tckDecisions := <-tckTestCasesCh, <-tckDecisionsCh
+	tckTestCases, dmnDecisions := <-tckTestCasesCh, <-dmnDecisionsCh
 
-	tckDecisionsMap := mapTckDecisionsByName(tckDecisions)
+	dmnDecisionsMap := mapDmnDecisionsByName(dmnDecisions)
 
-	testCases := make([]TestCase, 0)
+	testCases := make([]testconfig.TestCase, 0)
 	for _, tckTestCase := range tckTestCases.TestCases {
-		tests := make([]Test, 0)
+		tests := make([]testconfig.Test, 0)
 		for _, tckResult := range tckTestCase.ResultNodes {
-			tckDecision := tckDecisionsMap[tckResult.NameAttr]
+			dmnDecision := dmnDecisionsMap[tckResult.NameAttr]
 
 			expectedResult := compileExpectedResult(tckResult.Expected)
 			tests = append(
 				tests,
-				Test{
-					FeelExpression: &tckDecision.LiteralExpression,
-					ExpectedResult: &expectedResult,
+				testconfig.Test{
+					FeelExpression: dmnDecision.LiteralExpression,
+					ExpectedResult: expectedResult,
 				},
 			)
 		}
 
-		testCase := TestCase{
-			Id:          &tckTestCase.IdAttr,
-			Description: &tckTestCase.Description,
+		testCase := testconfig.TestCase{
+			Id:          tckTestCase.IdAttr,
+			Description: tckTestCase.Description,
 			Tests:       tests,
 		}
 		testCases = append(testCases, testCase)
 	}
 
-	testConfigsCh <- TestConfig{
-		Model: TestConfigModel{
-			&testCaseDir,
-			&tckTestCases.ModelName,
+	testConfigsCh <- testconfig.TestConfig{
+		Model: testconfig.Model{
+			Dir:  testCaseDir,
+			Name: tckTestCases.ModelName,
 		},
 		TestCases: testCases,
 	}
@@ -303,16 +258,16 @@ func stripNamespacePrefix(valueType *string) *string {
 	}
 }
 
-func mapTckDecisionsByName(tckDecisions []*TckDecision) map[string]*TckDecision {
-	resultsMap := make(map[string]*TckDecision)
-	for _, tckDecision := range tckDecisions {
-		resultsMap[tckDecision.Name] = tckDecision
+func mapDmnDecisionsByName(tckDecisions []*dmn.Decision) map[string]*dmn.Decision {
+	resultsMap := make(map[string]*dmn.Decision)
+	for _, dmnDecision := range tckDecisions {
+		resultsMap[dmnDecision.Name] = dmnDecision
 	}
 
 	return resultsMap
 }
 
-func saveTestConfigs(testConfigs []TestConfig, outputFile *os.File) {
+func saveTestConfigs(testConfigs []testconfig.TestConfig, outputFile *os.File) {
 	yamlData, err := yaml.Marshal(&testConfigs)
 	if err != nil {
 		printError("Error marshaling to YAML: %v\n", err)
@@ -345,7 +300,6 @@ func printExtractionStats(
 	countOfFiles int,
 	duration time.Duration,
 ) {
-
 	outputFileInfo := ""
 	if outputFile != os.Stdout {
 		outputFilenameAbs, _ := filepath.Abs(outputFile.Name())
