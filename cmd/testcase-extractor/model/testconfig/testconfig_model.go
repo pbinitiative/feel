@@ -5,18 +5,7 @@ import (
 	"strings"
 )
 
-type TestConfig struct {
-	Model     Model      `yaml:"model"`
-	TestCases []TestCase `yaml:"test-cases"`
-}
-
-type Model struct {
-	Dir  string `yaml:"dir"`
-	Name string `yaml:"name"`
-}
-
 type TestCase struct {
-	Id          string `yaml:"id"`
 	Description string `yaml:"description"`
 	Tests       []Test `yaml:"tests"`
 }

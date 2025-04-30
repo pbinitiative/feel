@@ -101,11 +101,7 @@ func (simpleType *AnySimpleType) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	if simpleTypeNode.Nil {
 		simpleType.Content = nil // Treat empty string as nil
 	} else {
-		//if simpleTypeNode.Value != "" {
 		simpleType.Content = &simpleTypeNode.Value
-		//} else {
-		//	simpleType.Content = nil
-		//}
 	}
 	simpleType.Type = simpleTypeNode.Type
 	return nil

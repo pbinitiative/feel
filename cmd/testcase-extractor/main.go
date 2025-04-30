@@ -5,8 +5,10 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/pbinitiative/feel/cmd/testcase-extractor/fs"
 	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/dmn"
 	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/tck"
+	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/tcktestconfig"
 	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/testconfig"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -24,18 +26,18 @@ const (
 
 func parseFlags() (
 	dir *string,
-	outputFilename *string,
+	outputDir *string,
 	forceStats *bool,
 ) {
 	dir = flag.String(
 		"dir",
 		".",
-		"Directory to start search for DMN model files and Test Cases files.",
+		"Directory to start search for TCK DMN model files and Test Cases files.",
 	)
-	outputFilename = flag.String(
-		"output-file",
-		"-",
-		`Name of file to save output to. Default is "-" (STDOUT).`,
+	outputDir = flag.String(
+		"output-dir",
+		"./feel",
+		`Dir to save output to. Default is "./feel".`,
 	)
 	forceStats = flag.Bool(
 		"force-stats",
@@ -47,13 +49,14 @@ func parseFlags() (
 	return
 }
 
-func resolveOutputFile(outputFilename string) *os.File {
+func ensureOutputFile(outputFilename string) *os.File {
 	var outputFile *os.File
 	var err error
 
 	if outputFilename == "-" {
 		outputFile = os.Stdout
 	} else {
+		fs.EnsureDir(filepath.Dir(outputFilename))
 		outputFile, err = os.Create(outputFilename)
 		if err != nil {
 			printError("Error getting output filename absolute path: %v\n", err)
@@ -62,40 +65,6 @@ func resolveOutputFile(outputFilename string) *os.File {
 	}
 
 	return outputFile
-}
-
-// findFiles traverses the directory tree starting at dir and returns files
-// matching the wildcard pattern
-func findFiles(dir, wildcard string) []string {
-	var filePaths []string
-
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		printError("Error: Directory '%s' does not exist\n", dir)
-		os.Exit(1)
-	}
-
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() {
-			matched, err := filepath.Match(wildcard, info.Name())
-			if err != nil {
-				return err
-			}
-			if matched {
-				filePaths = append(filePaths, path)
-			}
-		}
-		return nil
-	})
-
-	if err != nil {
-		printError("Error: %v\n", err)
-		os.Exit(1)
-	}
-
-	return filePaths
 }
 
 func extractTckTestCases(
@@ -135,14 +104,14 @@ func extractDmnDecisions(decisionsFilePath string, dmnDecisionsCh chan []*dmn.De
 	dmnDecisionsCh <- definitions.Decisions
 }
 
-func compileTestConfigs(dmnFiles []string, searchDir string) []testconfig.TestConfig {
-	testConfigsCh := make(chan testconfig.TestConfig)
+func compileTestConfigs(dmnFiles []string, searchDir string) []tcktestconfig.TestConfig {
+	testConfigsCh := make(chan tcktestconfig.TestConfig)
 
 	for _, dmnFile := range dmnFiles {
 		go compileTestConfig(dmnFile, searchDir, testConfigsCh)
 	}
 
-	testConfigs := make([]testconfig.TestConfig, 0)
+	testConfigs := make([]tcktestconfig.TestConfig, 0)
 	for range len(dmnFiles) {
 		testConfigs = append(testConfigs, <-testConfigsCh)
 	}
@@ -196,7 +165,7 @@ func compileExpectedResult(tckValue *tck.ValueType) testconfig.ExpectedResult {
 func compileTestConfig(
 	dmnFile string,
 	searchDir string,
-	testConfigsCh chan testconfig.TestConfig,
+	testConfigsCh chan tcktestconfig.TestConfig,
 ) {
 	testCaseDir := strings.TrimPrefix(filepath.Dir(dmnFile), searchDir)
 	testCaseFile := strings.TrimSuffix(
@@ -214,23 +183,11 @@ func compileTestConfig(
 
 	dmnDecisionsMap := mapDmnDecisionsByName(dmnDecisions)
 
-	testCases := make([]testconfig.TestCase, 0)
+	testCases := make([]tcktestconfig.TestCase, 0)
 	for _, tckTestCase := range tckTestCases.TestCases {
-		tests := make([]testconfig.Test, 0)
-		for _, tckResult := range tckTestCase.ResultNodes {
-			dmnDecision := dmnDecisionsMap[tckResult.NameAttr]
+		tests := compileTest(tckTestCase, dmnDecisionsMap)
 
-			expectedResult := compileExpectedResult(tckResult.Expected)
-			tests = append(
-				tests,
-				testconfig.Test{
-					FeelExpression: dmnDecision.LiteralExpression,
-					ExpectedResult: expectedResult,
-				},
-			)
-		}
-
-		testCase := testconfig.TestCase{
+		testCase := tcktestconfig.TestCase{
 			Id:          tckTestCase.IdAttr,
 			Description: tckTestCase.Description,
 			Tests:       tests,
@@ -238,13 +195,30 @@ func compileTestConfig(
 		testCases = append(testCases, testCase)
 	}
 
-	testConfigsCh <- testconfig.TestConfig{
-		Model: testconfig.Model{
+	testConfigsCh <- tcktestconfig.TestConfig{
+		Model: tcktestconfig.Model{
 			Dir:  testCaseDir,
 			Name: tckTestCases.ModelName,
 		},
 		TestCases: testCases,
 	}
+}
+
+func compileTest(tckTestCase *tck.TestCase, dmnDecisionsMap map[string]*dmn.Decision) []testconfig.Test {
+	tests := make([]testconfig.Test, 0)
+	for _, tckResult := range tckTestCase.ResultNodes {
+		dmnDecision := dmnDecisionsMap[tckResult.NameAttr]
+
+		expectedResult := compileExpectedResult(tckResult.Expected)
+		tests = append(
+			tests,
+			testconfig.Test{
+				FeelExpression: dmnDecision.LiteralExpression,
+				ExpectedResult: expectedResult,
+			},
+		)
+	}
+	return tests
 }
 
 // Strip namespace prefix from `valueType`, if not `nil`.
@@ -267,17 +241,40 @@ func mapDmnDecisionsByName(tckDecisions []*dmn.Decision) map[string]*dmn.Decisio
 	return resultsMap
 }
 
-func saveTestConfigs(testConfigs []testconfig.TestConfig, outputFile *os.File) {
-	yamlData, err := yaml.Marshal(&testConfigs)
-	if err != nil {
-		printError("Error marshaling to YAML: %v\n", err)
-		os.Exit(1)
-	}
+func saveTestConfigs(testConfigs []tcktestconfig.TestConfig, outputDir string) {
 
-	_, err = outputFile.Write(yamlData)
-	if err != nil {
-		printError("Error writing YAML file: %v\n", err)
-		os.Exit(1)
+	for _, testConfig := range testConfigs {
+
+		testConfigFilename := strings.TrimSuffix(
+			testConfig.Model.Name,
+			filepath.Ext(testConfig.Model.Name),
+		) + ".yaml"
+
+		outputFilename := filepath.Join(
+			outputDir,
+			filepath.Dir(testConfig.Model.Dir), // No need to have dir with one file of same name
+			testConfigFilename,
+		)
+		outputFile := ensureOutputFile(outputFilename)
+
+		yamlData, err := yaml.Marshal([]tcktestconfig.TestConfig{testConfig})
+		if err != nil {
+			printError("Error marshaling to YAML: %v\n", err)
+			os.Exit(1)
+		}
+
+		defer func(outputFile *os.File) {
+			err := outputFile.Close()
+			if err != nil {
+				printError("Error closing output file: %v\n", err)
+			}
+		}(outputFile)
+
+		_, err = outputFile.Write(yamlData)
+		if err != nil {
+			printError("Error writing YAML to file: %v\n", err)
+			os.Exit(1)
+		}
 	}
 }
 
@@ -285,40 +282,20 @@ func printError(format string, a ...any) {
 	_, _ = fmt.Fprintf(os.Stderr, format, a...)
 }
 
-func isOutputPiped() bool {
-	fileInfo, err := os.Stdout.Stat()
-	if err != nil {
-		printError("Error checking pipe: %v\n", err)
-	}
-	// Check if the file mode indicates a named pipe (FIFO)
-	return (fileInfo.Mode() & os.ModeNamedPipe) != 0
-}
-
 func printExtractionStats(
-	outputFile *os.File,
+	outputDir string,
 	countOfFeelExpressions int,
 	countOfFiles int,
 	duration time.Duration,
 ) {
-	outputFileInfo := ""
-	if outputFile != os.Stdout {
-		outputFilenameAbs, _ := filepath.Abs(outputFile.Name())
-		outputFileInfo = fmt.Sprintf(
-			" to file "+
-				"\n\t%v",
-			outputFilenameAbs,
-		)
-	}
-
 	fmt.Printf(
 		"\n"+
-			"%d test cases for feel expressions extracted"+
-			"%v"+
+			"%d test cases for feel expressions extracted to %s"+
 			"\n%d TCK DMN and Test Case files processed"+
 			"\nIt took %v"+
 			"\n",
 		countOfFeelExpressions,
-		outputFileInfo,
+		outputDir,
 		countOfFiles,
 		duration,
 	)
@@ -327,7 +304,7 @@ func printExtractionStats(
 func main() {
 	startTs := time.Now()
 
-	dir, outputFilename, forceStats := parseFlags()
+	dir, outputDir, _ := parseFlags()
 
 	searchDir, err := filepath.Abs(*dir)
 	if err != nil {
@@ -335,16 +312,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	outputFile := resolveOutputFile(*outputFilename)
-
-	defer func(outputFile *os.File) {
-		err := outputFile.Close()
-		if err != nil {
-			printError("Error closing output file: %v\n", err)
-		}
-	}(outputFile)
-
-	modelFiles := findFiles(searchDir, dmnModelFileWildcard)
+	modelFiles := fs.FindFiles(searchDir, dmnModelFileWildcard, true)
 	testConfigs := compileTestConfigs(modelFiles, searchDir)
 
 	countOfFeelExpressions := 0
@@ -352,16 +320,14 @@ func main() {
 		countOfFeelExpressions += len(testConfig.TestCases)
 	}
 
-	saveTestConfigs(testConfigs, outputFile)
+	saveTestConfigs(testConfigs, *outputDir)
 
 	duration := time.Since(startTs)
 
-	if !isOutputPiped() || *forceStats {
-		printExtractionStats(
-			outputFile,
-			countOfFeelExpressions,
-			len(modelFiles)*2, // *2 because both DMN file and TestCase files are processed
-			duration,
-		)
-	}
+	printExtractionStats(
+		*outputDir,
+		countOfFeelExpressions,
+		len(modelFiles)*2, // *2 because both DMN file and TestCase files are processed
+		duration,
+	)
 }
