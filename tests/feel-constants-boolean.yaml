@@ -1,0 +1,13 @@
+- id: "001"
+  description: Tests FEEL boolean constants
+  tests:
+    - feel-expression: "true"
+      expected:
+        result:
+          value: "true"
+          type: boolean
+    - feel-expression: "false"
+      expected:
+        result:
+          value: "false"
+          type: boolean

@@ -46,11 +46,15 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 				if err != nil {
 					t.Fatalf(
 						"Failed: %v"+
+							"\nfile: %v"+
+							"\nid: %s"+
 							"\ndescription: %s"+
 							"\nexpression: %s"+
 							"\nexpected:"+
 							"\n\t%v",
 						err,
+						testConfigFile,
+						testCase.Id,
 						testCase.Description,
 						test.FeelExpression,
 						test.ExpectedResult,
@@ -70,11 +74,14 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 					),
 				)
 				assert.Empty(t, diff,
-					"\ndir: %s"+
+					"\nfile: %s"+
+						"\nid: %s"+
 						"\ndescription: %s"+
 						"\nexpression: %s"+
 						"\nexpected:"+
 						"\n\t%v",
+					testConfigFile,
+					testCase.Id,
 					testCase.Description,
 					test.FeelExpression,
 					test.ExpectedResult,

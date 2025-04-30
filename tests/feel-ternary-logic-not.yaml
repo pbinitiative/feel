@@ -1,0 +1,23 @@
+- id: "001"
+  description: Tests ternary logic for true
+  tests:
+    - feel-expression: not(A)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: "002"
+#  description: Tests ternary logic for false
+#  tests:
+#    - feel-expression: not(A)
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: "003"
+#  description: Tests ternary logic for null
+#  tests:
+#    - feel-expression: not(A)
+#      expected:
+#        result:
+#          value: null

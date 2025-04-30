@@ -1,0 +1,900 @@
+- id: null_001
+  description: null equals null
+  tests:
+    - feel-expression: null = null
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: null_002
+  description: null not equals null
+  tests:
+    - feel-expression: null != null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: boolean_001
+  description: boolean true equal
+  tests:
+    - feel-expression: true = true
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: boolean_002
+  description: boolean true not equal
+  tests:
+    - feel-expression: true != true
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: boolean_003
+  description: boolean true equal
+  tests:
+    - feel-expression: false = false
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: boolean_004
+  description: boolean true not equal
+  tests:
+    - feel-expression: false != false
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: boolean_005
+  description: boolean true not equal false
+  tests:
+    - feel-expression: true = false
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: boolean_006
+  description: boolean true equals null
+  tests:
+    - feel-expression: true = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: boolean_007
+  description: boolean false equals null
+  tests:
+    - feel-expression: false = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: boolean_008
+#  description: boolean false equals another type (0)
+#  tests:
+#    - feel-expression: false = 0
+#      expected:
+#        result:
+#          value: null
+#- id: boolean_009
+#  description: boolean true equals another type (1)
+#  tests:
+#    - feel-expression: true = 1
+#      expected:
+#        result:
+#          value: null
+- id: number_001
+  description: num equal
+  tests:
+    - feel-expression: 123 = 123
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_002
+  description: num with digits equal
+  tests:
+    - feel-expression: 123.01 = 123.01
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_003
+  description: zero equality
+  tests:
+    - feel-expression: 0 = 0.00
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_004
+  description: negative zero equality
+  tests:
+    - feel-expression: -0 = 0
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_005
+  description: negative inequality
+  tests:
+    - feel-expression: -1 = 1
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_006
+  description: number equals null
+  tests:
+    - feel-expression: 100 = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: number_007
+#  description: number equals another type
+#  tests:
+#    - feel-expression: 100 = "100"
+#      expected:
+#        result:
+#          value: null
+#- id: number_008
+#  description: number equals literal 'e' exponent number with default sign
+#  tests:
+#    - feel-expression: 12300 = 1.23e4
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_009
+#  description: number equals literal 'e' exponent number with '+' sign
+#  tests:
+#    - feel-expression: 12300 = 1.23e+4
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_010
+#  description: number equals literal 'e' exponent number with '-' sign
+#  tests:
+#    - feel-expression: 0.000123 = 1.23e-4
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: string_001
+  description: string equals
+  tests:
+    - feel-expression: '"foo" = "foo"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_002
+  description: string case sensitive
+  tests:
+    - feel-expression: '"foo" = "Foo"'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_003
+  description: string not equals
+  tests:
+    - feel-expression: '"foo" != "Foo"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_004
+  description: string equals null
+  tests:
+    - feel-expression: '"foo" = null'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: string_005
+#  description: string equals another type
+#  tests:
+#    - feel-expression: '"foo" = 100'
+#      expected:
+#        result:
+#          value: null
+#- id: list_001
+#  description: list equal
+#  tests:
+#    - feel-expression: '[1,2,3] = [1,2,3]'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: list_002
+  description: lists of different lengths not equal
+  tests:
+    - feel-expression: '[1,1,1] = [1,1,1,1]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: list_003
+  description: lists of same length with diff contents not equal
+  tests:
+    - feel-expression: '[1,1,1] = [1,1,2]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: list_004
+#  description: empty lists equal
+#  tests:
+#    - feel-expression: '[] = []'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: list_005
+  description: list with same content but different order not equal
+  tests:
+    - feel-expression: '[1,2,3] = [3,2,1]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: list_006
+#  description: non list boolean of index 1 equals boolean
+#  tests:
+#    - feel-expression: true[1] = true
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_007
+#  description: non list number of index 1 equals number
+#  tests:
+#    - feel-expression: 100[1] = 100
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_008
+#  description: non list string of index 1 equals string
+#  tests:
+#    - feel-expression: '"foo"[1] = "foo"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_009
+#  description: non list date of index 1 equals date
+#  tests:
+#    - feel-expression: date("2018-12-08")[1] = date("2018-12-08")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_010
+#  description: non list time of index 1 equals time
+#  tests:
+#    - feel-expression: time("10:30:12")[1] = time("10:30:12")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_011
+#  description: non list date time of index 1 equals date time
+#  tests:
+#    - feel-expression: date and time("2018-12-08")[1] = date and time("2018-12-08")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_012
+#  description: non list days duration of index 1 equals days duration
+#  tests:
+#    - feel-expression: duration("P1D")[1] = duration("P1D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_013
+#  description: non list years duration of index 1 equals years duration
+#  tests:
+#    - feel-expression: duration("P1Y")[1] = duration("P1Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: list_014
+#  description: non list context of index 1 equals context
+#  tests:
+#    - feel-expression: '{a: "foo"}[1] = {a: "foo"}'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: list_015
+  description: list equals null
+  tests:
+    - feel-expression: '[] = null'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: list_016
+#  description: list equals another type
+#  tests:
+#    - feel-expression: '[] = 0'
+#      expected:
+#        result:
+#          value: null
+- id: context_001
+  description: empty contexts equal
+  tests:
+    - feel-expression: '{} = {}'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: context_002
+  description: contexts with same properties in same order equal
+  tests:
+    - feel-expression: '{foo: "bar", bar: "baz"} = {foo: "bar", bar: "baz"}'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: context_003
+  description: contexts with same properties in different order equal
+  tests:
+    - feel-expression: '{foo: "bar", bar: "baz"} = {bar: "baz", foo: "bar"}'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: context_004
+  description: string literal name equal to non-string-literal name
+  tests:
+    - feel-expression: '{foo: "bar"} = {"foo": "bar"}'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: context_005
+  description: context with same name and different values not equal
+  tests:
+    - feel-expression: '{foo: "bar"} = {foo: "baz"}'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: context_006
+  description: context equals null
+  tests:
+    - feel-expression: '{} = null'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: context_007
+#  description: context equals another type
+#  tests:
+#    - feel-expression: '{} = []'
+#      expected:
+#        result:
+#          value: null
+#- id: date_001
+#  description: same dates are equal
+#  tests:
+#    - feel-expression: date("2018-12-08") = date("2018-12-08")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_002
+#  description: different dates are not equal
+#  tests:
+#    - feel-expression: date("2018-12-07") = date("2018-12-08")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: date_003
+  description: date equals null
+  tests:
+    - feel-expression: date("2018-12-07") = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: date_004
+#  description: date equals another type
+#  tests:
+#    - feel-expression: date("2018-12-07") = 100
+#      expected:
+#        result:
+#          value: null
+- id: time_001
+  description: same times are equal
+  tests:
+    - feel-expression: time("10:30:00") = time("10:30:00")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_002
+  description: 'different times are not equal: hours'
+  tests:
+    - feel-expression: time("11:30:00") = time("10:30:00")
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_002_a
+  description: 'different times are not equal: minutes'
+  tests:
+    - feel-expression: time("10:31:00") = time("10:30:00")
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_002_b
+  description: 'different times are not equal: seconds'
+  tests:
+    - feel-expression: time("10:30:01") = time("10:30:00")
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_003
+  description: same times with zero milliseconds are equal
+  tests:
+    - feel-expression: time("10:30:00.0000") = time("10:30:00")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_004
+  description: same times with same milliseconds are equal
+  tests:
+    - feel-expression: time("10:30:00.0001") = time("10:30:00.0001")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: time_005
+#  description: same times with different milliseconds are equal as value resolution is seconds
+#  tests:
+#    - feel-expression: time("10:30:00.0001") = time("10:30:00.0002")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_006
+#  description: same times in same zone are equal
+#  tests:
+#    - feel-expression: time("10:30:00@Europe/Paris") = time("10:30:00@Europe/Paris")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_010
+#  description: same times = one with Z zone, the other with UTC are equal
+#  tests:
+#    - feel-expression: time("10:30:00Z") = time("10:30:00+00:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: time_011
+  description: time equals null
+  tests:
+    - feel-expression: time("10:30:00") = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: time_012
+#  description: time equals another type
+#  tests:
+#    - feel-expression: time("10:30:00") = 100
+#      expected:
+#        result:
+#          value: null
+- id: datetime_001
+  description: same datetimes are equal
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:00") = date and time("2018-12-08T10:30:00")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: datetime_002
+#  description: datetimes with no time is equal to datetime with zero time
+#  tests:
+#    - feel-expression: date and time("2018-12-08") = date and time("2018-12-08T00:00:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: datetime_003
+  description: datetimes with same milliseconds are equal
+  tests:
+    - feel-expression: date and time("2018-12-08T00:00:00.0001") = date and time("2018-12-08T00:00:00.0001")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: datetime_003_a
+#  description: datetimes with different milliseconds are equal as resolution is to the second
+#  tests:
+#    - feel-expression: date and time("2018-12-08T00:00:00.0001") = date and time("2018-12-08T00:00:00.0000")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: datetime_004
+  description: different datetimes are not equal
+  tests:
+    - feel-expression: date and time("2018-12-08T00:00:00") = date and time("2018-12-07T00:00:00")
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: datetime_005
+#  description: same datetimes in same zone are equal
+#  tests:
+#    - feel-expression: "date and time(\"2018-12-08T00:00:00@Europe/Paris\") = date and\n                time(\"2018-12-08T00:00:00@Europe/Paris\")\n            "
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_006
+#  description: same datetimes in different zones are not equal
+#  tests:
+#    - feel-expression: "date and time(\"2018-12-08T00:00:00@Europe/Paris\") = date and time(\"2018-12-08T00:00:00@Asia/Dhaka\")\n            "
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: datetime_008
+#  description: same datetimes, one with offset and the other with zone are equal
+#  tests:
+#    - feel-expression: date and time("2018-10-08T00:00:00+02:00") = date and time("2018-10-08T00:00:00@Europe/Paris")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_008_a
+#  description: same datetimes, one with offset and the other with zone are equal - DST
+#  tests:
+#    - feel-expression: date and time("2018-02-08T00:00:00+01:00") = date and time("2018-02-08T00:00:00@Europe/Paris")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_008_b
+#  description: same datetimes, with same offsets but different zones equal
+#  tests:
+#    - feel-expression: '@"2002-04-02T12:00:00@Australia/Melbourne" = @"2002-04-02T12:00:00@Australia/Sydney"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_009
+#  description: datetime with zero offset is equal to utc zone
+#  tests:
+#    - feel-expression: date and time("2018-12-08T00:00:00+00:00") = date and time("2018-12-08T00:00:00@Etc/UTC")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: datetime_010
+  description: datetime equals null
+  tests:
+    - feel-expression: date and time("2018-12-08T00:00:00") = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: datetime_011
+#  description: datetime equals another type
+#  tests:
+#    - feel-expression: date and time("2018-12-08T00:00:00") = 100
+#      expected:
+#        result:
+#          value: null
+- id: datetime_012
+  description: 'datetime: different times in different zones can be equal'
+  tests:
+    - feel-expression: '@"2002-04-02T12:00:00-01:00" = @"2002-04-02T17:00:00+04:00"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: datetime_013
+  description: 'datetime: different times in different zones can be equal (with negative offset)'
+  tests:
+    - feel-expression: '@"2002-04-02T23:00:00-04:00" = @"2002-04-03T02:00:00-01:00"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: dt_duration_001
+#  description: same durations are equal
+#  tests:
+#    - feel-expression: duration("P1D") = duration("P1D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_002
+#  description: equivalent durations are (erm) equal
+#  tests:
+#    - feel-expression: duration("P1D") = duration("PT24H")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_003
+#  description: different durations are not equal
+#  tests:
+#    - feel-expression: duration("P1D") = duration("P2D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_004
+#  description: negative non-zero durations of same amount are not equal
+#  tests:
+#    - feel-expression: duration("P1D") = duration("-P1D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_005
+#  description: negative zero duration and zero duration are equal
+#  tests:
+#    - feel-expression: duration("P0D") = duration("-P0D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_006
+#  description: dt duration equals null
+#  tests:
+#    - feel-expression: duration("P0D") = null
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_007
+#  description: dt duration equals another type
+#  tests:
+#    - feel-expression: duration("P0D") = 0
+#      expected:
+#        result:
+#          value: null
+#- id: ym_duration_001
+#  description: same durations are equal
+#  tests:
+#    - feel-expression: duration("P1Y") = duration("P1Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_002
+#  description: equivalent durations are (erm) equal
+#  tests:
+#    - feel-expression: duration("P1Y") = duration("P12M")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_003
+#  description: different durations are not equal
+#  tests:
+#    - feel-expression: duration("P1Y") = duration("P2Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_004
+#  description: negative non-zero durations of same amount are not equal
+#  tests:
+#    - feel-expression: duration("P1Y") = duration("-P1Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_005
+#  description: negative zero duration and zero duration are equal
+#  tests:
+#    - feel-expression: duration("P0Y") = duration("-P0Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_006
+#  description: years/months duration not equal to days/hours duration of same amount
+#  tests:
+#    - feel-expression: duration("P1Y") = duration("P365D")
+#      expected:
+#        result:
+#          value: null
+- id: ym_duration_007
+  description: years/months duration equals null
+  tests:
+    - feel-expression: duration("P0Y") = null
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: ym_duration_008
+#  description: years/months duration equals another type
+#  tests:
+#    - feel-expression: duration("P0Y") = 0
+#      expected:
+#        result:
+#          value: null
+#- id: deep_001
+#  description: deep array equality
+#  tests:
+#    - feel-expression: '[1,2,[3, 4]] = [1,2,[3, 4]]'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: deep_002
+#  description: deep array equality
+#  tests:
+#    - feel-expression: '[1,2,{a: [3,4]}] = [1,2,{a: [3,4]}]'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: deep_003
+  description: deep array in-equality
+  tests:
+    - feel-expression: '[1,2,[3, 4]] = [1,2,[4, 3]]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: deep_004
+  description: deep array in-equality
+  tests:
+    - feel-expression: '[1,2,{a: [3,4]}] = [1,2,{a: [3,4], b: "foo"}]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: deep_005
+#  description: deep context equality
+#  tests:
+#    - feel-expression: '{a: {b: "foo", c: [1,2]}} = {a: {b: "foo", c: [1,2]}}'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: deep_006
+  description: deep context equality
+  tests:
+    - feel-expression: '{a: {c: "bar", b: "foo"}} = {a: {b: "foo", c: "bar"}}'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: deep_007
+  description: deep context in-equality
+  tests:
+    - feel-expression: '{a: {b: "foo", c: [1,2]}} = {a: {b: "foo", c: [2,1]}}'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: range_001
+#  description: ranges with same endpoint and inclusivity are equal
+#  tests:
+#    - feel-expression: '[1..10] = [1..10]'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_002
+#  description: ranges with different upper endpoints are not equal
+#  tests:
+#    - feel-expression: '[1..2] = [1..3]'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_003
+#  description: ranges with different lower endpoints are not equal
+#  tests:
+#    - feel-expression: '[2..10] = [1..10]'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_004
+#  description: ranges with same endpoints, but same though syntactically different lower inclusivity are equal
+#  tests:
+#    - feel-expression: (1..10] = ]1..10]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_005
+#  description: ranges with same endpoints, but same though syntactically different upper inclusivity are equal
+#  tests:
+#    - feel-expression: '[1..10) = [1..10['
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_006
+#  description: 'equal ranges though syntactically different are not equal: LT '
+#  tests:
+#    - feel-expression: (< 10) = (null..10)
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_006_a
+#  description: unary syntax comparison range LT
+#  tests:
+#    - feel-expression: (< 10) = (< 10)
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_007
+#  description: 'equal ranges though syntactically different are not equal: LE '
+#  tests:
+#    - feel-expression: (<= 10) = (null..10]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_008
+#  description: 'equal ranges though syntactically different are not equal: GT '
+#  tests:
+#    - feel-expression: (> 10) = (10..null)
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_009
+#  description: 'equal ranges though syntactically different are not equal: GE '
+#  tests:
+#    - feel-expression: (>= 10) = [10..null)
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_010
+#  description: 'equal ranges though syntactically different are not equal: EQ '
+#  tests:
+#    - feel-expression: (=10) = [10..10]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_011
+#  description: unary syntax comparison range EQ
+#  tests:
+#    - feel-expression: (=10) = (=10)
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_012
+#  description: unary syntax comparison range NE
+#  tests:
+#    - feel-expression: (!=10) = (!=10)
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean

@@ -1,0 +1,387 @@
+#- id: 001_e9ae035ab9
+#  description: ""
+#  tests:
+#    - feel-expression: date(null)
+#      expected:
+#        result:
+#          value: null
+#- id: 002_9b9e6085ce
+#  description: ""
+#  tests:
+#    - feel-expression: date(null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 003_e4b7918d8f
+#  description: ""
+#  tests:
+#    - feel-expression: date(null,2,1)
+#      expected:
+#        result:
+#          value: null
+#- id: 004_f24ed41117
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,null,1)
+#      expected:
+#        result:
+#          value: null
+#- id: 005_3540a22062
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,1,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 006_616e24dbb7
+#  description: ""
+#  tests:
+#    - feel-expression: date(null,null,1)
+#      expected:
+#        result:
+#          value: null
+#- id: 007_cda82a5d01
+#  description: ""
+#  tests:
+#    - feel-expression: date(null,02,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 008_492649d3d0
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 009_9e00bbdad3
+#  description: ""
+#  tests:
+#    - feel-expression: date(null,null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 010_6d4d58d23a
+#  description: ""
+#  tests:
+#    - feel-expression: date()
+#      expected:
+#        result:
+#          value: null
+#- id: 011_5f0b42b1f8
+#  description: ""
+#  tests:
+#    - feel-expression: date("2017-12-31")
+#      expected:
+#        result:
+#          value: "2017-12-31"
+#          type: date
+#- id: 012_d9e4b97438
+#  description: ""
+#  tests:
+#    - feel-expression: date("2017-01-01")
+#      expected:
+#        result:
+#          value: "2017-01-01"
+#          type: date
+#- id: 013_d7e901ee86
+#  description: ""
+#  tests:
+#    - feel-expression: date("-2017-12-31")
+#      expected:
+#        result:
+#          value: -2017-12-31
+#          type: date
+#- id: 014_fad7e00633
+#  description: ""
+#  tests:
+#    - feel-expression: date("-2017-01-01")
+#      expected:
+#        result:
+#          value: -2017-01-01
+#          type: date
+#- id: 015_1dd66594cf
+#  description: ""
+#  tests:
+#    - feel-expression: string(date("999999999-12-31"))
+#      expected:
+#        result:
+#          value: 999999999-12-31
+#          type: string
+#- id: 016_31f3fef4a0
+#  description: ""
+#  tests:
+#    - feel-expression: string(date("-999999999-12-31"))
+#      expected:
+#        result:
+#          value: -999999999-12-31
+#          type: string
+#- id: 017_887dfef005
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time("2017-08-14T14:25:00"))
+#      expected:
+#        result:
+#          value: "2017-08-14"
+#          type: date
+#- id: 018_fc0ef0c8cb
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time(date and time("2017-08-14T14:25:00"),time("10:50:00")))
+#      expected:
+#        result:
+#          value: "2017-08-14"
+#          type: date
+#- id: 019_b2b82796ce
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time("2017-08-14T14:25:00.123456789"))
+#      expected:
+#        result:
+#          value: "2017-08-14"
+#          type: date
+#- id: 020_7d56b7bf63
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time("2017-09-03T09:45:30@Europe/Paris"))
+#      expected:
+#        result:
+#          value: "2017-09-03"
+#          type: date
+#- id: 021_95fb3d9984
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time("2017-09-06T09:45:30@Asia/Dhaka"))
+#      expected:
+#        result:
+#          value: "2017-09-06"
+#          type: date
+#- id: 022_4063db2d59
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time("2012-12-25T11:00:00Z"))
+#      expected:
+#        result:
+#          value: "2012-12-25"
+#          type: date
+#- id: 023_4a1f604006
+#  description: ""
+#  tests:
+#    - feel-expression: date(date and time("2017-08-03T10:15:30+01:00"))
+#      expected:
+#        result:
+#          value: "2017-08-03"
+#          type: date
+#- id: 024_3cb98a2bb8
+#  description: ""
+#  tests:
+#    - feel-expression: date(date("2017-10-11"))
+#      expected:
+#        result:
+#          value: "2017-10-11"
+#          type: date
+#- id: 025_cf0ad1313c
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,12,31)
+#      expected:
+#        result:
+#          value: "2017-12-31"
+#          type: date
+#- id: 026_cedd7e5e5f
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,01,01)
+#      expected:
+#        result:
+#          value: "2017-01-01"
+#          type: date
+#- id: 027_987c5be372
+#  description: ""
+#  tests:
+#    - feel-expression: date(-2017,12,31)
+#      expected:
+#        result:
+#          value: -2017-12-31
+#          type: date
+#- id: 028_35ca79a6cd
+#  description: ""
+#  tests:
+#    - feel-expression: date(-2017,01,01)
+#      expected:
+#        result:
+#          value: -2017-01-01
+#          type: date
+#- id: 029_88f5c7c90f
+#  description: ""
+#  tests:
+#    - feel-expression: string(date(999999999,12,31))
+#      expected:
+#        result:
+#          value: 999999999-12-31
+#          type: string
+#- id: 030_9184a7bfc3
+#  description: ""
+#  tests:
+#    - feel-expression: string(date(-999999999,12,31))
+#      expected:
+#        result:
+#          value: -999999999-12-31
+#          type: string
+#- id: 031_4f5ec70669
+#  description: ""
+#  tests:
+#    - feel-expression: date("2012-12-25T")
+#      expected:
+#        result:
+#          value: null
+#- id: 032_fc66cc2fec
+#  description: ""
+#  tests:
+#    - feel-expression: date("")
+#      expected:
+#        result:
+#          value: null
+#- id: 033_c3a5600c62
+#  description: ""
+#  tests:
+#    - feel-expression: date("2012/12/25")
+#      expected:
+#        result:
+#          value: null
+#- id: 034_7d2e18a10c
+#  description: ""
+#  tests:
+#    - feel-expression: date("0000-12-25T")
+#      expected:
+#        result:
+#          value: null
+#- id: 035_e6c1bb43fd
+#  description: ""
+#  tests:
+#    - feel-expression: date("9999999999-12-25")
+#      expected:
+#        result:
+#          value: null
+#- id: 036_b826a6b5f9
+#  description: ""
+#  tests:
+#    - feel-expression: date("2017-13-10")
+#      expected:
+#        result:
+#          value: null
+#- id: 037_cfd70896b6
+#  description: ""
+#  tests:
+#    - feel-expression: date("2017-12-32")
+#      expected:
+#        result:
+#          value: null
+#- id: 038_c26782f559
+#  description: ""
+#  tests:
+#    - feel-expression: date("998-12-31")
+#      expected:
+#        result:
+#          value: null
+#- id: 039_67a6eafa3f
+#  description: ""
+#  tests:
+#    - feel-expression: date("01211-12-31")
+#      expected:
+#        result:
+#          value: null
+#- id: 040_dd2a2ed4a2
+#  description: ""
+#  tests:
+#    - feel-expression: date("2012T-12-2511:00:00Z")
+#      expected:
+#        result:
+#          value: null
+#- id: 041_9e7e388146
+#  description: ""
+#  tests:
+#    - feel-expression: date("+2012-12-02")
+#      expected:
+#        result:
+#          value: null
+#- id: 042_8f5dd97588
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,13,31)
+#      expected:
+#        result:
+#          value: null
+#- id: 043_8f82301fac
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,12,32)
+#      expected:
+#        result:
+#          value: null
+#- id: 044_74893220b4
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,-8,2)
+#      expected:
+#        result:
+#          value: null
+#- id: 045_969723fed5
+#  description: ""
+#  tests:
+#    - feel-expression: date(2017,8,-2)
+#      expected:
+#        result:
+#          value: null
+#- id: 046_36bf30268a
+#  description: ""
+#  tests:
+#    - feel-expression: date(-1000999999,12,01)
+#      expected:
+#        result:
+#          value: null
+#- id: 047_ba717eb672
+#  description: ""
+#  tests:
+#    - feel-expression: date(1000999999,12,32)
+#      expected:
+#        result:
+#          value: null
+#- id: 048_25595a6420
+#  description: ""
+#  tests:
+#    - feel-expression: date(1)
+#      expected:
+#        result:
+#          value: null
+#- id: 049_a1644ce710
+#  description: ""
+#  tests:
+#    - feel-expression: date([])
+#      expected:
+#        result:
+#          value: null
+- id: 050_8f1e299951
+  description: ""
+  tests:
+    - feel-expression: date(from:"2012-12-25")
+      expected:
+        result:
+          value: "2012-12-25"
+          type: date
+#- id: 051_ad98079864
+#  description: ""
+#  tests:
+#    - feel-expression: date(from:date and time("2017-08-30T10:25:00"))
+#      expected:
+#        result:
+#          value: "2017-08-30"
+#          type: date
+#- id: 052_63457d78b7
+#  description: ""
+#  tests:
+#    - feel-expression: date(year:2017,month:08,day:30)
+#      expected:
+#        result:
+#          value: "2017-08-30"
+#          type: date

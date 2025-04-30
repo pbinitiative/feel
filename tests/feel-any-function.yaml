@@ -1,0 +1,128 @@
+- id: "001"
+  description: return true if any item is true
+  tests:
+    - feel-expression: any([true, false, true])
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "002"
+  description: return false if all items are false
+  tests:
+    - feel-expression: any([false, false, false])
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: "004"
+#  description: return null if any item not true and not all false
+#  tests:
+#    - feel-expression: any([123, false])
+#      expected:
+#        result:
+#          value: null
+- id: "005"
+  description: return false for empty list
+  tests:
+    - feel-expression: any([])
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: "006"
+  description: 'return true for singleton true '
+  tests:
+    - feel-expression: any(true)
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "007"
+  description: return false for singleton false
+  tests:
+    - feel-expression: any(false)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: "008"
+#  description: return null for singleton null
+#  tests:
+#    - feel-expression: any(null)
+#      expected:
+#        result:
+#          value: null
+#- id: "009"
+#  description: return null for singleton non-boolean
+#  tests:
+#    - feel-expression: any(123)
+#      expected:
+#        result:
+#          value: null
+- id: "010"
+  description: return true if any vararg item is true
+  tests:
+    - feel-expression: any(true, false, true)
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "011"
+  description: return false if all vararg items are false
+  tests:
+    - feel-expression: any(false, false)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: "012"
+#  description: return null if not all vararg items are true and none are false false
+#  tests:
+#    - feel-expression: any(null, false)
+#      expected:
+#        result:
+#          value: null
+#- id: "014"
+#  description: return error when no params
+#  tests:
+#    - feel-expression: any()
+#      expected:
+#        result:
+#          value: null
+#- id: "015"
+#  description: return true if any item is true with named param
+#  tests:
+#    - feel-expression: any(list:[true, false, true])
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: "016"
+#  description: return false if all items are false with named param
+#  tests:
+#    - feel-expression: any(list:[false, false])
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: "017"
+#  description: return null if none true and not all false - with named param
+#  tests:
+#    - feel-expression: any(list:[null, false])
+#      expected:
+#        result:
+#          value: null
+#- id: "018"
+#  description: return error when named param is null
+#  tests:
+#    - feel-expression: any(list:null)
+#      expected:
+#        result:
+#          value: null
+#- id: "019"
+#  description: will error when wrongly named param
+#  tests:
+#    - feel-expression: any(l:[true])
+#      expected:
+#        result:
+#          value: null

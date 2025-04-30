@@ -1,0 +1,105 @@
+- id: "001"
+  description: will return median for even list size
+  tests:
+    - feel-expression: median([8, 2, 5, 3, 4])
+      expected:
+        result:
+          value: "4"
+          type: decimal
+#- id: "002"
+#  description: will return median for odd list size
+#  tests:
+#    - feel-expression: median([8, 2, 5, 7])
+#      expected:
+#        result:
+#          value: "6"
+#          type: decimal
+#- id: "003"
+#  description: will error when no params
+#  tests:
+#    - feel-expression: median()
+#      expected:
+#        result:
+#          value: null
+#- id: 003_a
+#  description: will error when null param
+#  tests:
+#    - feel-expression: median(null)
+#      expected:
+#        result:
+#          value: null
+#- id: "004"
+#  description: will error when list item not a number
+#  tests:
+#    - feel-expression: median()
+#      expected:
+#        result:
+#          value: null
+#- id: "005"
+#  description: will error when list item not a number
+#  tests:
+#    - feel-expression: median([1,2,"foo",4])
+#      expected:
+#        result:
+#          value: null
+#- id: "006"
+#  description: will median to decimals
+#  tests:
+#    - feel-expression: median([6, 1, 2, 3])
+#      expected:
+#        result:
+#          value: "2.5"
+#          type: decimal
+#- id: "007"
+#  description: will return null for empty list
+#  tests:
+#    - feel-expression: median([])
+#      expected:
+#        result:
+#          value: null
+- id: "008"
+  description: will coerce singleton list
+  tests:
+    - feel-expression: median(4)
+      expected:
+        result:
+          value: "4"
+          type: decimal
+- id: "009"
+  description: will return median for even varargs list size
+  tests:
+    - feel-expression: median(8, 2, 5, 3, 4)
+      expected:
+        result:
+          value: "4"
+          type: decimal
+#- id: "010"
+#  description: will return median for odd varargs list size
+#  tests:
+#    - feel-expression: median(8, 2, 5, 7)
+#      expected:
+#        result:
+#          value: "6"
+#          type: decimal
+#- id: "011"
+#  description: will return median - named param
+#  tests:
+#    - feel-expression: median(list:[8, 2, 5, 7])
+#      expected:
+#        result:
+#          value: "6"
+#          type: decimal
+#- id: "012"
+#  description: will error when null named param
+#  tests:
+#    - feel-expression: median(list:null)
+#      expected:
+#        result:
+#          value: null
+#- id: "013"
+#  description: will error when wrongly named param
+#  tests:
+#    - feel-expression: median(l:[2, 4, 7, 5])
+#      expected:
+#        result:
+#          value: null

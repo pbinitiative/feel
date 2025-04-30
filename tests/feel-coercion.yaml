@@ -1,0 +1,296 @@
+#- id: decision_001
+#  description: type mismatch - decision return value is null coerced
+#  tests:
+#    - feel-expression: 1+1
+#      expected:
+#        result:
+#          value: null
+#- id: decision_003
+#  description: list type mismatch - decision return value is null coerced
+#  tests:
+#    - feel-expression: '[1,2,"foo"]'
+#      expected:
+#        result:
+#          value: null
+- id: decision_004
+  description: type permitted - conforming context
+  tests:
+    - feel-expression: '{name: "foo", surname: "bar", age: 10}'
+      expected:
+        components:
+          - name: name
+            expected:
+              result:
+                value: foo
+                type: string
+          - name: surname
+            expected:
+              result:
+                value: bar
+                type: string
+          - name: age
+            expected:
+              result:
+                value: "10"
+                type: decimal
+#- id: decision_005
+#  description: context type mismatch - decision return value is null coerced
+#  tests:
+#    - feel-expression: '{name: "foo"}'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_006_a
+#  description: decision type is list but return val is non-conforming val - coercion to null
+#  tests:
+#    - feel-expression: '"foo"'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_007
+#  description: decision returns singleton list value but type is not a list - coercion list to val
+#  tests:
+#    - feel-expression: '["foo"]'
+#      expected:
+#        result:
+#          value: foo
+#          type: string
+#- id: decision_007_a
+#  description: decision type is value but return val is non-conforming singleton list - coercion to null
+#  tests:
+#    - feel-expression: '[1]'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_008
+#  description: decision type is list but return val null - null cannot be coerced so no singleton list coercion
+#  tests:
+#    - feel-expression: "null"
+#      expected:
+#        result:
+#          value: null
+#- id: decision_bkm_001
+#  description: pass conforming context type to bkm
+#  tests:
+#    - feel-expression: 'bkm_001({name: "foo", surname: "bar", age: 10})'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: decision_bkm_002
+#  description: pass non-conforming type to bkm - bkm is never invoked
+#  tests:
+#    - feel-expression: 'bkm_001({name: "foo"})'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_bkm_003
+#  description: BKM logic returns non-conforming value to bkm variable typeRef - bk result is null coerced
+#  tests:
+#    - feel-expression: 'bkm_002({name: "foo"})'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_bkm_004_a
+#  description: bkm type is list and bkm logic returns non-conforming (non-list) value - coercion to null
+#  tests:
+#    - feel-expression: bkm_004("foo")
+#      expected:
+#        result:
+#          value: null
+#- id: decision_bkm_004_b
+#  description: bkm type is list and bkm logic returns null - null cannot be coerced to result remains null
+#  tests:
+#    - feel-expression: bkm_004(null)
+#      expected:
+#        result:
+#          value: null
+#- id: decision_bkm_005
+#  description: bkm type is non-list and bkm logic returns singleton list of conforming value - coercion list to val
+#  tests:
+#    - feel-expression: bkm_005(10)
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: decision_bkm_005_a
+#  description: bkm type is non-list and bkm logic returns singleton list of non-conforming value - coercion to null
+#  tests:
+#    - feel-expression: bkm_005("foo")
+#      expected:
+#        result:
+#          value: null
+- id: invoke_001
+  description: |-
+    decision has invocation call to bkm passing
+                non-conforming context - bkm is never invoked
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: invoke_002
+  description: "decision has invocation of bkm passing valid param, but bkm return value\n            does not match explicit type on invocation defn  - null coercion of result\n            of invocation "
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: invoke_004
+  description: invocation type is a list and invoked bkm returns single non-conforming value - coercion to null
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: invoke_005
+  description: "Ref https://github.com/dmn-tck/tck/pull/238#issuecomment-497744315\n        \n        "
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: invoke_006
+  description: invocation type is a non-list and invoked bkm returns singleton array of non-conforming value - coercion to null
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: invoke_007
+  description: |-
+    invocation has binding name that is not a valid formal param name -
+                function is never invoked
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+#- id: fd_001
+#  description: function definition has typed param and is passed a conforming type - no coercion
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+- id: fd_002
+  description: function definition has typed param and is passed non-conforming type - coercion to null
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: literal_001
+  description: literal expression has typeRef and result is conforming value - no coercion
+  tests:
+    - feel-expression: 5+5
+      expected:
+        result:
+          value: "10"
+          type: decimal
+#- id: literal_002
+#  description: literal expression has typeRef and result is non-conforming value - coercion to null
+#  tests:
+#    - feel-expression: '"foo"'
+#      expected:
+#        result:
+#          value: null
+#- id: literal_004
+#  description: literal expression has list typeRef and result is non-conforming value - coercion to null
+#  tests:
+#    - feel-expression: '"foo"'
+#      expected:
+#        result:
+#          value: null
+#- id: literal_005
+#  description: literal expression has non-list typeRef and result is conforming singleton list - coercion to value
+#  tests:
+#    - feel-expression: '[10]'
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: literal_006
+#  description: literal expression has non-list typeRef and result is non-conforming singleton list - coercion to null
+#  tests:
+#    - feel-expression: '["foo"]'
+#      expected:
+#        result:
+#          value: null
+#- id: decisionService_001
+#  description: 'Direct invocation: Decision service returns context that does not confirm to type'
+#  tests:
+#    - feel-expression: "1000"
+#      expected:
+#        result:
+#          value: null
+#- id: decisionService_002
+#  description: 'Direct invocation: Decision service has string input but we pass incorrect type - input is coerced to null'
+#  tests:
+#    - feel-expression: decisionService_002_input_1
+#      expected:
+#        result:
+#          value: null
+#- id: decisionService_002_a
+#  description: 'Indirect invocation: Decision Service has string input but we pass incorrect type - input is coerced to null'
+#  tests:
+#    - feel-expression: decisionService_002(10)
+#      expected:
+#        result:
+#          value: null
+#- id: decisionService_002_b
+#  description: 'Direct invocation: Decision service has string input but we pass in singleton list of correct type - input is coerced to string'
+#  tests:
+#    - feel-expression: decisionService_002_input_1
+#      expected:
+#        result:
+#          value: foo
+#          type: string
+#- id: decisionService_002_c
+#  description: 'Indirect invocation: Decision service has string input but we pass in singleton list of correct type - input is coerced to string'
+#  tests:
+#    - feel-expression: decisionService_002(["foo"])
+#      expected:
+#        result:
+#          value: foo
+#          type: string
+#- id: decision_context_01
+#  description: Value of context() equivalentTo the decision typeRef
+#  tests:
+#    - feel-expression: 'context(entries: [{key:"a", value:1}, {key:"b", value:2}])'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "1"
+#                type: decimal
+#          - name: b
+#            expected:
+#              result:
+#                value: "2"
+#                type: decimal
+#- id: decision_context_02
+#  description: Value of context() conformsTo the decision typeRef
+#  tests:
+#    - feel-expression: 'context(entries: [{key:"a", value:1}, {key:"b", value:2}])'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "1"
+#                type: decimal
+#          - name: b
+#            expected:
+#              result:
+#                value: "2"
+#                type: decimal
+#- id: decision_context_03
+#  description: Value of context() does not conformsTo the decision typeRef
+#  tests:
+#    - feel-expression: 'context(entries: [{key:"a", value:1}, {key:"b", value:2}])'
+#      expected:
+#        result:
+#          value: null

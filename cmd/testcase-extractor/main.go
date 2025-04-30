@@ -183,11 +183,11 @@ func compileTestConfig(
 
 	dmnDecisionsMap := mapDmnDecisionsByName(dmnDecisions)
 
-	testCases := make([]tcktestconfig.TestCase, 0)
+	testCases := make([]testconfig.TestCase, 0)
 	for _, tckTestCase := range tckTestCases.TestCases {
 		tests := compileTest(tckTestCase, dmnDecisionsMap)
 
-		testCase := tcktestconfig.TestCase{
+		testCase := testconfig.TestCase{
 			Id:          tckTestCase.IdAttr,
 			Description: tckTestCase.Description,
 			Tests:       tests,

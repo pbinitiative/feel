@@ -1,0 +1,118 @@
+#- id: decision_001
+#  description: Assert length of string with 4 digit unicode char
+#  tests:
+#    - feel-expression: string length("\u0009")
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+#- id: decision_001_a
+#  description: Assert length of string with 6 digit unicode char
+#  tests:
+#    - feel-expression: string length("\U01F40E")
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+#- id: decision_001_b
+#  description: Assert string with 6 digit unicode char
+#  tests:
+#    - feel-expression: "\"\\U01F40E\" = \"\U0001F40E\""
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: decision_002
+#  description: Escaped encoded unicode
+#  tests:
+#    - feel-expression: string length("\\u0009")
+#      expected:
+#        result:
+#          value: "6"
+#          type: decimal
+#- id: decision_003
+#  description: encoded unicode - supplementary char (uppercase)
+#  tests:
+#    - feel-expression: string length("\uD83D\uDCA9")
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+#- id: decision_003_a
+#  description: encoded unicode - supplementary char (lowercase)
+#  tests:
+#    - feel-expression: string length("\ud83d\udca9")
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+#- id: decision_004
+#  description: encoded unicode - string literal with supplementary chars
+#  tests:
+#    - feel-expression: string length("\ud83d\udc0e\uD83D\uDE00")
+#      expected:
+#        result:
+#          value: "2"
+#          type: decimal
+#- id: decision_004_a
+#  description: literal unicode - supplementary 2 char - in string literal
+#  tests:
+#    - feel-expression: "string length(\"\U0001F40E\U0001F600\")"
+#      expected:
+#        result:
+#          value: "2"
+#          type: decimal
+- id: decision_005
+  description: encoded unicode - string contains with supplementary chars
+  tests:
+    - feel-expression: contains("\ud83d\udc0e\uD83D\uDE00", "\uD83D\uDE00")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: decision_005_a
+#  description: literal unicode - string contains with supplementary chars
+#  tests:
+#    - feel-expression: "contains(\"\\ud83d\\udc0e\\uD83D\\uDE00\", \"\U0001F600\")"
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: decision_006
+#  description: literal unicode - context property name as supplementary character
+#  tests:
+#    - feel-expression: "{\U0001F40E: \"bar\"}"
+#      expected:
+#        components:
+#          - name: "\U0001F40E"
+#            expected:
+#              result:
+#                value: bar
+#                type: string
+#- id: decision_007
+#  description: literal unicode - context property and value supplementary characters
+#  tests:
+#    - feel-expression: "{\U0001F40E: \"\U0001F600\"}"
+#      expected:
+#        components:
+#          - name: "\U0001F40E"
+#            expected:
+#              result:
+#                value: "\U0001F600"
+#                type: string
+- id: endswith_001
+  description: literal unicode - string ends with with supplementary chars
+  tests:
+    - feel-expression: ends with("\ud83d\udc0e\uD83D\uDE00", "\uD83D\uDE00")
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: substring_004
+#  description: escape 6 digit unicode substring
+#  tests:
+#    - feel-expression: substring("\U01F40Efoo", 2) = "foo"
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean

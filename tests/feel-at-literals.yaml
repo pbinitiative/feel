@@ -1,0 +1,151 @@
+#- id: test_001
+#  description: invalid value has null value
+#  tests:
+#    - feel-expression: '@"foo"'
+#      expected:
+#        result:
+#          value: null
+#- id: date_001
+#  description: will parse date to date type
+#  tests:
+#    - feel-expression: '@"2019-03-31" instance of date'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: date_002
+  description: will parse date value
+  tests:
+    - feel-expression: '@"2019-03-31"'
+      expected:
+        result:
+          value: "2019-03-31"
+          type: date
+#- id: datetime_001
+#  description: will parse to date time type
+#  tests:
+#    - feel-expression: '@"2018-12-08T10:30:11" instance of date and time'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: datetime_002
+  description: will parse date time value
+  tests:
+    - feel-expression: '@"2018-12-08T10:30:11"'
+      expected:
+        result:
+          value: 2018-12-08T10:30:11
+          type: dateTime
+#- id: datetime_003
+#  description: will parse to date time with zone
+#  tests:
+#    - feel-expression: '@"2018-12-08T10:30:11@Australia/Melbourne" instance of date and time'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_004
+#  description: will parse date time value with zone
+#  tests:
+#    - feel-expression: string(@"2018-12-08T10:30:11@Australia/Melbourne")
+#      expected:
+#        result:
+#          value: 2018-12-08T10:30:11@Australia/Melbourne
+#          type: string
+#- id: datetime_005
+#  description: will parse to date time value with offset
+#  tests:
+#    - feel-expression: '@"2018-12-08T10:30:11+11:00" instance of date and time'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: datetime_006
+  description: will parse date time value with offset
+  tests:
+    - feel-expression: '@"2018-12-08T10:30:11+11:00"'
+      expected:
+        result:
+          value: "2018-12-08T10:30:11+11:00"
+          type: dateTime
+#- id: time_001
+#  description: will parse to time type
+#  tests:
+#    - feel-expression: '@"10:30:11" instance of time'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: time_002
+  description: will parse time value
+  tests:
+    - feel-expression: '@"10:30:11"'
+      expected:
+        result:
+          value: "10:30:11"
+          type: time
+#- id: time_003
+#  description: will parse to time + offset
+#  tests:
+#    - feel-expression: '@"10:30:11+11:00" instance of time'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: time_004
+  description: will parse time value + offset
+  tests:
+    - feel-expression: '@"10:30:11+11:00"'
+      expected:
+        result:
+          value: 10:30:11+11:00
+          type: time
+#- id: time_005
+#  description: will parse to time + zone
+#  tests:
+#    - feel-expression: '@"10:30:11@Australia/Melbourne" instance of time'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_006
+#  description: will parse time value + zone
+#  tests:
+#    - feel-expression: string(@"10:30:11@Australia/Melbourne")
+#      expected:
+#        result:
+#          value: 10:30:11@Australia/Melbourne
+#          type: string
+#- id: dt_duration_001
+#  description: will parse to days and time duration type
+#  tests:
+#    - feel-expression: '@"P10D" instance of days and time duration'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_002
+#  description: will parse days and time duration value
+#  tests:
+#    - feel-expression: '@"P10D"'
+#      expected:
+#        result:
+#          value: P10D
+#          type: duration
+#- id: ym_duration_001
+#  description: will parse to years and months duration type
+#  tests:
+#    - feel-expression: '@"P10Y" instance of years and months duration'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: ym_duration_002
+  description: will parse years and months duration value
+  tests:
+    - feel-expression: '@"P10Y"'
+      expected:
+        result:
+          value: P10Y
+          type: duration

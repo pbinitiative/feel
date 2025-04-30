@@ -1,0 +1,406 @@
+- id: "001"
+  description: Will add context entry
+  tests:
+    - feel-expression: context put({}, "a", 1)
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "1"
+                type: decimal
+#- id: "002"
+#  description: Will add entry to end of context
+#  tests:
+#    - feel-expression: 'get entries(context put({"a": 1}, "b", 2))'
+#      expected:
+#        results:
+#          - components:
+#              - name: key
+#                expected:
+#                  result:
+#                    value: a
+#                    type: string
+#              - name: value
+#                expected:
+#                  result:
+#                    value: "1"
+#                    type: decimal
+#          - components:
+#              - name: key
+#                expected:
+#                  result:
+#                    value: b
+#                    type: string
+#              - name: value
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+- id: "003"
+  description: Will overwrite existing context entry
+  tests:
+    - feel-expression: 'context put({"a": 1}, "a", 2)'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "2"
+                type: decimal
+- id: 003_a
+  description: Will maintain key order when overwriting existing context entry
+  tests:
+    - feel-expression: context put({"a":1, "b":2, "c":3 }, "b", 3)
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "1"
+                type: decimal
+          - name: b
+            expected:
+              result:
+                value: "3"
+                type: decimal
+          - name: c
+            expected:
+              result:
+                value: "3"
+                type: decimal
+- id: "004"
+  description: Will permit empty key param
+  tests:
+    - feel-expression: context put({}, "", 1)
+      expected:
+        components:
+          - name: ""
+            expected:
+              result:
+                value: "1"
+                type: decimal
+#- id: "005"
+#  description: Null key param gives null
+#  tests:
+#    - feel-expression: context put({}, null, 1)
+#      expected:
+#        result:
+#          value: null
+#- id: "006"
+#  description: Null context param gives null
+#  tests:
+#    - feel-expression: context put(null, "a", 1)
+#      expected:
+#        result:
+#          value: null
+#- id: "007"
+#  description: Will permit null value param
+#  tests:
+#    - feel-expression: context put({}, "a", null)
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: null
+#- id: "008"
+#  description: Too few params gives null
+#  tests:
+#    - feel-expression: context put({}, "a")
+#      expected:
+#        result:
+#          value: null
+#- id: "009"
+#  description: Too many params gives null
+#  tests:
+#    - feel-expression: context put({}, "a", 1, 1)
+#      expected:
+#        result:
+#          value: null
+- id: "010"
+  description: named params
+  tests:
+    - feel-expression: 'context put(context: {}, key: "a", value: 1)'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "1"
+                type: decimal
+#- id: "011"
+#  description: Incorrect named param gives null
+#  tests:
+#    - feel-expression: 'context put(context: {}, ky: "a", value: 1)'
+#      expected:
+#        result:
+#          value: null
+#- id: "012"
+#  description: Incorrect 'context' type gives null
+#  tests:
+#    - feel-expression: context put([], "a", 1)
+#      expected:
+#        result:
+#          value: null
+#- id: "013"
+#  description: Will return null when key is not a string
+#  tests:
+#    - feel-expression: context put({}, 1, 1)
+#      expected:
+#        result:
+#          value: null
+- id: "014"
+  description: Will operate on boxed context
+  tests:
+    - feel-expression: context put(context01, "a", 2)
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "2"
+                type: decimal
+#- id: "015"
+#  description: Will create new copy of boxed context, not mutate it
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        components:
+#          - name: context01
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    result:
+#                      value: "1"
+#                      type: decimal
+#          - name: copied
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    result:
+#                      value: "2"
+#                      type: decimal
+#- id: "016"
+#  description: Will create new copy of literal context, not mutate it
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        components:
+#          - name: original
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    result:
+#                      value: "1"
+#                      type: decimal
+#          - name: copied
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    result:
+#                      value: "2"
+#                      type: decimal
+- id: nested001
+  description: will overwrite value in nested context
+  tests:
+    - feel-expression: 'context put({x:1, y: {a: 0} }, ["y", "a"], 2)'
+      expected:
+        components:
+          - name: x
+            expected:
+              result:
+                value: "1"
+                type: decimal
+          - name: "y"
+            expected:
+              components:
+                - name: a
+                  expected:
+                    result:
+                      value: "2"
+                      type: decimal
+- id: nested001_a
+  description: will add value to nested context
+  tests:
+    - feel-expression: 'context put({x:1, y: {a: 0} }, ["y", "b"], 2)'
+      expected:
+        components:
+          - name: x
+            expected:
+              result:
+                value: "1"
+                type: decimal
+          - name: "y"
+            expected:
+              components:
+                - name: a
+                  expected:
+                    result:
+                      value: "0"
+                      type: decimal
+                - name: b
+                  expected:
+                    result:
+                      value: "2"
+                      type: decimal
+#- id: nested002
+#  description: null key gives null (1)
+#  tests:
+#    - feel-expression: 'context put({x:1, y: {a: 0} }, ["y", null], 2)'
+#      expected:
+#        result:
+#          value: null
+#- id: nested003
+#  description: null key gives null (2)
+#  tests:
+#    - feel-expression: 'context put({x:1, y: {a: 0} }, [null, "a"], 2)'
+#      expected:
+#        result:
+#          value: null
+#- id: nested004
+#  description: null key gives null (3)
+#  tests:
+#    - feel-expression: 'context put({x:1, y: {a: 0} }, [null], 2)'
+#      expected:
+#        result:
+#          value: null
+#- id: nested005
+#  description: empty keys array gives null
+#  tests:
+#    - feel-expression: 'context put({x:1, y: {a: 0} }, [], 2)'
+#      expected:
+#        result:
+#          value: null
+- id: nested006
+  description: will recurse into nested contexts
+  tests:
+    - feel-expression: 'context put({x:1, y: {a: {b: {c: 1}} }}, ["y", "a", "b", "c"], 2)'
+      expected:
+        components:
+          - name: x
+            expected:
+              result:
+                value: "1"
+                type: decimal
+          - name: "y"
+            expected:
+              components:
+                - name: a
+                  expected:
+                    components:
+                      - name: b
+                        expected:
+                          components:
+                            - name: c
+                              expected:
+                                result:
+                                  value: "2"
+                                  type: decimal
+#- id: nested007
+#  description: named params - with 'keys'
+#  tests:
+#    - feel-expression: 'context put(context: {x:1, y: {a: 0} }, keys: ["y", "a"], value: 2)'
+#      expected:
+#        components:
+#          - name: x
+#            expected:
+#              result:
+#                value: "1"
+#                type: decimal
+#          - name: "y"
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    result:
+#                      value: "2"
+#                      type: decimal
+#- id: nested008
+#  description: named params - array value for 'key' gives null
+#  tests:
+#    - feel-expression: 'context put(context: {x:1, y: {a: 0} }, key: ["y", "a"], value: 2)'
+#      expected:
+#        result:
+#          value: null
+#- id: nested009
+#  description: named params - array value for 'key' gives null
+#  tests:
+#    - feel-expression: 'context put({x:1, y: {a: 0}}, ["y", "a", "b", "c"], 2)'
+#      expected:
+#        result:
+#          value: null
+- id: nested010
+  description: Will operate on boxed context
+  tests:
+    - feel-expression: context put(nestedContext01, ["a", "b"], 2)
+      expected:
+        components:
+          - name: a
+            expected:
+              components:
+                - name: b
+                  expected:
+                    result:
+                      value: "2"
+                      type: decimal
+#- id: nested011
+#  description: Will create new copy of nested boxed context, not mutate it
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        components:
+#          - name: nestedContext01
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    components:
+#                      - name: b
+#                        expected:
+#                          result:
+#                            value: "1"
+#                            type: decimal
+#          - name: copied
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    components:
+#                      - name: b
+#                        expected:
+#                          result:
+#                            value: "2"
+#                            type: decimal
+#- id: nested012
+#  description: Will create new copy of nested literal context, not mutate it
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        components:
+#          - name: original
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    components:
+#                      - name: b
+#                        expected:
+#                          result:
+#                            value: "1"
+#                            type: decimal
+#          - name: copied
+#            expected:
+#              components:
+#                - name: a
+#                  expected:
+#                    components:
+#                      - name: b
+#                        expected:
+#                          result:
+#                            value: "2"
+#                            type: decimal

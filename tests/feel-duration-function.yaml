@@ -1,0 +1,388 @@
+#- id: 001_f2c6cd6866
+#  description: ""
+#  tests:
+#    - feel-expression: duration(null)
+#      expected:
+#        result:
+#          value: null
+#- id: 002_ddca5756ca
+#  description: ""
+#  tests:
+#    - feel-expression: duration()
+#      expected:
+#        result:
+#          value: null
+#- id: 003_951e1d1c31
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P1D")
+#      expected:
+#        result:
+#          value: P1D
+#          type: duration
+- id: 004_6b31e7cde7
+  description: ""
+  tests:
+    - feel-expression: duration("PT2H")
+      expected:
+        result:
+          value: PT2H
+          type: duration
+- id: 005_202d863d07
+  description: ""
+  tests:
+    - feel-expression: duration("PT3M")
+      expected:
+        result:
+          value: PT3M
+          type: duration
+- id: 006_a885f926d9
+  description: ""
+  tests:
+    - feel-expression: duration("PT4S")
+      expected:
+        result:
+          value: PT4S
+          type: duration
+#- id: 007_2f0ad399f3
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT0.999S")
+#      expected:
+#        result:
+#          value: PT0.999S
+#          type: duration
+#- id: 008_747f56743d
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P1DT2H3M4.123456789S")
+#      expected:
+#        result:
+#          value: P1DT2H3M4.123456789S
+#          type: duration
+- id: 009_cef3c1ed26
+  description: ""
+  tests:
+    - feel-expression: duration("PT0S")
+      expected:
+        result:
+          value: PT0S
+          type: duration
+#- id: 010_5b452a4975
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT0.000S")
+#      expected:
+#        result:
+#          value: PT0S
+#          type: duration
+#- id: 011_2169615b94
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT0.S")
+#      expected:
+#        result:
+#          value: PT0S
+#          type: duration
+- id: 012_2affe6d169
+  description: ""
+  tests:
+    - feel-expression: duration("PT0M")
+      expected:
+        result:
+          value: PT0S
+          type: duration
+- id: 013_0e8e26513c
+  description: ""
+  tests:
+    - feel-expression: duration("PT0H")
+      expected:
+        result:
+          value: PT0S
+          type: duration
+#- id: 014_598ba6fabd
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P0D")
+#      expected:
+#        result:
+#          value: PT0S
+#          type: duration
+- id: 015_ce2cb09830
+  description: ""
+  tests:
+    - feel-expression: duration("-PT1H2M")
+      expected:
+        result:
+          value: -PT1H2M
+          type: duration
+#- id: 016_af3e37fdbd
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT1000M")
+#      expected:
+#        result:
+#          value: PT16H40M
+#          type: duration
+#- id: 017_4f4549fda4
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT1000M0.999999999S")
+#      expected:
+#        result:
+#          value: PT16H40M0.999999999S
+#          type: duration
+#- id: 018_f5ec776811
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT555M")
+#      expected:
+#        result:
+#          value: PT9H15M
+#          type: duration
+#- id: 019_2e6885755a
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT61M")
+#      expected:
+#        result:
+#          value: PT1H1M
+#          type: duration
+#- id: 020_af58b3766e
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT24H")
+#      expected:
+#        result:
+#          value: P1D
+#          type: duration
+#- id: 021_e48e70ad4e
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT240H")
+#      expected:
+#        result:
+#          value: P10D
+#          type: duration
+#- id: 022_668f24bed7
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P2DT100M")
+#      expected:
+#        result:
+#          value: P2DT1H40M
+#          type: duration
+#- id: 023_6fc32087db
+#  description: ""
+#  tests:
+#    - feel-expression: duration("PT3600S")
+#      expected:
+#        result:
+#          value: PT1H
+#          type: duration
+#- id: 024_fd7000d72f
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P2DT274M")
+#      expected:
+#        result:
+#          value: P2DT4H34M
+#          type: duration
+- id: 025_f8ffbd8658
+  description: ""
+  tests:
+    - feel-expression: duration("P1Y2M")
+      expected:
+        result:
+          value: P1Y2M
+          type: duration
+- id: 026_e6c47f0cae
+  description: ""
+  tests:
+    - feel-expression: duration("P1Y")
+      expected:
+        result:
+          value: P1Y
+          type: duration
+- id: 027_33b7fb8704
+  description: ""
+  tests:
+    - feel-expression: duration("P0Y")
+      expected:
+        result:
+          value: P0M
+          type: duration
+- id: 028_971b94f16d
+  description: ""
+  tests:
+    - feel-expression: duration("P0M")
+      expected:
+        result:
+          value: P0M
+          type: duration
+- id: 029_1a12a226cc
+  description: ""
+  tests:
+    - feel-expression: duration("-P1Y")
+      expected:
+        result:
+          value: -P1Y
+          type: duration
+#- id: 030_afac0f2062
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P26M")
+#      expected:
+#        result:
+#          value: P2Y2M
+#          type: duration
+#- id: 031_1ddad718b9
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P1Y27M")
+#      expected:
+#        result:
+#          value: P3Y3M
+#          type: duration
+#- id: 032_72c46a9ec9
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P100M")
+#      expected:
+#        result:
+#          value: P8Y4M
+#          type: duration
+#- id: 033_5d1540abaf
+#  description: ""
+#  tests:
+#    - feel-expression: duration("-P100M")
+#      expected:
+#        result:
+#          value: -P8Y4M
+#          type: duration
+#- id: 034_aa9cbb21a6
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P999999999M")
+#      expected:
+#        result:
+#          value: P83333333Y3M
+#          type: duration
+#- id: 035_93eef01ae7
+#  description: ""
+#  tests:
+#    - feel-expression: duration("-P999999999M")
+#      expected:
+#        result:
+#          value: -P83333333Y3M
+#          type: duration
+- id: 036_5f2775875e
+  description: ""
+  tests:
+    - feel-expression: duration("P99999999Y")
+      expected:
+        result:
+          value: P99999999Y
+          type: duration
+- id: 037_8c9ea9c0e6
+  description: ""
+  tests:
+    - feel-expression: duration("-P99999999Y")
+      expected:
+        result:
+          value: -P99999999Y
+          type: duration
+- id: 038_67dc4c254c
+  description: ""
+  tests:
+    - feel-expression: duration(from:"P1Y")
+      expected:
+        result:
+          value: P1Y
+          type: duration
+#- id: 039_4aa0b67804
+#  description: ""
+#  tests:
+#    - feel-expression: duration(from:"PT24H")
+#      expected:
+#        result:
+#          value: P1D
+#          type: duration
+#- id: 040_7d8eae461f
+#  description: ""
+#  tests:
+#    - feel-expression: duration(from:"P26M")
+#      expected:
+#        result:
+#          value: P2Y2M
+#          type: duration
+#- id: 041_264bc9d682
+#  description: ""
+#  tests:
+#    - feel-expression: duration("")
+#      expected:
+#        result:
+#          value: null
+#- id: 042_59a0000245
+#  description: ""
+#  tests:
+#    - feel-expression: duration(2017)
+#      expected:
+#        result:
+#          value: null
+#- id: 043_253815dc6c
+#  description: ""
+#  tests:
+#    - feel-expression: duration("2012T-12-2511:00:00Z")
+#      expected:
+#        result:
+#          value: null
+#- id: 044_f3b338d877
+#  description: ""
+#  tests:
+#    - feel-expression: duration([])
+#      expected:
+#        result:
+#          value: null
+#- id: 045_2ffcc37801
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P")
+#      expected:
+#        result:
+#          value: null
+#- id: 046_eb637de5f6
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P0")
+#      expected:
+#        result:
+#          value: null
+#- id: 047_3210c46a5a
+#  description: ""
+#  tests:
+#    - feel-expression: duration("1Y")
+#      expected:
+#        result:
+#          value: null
+#- id: 048_ab6244f767
+#  description: ""
+#  tests:
+#    - feel-expression: duration("1D")
+#      expected:
+#        result:
+#          value: null
+#- id: 049_2225b503a0
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P1H")
+#      expected:
+#        result:
+#          value: null
+#- id: 050_dd2ef33bbd
+#  description: ""
+#  tests:
+#    - feel-expression: duration("P1S")
+#      expected:
+#        result:
+#          value: null

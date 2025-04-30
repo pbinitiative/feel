@@ -1,0 +1,148 @@
+- id: "001"
+  description: creation of simple context
+  tests:
+    - feel-expression: '{a: "foo", b: "bar"}'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: foo
+                type: string
+          - name: b
+            expected:
+              result:
+                value: bar
+                type: string
+- id: "002"
+  description: nested context
+  tests:
+    - feel-expression: '{a: "foo", b: {c: "bar", d: {e: "baz"}}}'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: foo
+                type: string
+          - name: b
+            expected:
+              components:
+                - name: c
+                  expected:
+                    result:
+                      value: bar
+                      type: string
+                - name: d
+                  expected:
+                    components:
+                      - name: e
+                        expected:
+                          result:
+                            value: baz
+                            type: string
+#- id: "003"
+#  description: previous entries in scope for later entries
+#  tests:
+#    - feel-expression: '{a: 1 + 2, b: a + 3}'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "3"
+#                type: decimal
+#          - name: b
+#            expected:
+#              result:
+#                value: "6"
+#                type: decimal
+#- id: 003_a
+#  description: previous entries in scope for later (nested) entries
+#  tests:
+#    - feel-expression: '{a: 1 + 2, b: 3, c: {d: a + b}}'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "3"
+#                type: decimal
+#          - name: b
+#            expected:
+#              result:
+#                value: "3"
+#                type: decimal
+#          - name: c
+#            expected:
+#              components:
+#                - name: d
+#                  expected:
+#                    result:
+#                      value: "6"
+#                      type: decimal
+- id: "004"
+  description: spaces permitted in name
+  tests:
+    - feel-expression: '{foo bar: "foo"}'
+      expected:
+        components:
+          - name: foo bar
+            expected:
+              result:
+                value: foo
+                type: string
+#- id: "005"
+#  description: extra chars permtted in name
+#  tests:
+#    - feel-expression: '{foo+bar: "foo"}'
+#      expected:
+#        components:
+#          - name: foo+bar
+#            expected:
+#              result:
+#                value: foo
+#                type: string
+- id: "006"
+  description: string literal permitted as name
+  tests:
+    - feel-expression: '{"foo+bar((!!],foo": "foo"}'
+      expected:
+        components:
+          - name: foo+bar((!!],foo
+            expected:
+              result:
+                value: foo
+                type: string
+- id: "007"
+  description: empty string literal permitted as name
+  tests:
+    - feel-expression: '{"": "foo"}'
+      expected:
+        components:
+          - name: ""
+            expected:
+              result:
+                value: foo
+                type: string
+#- id: "008"
+#  description: duplicate context entry keys not allowed (DMN14-178), results in null
+#  tests:
+#    - feel-expression: '{foo: "bar", foo: "baz"}'
+#      expected:
+#        result:
+#          value: null
+#- id: "009"
+#  description: non-existing member access results in null
+#  tests:
+#    - feel-expression: '{ a: 1 }.b'
+#      expected:
+#        result:
+#          value: null
+#- id: "010"
+#  description: non-existing member access (on null)
+#  tests:
+#    - feel-expression: null.b
+#      expected:
+#        result:
+#          value: null

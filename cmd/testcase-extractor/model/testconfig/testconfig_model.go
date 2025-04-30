@@ -6,6 +6,7 @@ import (
 )
 
 type TestCase struct {
+	Id          string `yaml:"id"`
 	Description string `yaml:"description"`
 	Tests       []Test `yaml:"tests"`
 }

@@ -1,0 +1,97 @@
+- id: "001"
+  description: will return product for list
+  tests:
+    - feel-expression: product([6, 3, 9, 6, 6])
+      expected:
+        result:
+          value: "5832"
+          type: decimal
+#- id: "002"
+#  description: will return null when empty list
+#  tests:
+#    - feel-expression: product([])
+#      expected:
+#        result:
+#          value: null
+#- id: "003"
+#  description: will return null when no params
+#  tests:
+#    - feel-expression: product()
+#      expected:
+#        result:
+#          value: null
+#- id: 003_a
+#  description: will error when null param
+#  tests:
+#    - feel-expression: product(null)
+#      expected:
+#        result:
+#          value: null
+#- id: "004"
+#  description: will error when list item not a number
+#  tests:
+#    - feel-expression: product([1,2,null,4])
+#      expected:
+#        result:
+#          value: null
+#- id: "005"
+#  description: will error when list item not a number
+#  tests:
+#    - feel-expression: product([1,2,"foo",4])
+#      expected:
+#        result:
+#          value: null
+- id: "006"
+  description: will multiple decimals
+  tests:
+    - feel-expression: product([2.5, 1, 2.5, 3])
+      expected:
+        result:
+          value: "18.75"
+          type: decimal
+- id: "007"
+  description: will multiply varargs number list
+  tests:
+    - feel-expression: product(2,3,4)
+      expected:
+        result:
+          value: "24"
+          type: decimal
+- id: "008"
+  description: product of single item is itself
+  tests:
+    - feel-expression: product(6)
+      expected:
+        result:
+          value: "6"
+          type: decimal
+- id: 008_a
+  description: product of single item list is value of first item
+  tests:
+    - feel-expression: product([6])
+      expected:
+        result:
+          value: "6"
+          type: decimal
+#- id: "011"
+#  description: will return product for named params
+#  tests:
+#    - feel-expression: product(list:[6, 3, 9, 6, 6])
+#      expected:
+#        result:
+#          value: "5832"
+#          type: decimal
+#- id: "012"
+#  description: will error when null named param
+#  tests:
+#    - feel-expression: product(list:null)
+#      expected:
+#        result:
+#          value: null
+#- id: "013"
+#  description: will error when wrongly named param
+#  tests:
+#    - feel-expression: product(l:[2, 4, 7, 5])
+#      expected:
+#        result:
+#          value: null

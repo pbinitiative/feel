@@ -1,0 +1,64 @@
+- id: 001_2395aaad55
+  description: ""
+  tests:
+    - feel-expression: upper case("a")
+      expected:
+        result:
+          value: A
+          type: string
+- id: 002_991789dded
+  description: ""
+  tests:
+    - feel-expression: upper case("abc")
+      expected:
+        result:
+          value: ABC
+          type: string
+- id: 003_d8306d8d00
+  description: ""
+  tests:
+    - feel-expression: upper case("")
+      expected:
+        result:
+          value: ""
+          type: string
+- id: 004_310caf7262
+  description: ""
+  tests:
+    - feel-expression: upper case("1")
+      expected:
+        result:
+          value: "1"
+          type: string
+- id: 005_b316d773ac
+  description: ""
+  tests:
+    - feel-expression: upper case("?@{")
+      expected:
+        result:
+          value: ?@{
+          type: string
+- id: 006_d9bd3c14bc
+  description: ""
+  tests:
+    - feel-expression: upper case(string:"AbDcF")
+      expected:
+        result:
+          value: ABDCF
+          type: string
+- id: 007_31fc6c1967
+  description: ""
+  tests:
+    - feel-expression: upper case(string:"xyZ ")
+      expected:
+        result:
+          value: 'XYZ '
+          type: string
+- id: 008_26e369a9d9
+  description: ""
+  tests:
+    - feel-expression: upper case(string:"123ABC")
+      expected:
+        result:
+          value: 123ABC
+          type: string

@@ -1,0 +1,292 @@
+#- id: decision_001
+#  description: no param
+#  tests:
+#    - feel-expression: string()
+#      expected:
+#        result:
+#          value: null
+#- id: decision_002
+#  description: too many params
+#  tests:
+#    - feel-expression: string("foo", "bar")
+#      expected:
+#        result:
+#          value: null
+- id: decision_003
+  description: named param
+  tests:
+    - feel-expression: string(from:"foo")
+      expected:
+        result:
+          value: foo
+          type: string
+#- id: decision_004
+#  description: badly named param
+#  tests:
+#    - feel-expression: string("foo", "bar")
+#      expected:
+#        result:
+#          value: null
+#- id: null_001
+#  description: null param gives null, not "null"
+#  tests:
+#    - feel-expression: string(null)
+#      expected:
+#        result:
+#          value: null
+- id: string_001
+  description: string param
+  tests:
+    - feel-expression: string("foo")
+      expected:
+        result:
+          value: foo
+          type: string
+- id: number_001
+  description: string param
+  tests:
+    - feel-expression: string(123.45)
+      expected:
+        result:
+          value: "123.45"
+          type: string
+#- id: boolean_001
+#  description: boolean true
+#  tests:
+#    - feel-expression: string(true)
+#      expected:
+#        result:
+#          value: "true"
+#          type: string
+#- id: boolean_002
+#  description: boolean false
+#  tests:
+#    - feel-expression: string(false)
+#      expected:
+#        result:
+#          value: "false"
+#          type: string
+- id: date_001
+  description: date
+  tests:
+    - feel-expression: string(date("2018-12-10"))
+      expected:
+        result:
+          value: "2018-12-10"
+          type: string
+#- id: dateTime_001
+#  description: dateTime - date only
+#  tests:
+#    - feel-expression: string(date and time("2018-12-10"))
+#      expected:
+#        result:
+#          value: 2018-12-10T00:00:00
+#          type: string
+#- id: dateTime_002
+#  description: dateTime - with time
+#  tests:
+#    - feel-expression: string(date and time("2018-12-10T10:30:00.0001"))
+#      expected:
+#        result:
+#          value: 2018-12-10T10:30:00.0001
+#          type: string
+#- id: dateTime_003
+#  description: dateTime - with time and offset
+#  tests:
+#    - feel-expression: string(date and time("2018-12-10T10:30:00.0001+05:00:01"))
+#      expected:
+#        result:
+#          value: 2018-12-10T10:30:00.0001+05:00:01
+#          type: string
+#- id: dateTime_004
+#  description: dateTime - with time and zone
+#  tests:
+#    - feel-expression: string(date and time("2018-12-10T10:30:00@Etc/UTC"))
+#      expected:
+#        result:
+#          value: 2018-12-10T10:30:00@Etc/UTC
+#          type: string
+#- id: time_001
+#  description: time
+#  tests:
+#    - feel-expression: string(time("10:30:00.0001"))
+#      expected:
+#        result:
+#          value: "10:30:00.0001"
+#          type: string
+#- id: time_002
+#  description: time - with offset
+#  tests:
+#    - feel-expression: string(time("10:30:00.0001+05:00:01"))
+#      expected:
+#        result:
+#          value: 10:30:00.0001+05:00:01
+#          type: string
+#- id: time_003
+#  description: time - with zone
+#  tests:
+#    - feel-expression: string(time("10:30:00@Etc/UTC"))
+#      expected:
+#        result:
+#          value: 10:30:00@Etc/UTC
+#          type: string
+#- id: dt_duration_001
+#  description: dt duration 1D
+#  tests:
+#    - feel-expression: string(duration("P1D"))
+#      expected:
+#        result:
+#          value: P1D
+#          type: string
+#- id: dt_duration_002
+#  description: dt duration -1D
+#  tests:
+#    - feel-expression: string(duration("-P1D"))
+#      expected:
+#        result:
+#          value: -P1D
+#          type: string
+#- id: dt_duration_003
+#  description: dt duration P0D
+#  tests:
+#    - feel-expression: string(duration("P0D"))
+#      expected:
+#        result:
+#          value: PT0S
+#          type: string
+#- id: dt_duration_004
+#  description: dt duration P1DT2H3M4.1234S
+#  tests:
+#    - feel-expression: string(duration("P1DT2H3M4.1234S"))
+#      expected:
+#        result:
+#          value: P1DT2H3M4.1234S
+#          type: string
+#- id: dt_duration_005
+#  description: dt duration P49H
+#  tests:
+#    - feel-expression: string(duration("PT49H"))
+#      expected:
+#        result:
+#          value: P2DT1H
+#          type: string
+- id: ym_duration_001
+  description: ym duration P1Y
+  tests:
+    - feel-expression: string(duration("P1Y"))
+      expected:
+        result:
+          value: P1Y
+          type: string
+- id: ym_duration_002
+  description: ym duration -P1Y
+  tests:
+    - feel-expression: string(duration("-P1Y"))
+      expected:
+        result:
+          value: -P1Y
+          type: string
+#- id: ym_duration_003
+#  description: ym duration P0Y
+#  tests:
+#    - feel-expression: string(duration("P0Y"))
+#      expected:
+#        result:
+#          value: P0M
+#          type: string
+- id: ym_duration_004
+  description: ym duration P1Y2M
+  tests:
+    - feel-expression: string(duration("P1Y2M"))
+      expected:
+        result:
+          value: P1Y2M
+          type: string
+#- id: ym_duration_005
+#  description: ym duration P25M
+#  tests:
+#    - feel-expression: string(duration("P25M"))
+#      expected:
+#        result:
+#          value: P2Y1M
+#          type: string
+#- id: list_001
+#  description: list
+#  tests:
+#    - feel-expression: string([1,2,3,"foo"])
+#      expected:
+#        result:
+#          value: '[1, 2, 3, "foo"]'
+#          type: string
+#- id: list_002
+#  description: nested list
+#  tests:
+#    - feel-expression: string([1,2,3,[4,5,"foo"]])
+#      expected:
+#        result:
+#          value: '[1, 2, 3, [4, 5, "foo"]]'
+#          type: string
+#- id: list_003
+#  description: list string get escaped
+#  tests:
+#    - feel-expression: string(["\"foo\""])
+#      expected:
+#        result:
+#          value: '["\"foo\""]'
+#          type: string
+#- id: context_001
+#  description: context
+#  tests:
+#    - feel-expression: 'string({a: "foo"})'
+#      expected:
+#        result:
+#          value: '{a: "foo"}'
+#          type: string
+#- id: context_002
+#  description: nested context
+#  tests:
+#    - feel-expression: 'string({a: "foo", b: {bar: "baz"}})'
+#      expected:
+#        result:
+#          value: '{a: "foo", b: {bar: "baz"}}'
+#          type: string
+#- id: context_003
+#  description: context entry contains "{" so it gets quotes
+#  tests:
+#    - feel-expression: 'string({"{": "foo"})'
+#      expected:
+#        result:
+#          value: '{"{": "foo"}'
+#          type: string
+#- id: context_004
+#  description: context entry contains ":" so it gets quotes
+#  tests:
+#    - feel-expression: 'string({":": "foo"})'
+#      expected:
+#        result:
+#          value: '{":": "foo"}'
+#          type: string
+#- id: context_005
+#  description: context entry contains "," so it gets quotes
+#  tests:
+#    - feel-expression: 'string({",": "foo"})'
+#      expected:
+#        result:
+#          value: '{",": "foo"}'
+#          type: string
+#- id: context_006
+#  description: context entry contains "}" so it gets quotes
+#  tests:
+#    - feel-expression: 'string({"}": "foo"})'
+#      expected:
+#        result:
+#          value: '{"}": "foo"}'
+#          type: string
+#- id: context_007
+#  description: context entry contains '"' so it gets escaped and quotes
+#  tests:
+#    - feel-expression: 'string({"\"": "foo"})'
+#      expected:
+#        result:
+#          value: '{"\"": "foo"}'
+#          type: string
