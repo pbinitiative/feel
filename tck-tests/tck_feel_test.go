@@ -1,12 +1,13 @@
 //go:build tck_feel_test
 // +build tck_feel_test
 
-package feel
+package tck_tests
 
 import (
 	"fmt"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	"github.com/pbinitiative/feel"
 	"github.com/pbinitiative/feel/cmd/testcase-extractor/model/testconfig"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
@@ -40,7 +41,7 @@ func Test_TckFeelTests(t *testing.T) {
 
 					result, err := safeCall(
 						func() (any, error) {
-							return EvalString(test.FeelExpression)
+							return feel.EvalString(test.FeelExpression)
 						})
 
 					if err != nil {
@@ -72,8 +73,8 @@ func Test_TckFeelTests(t *testing.T) {
 						result,
 						// FEELDate, FEELTime don't not export `t`
 						cmpopts.IgnoreUnexported(
-							FEELDate{},
-							FEELTime{},
+							feel.FEELDate{},
+							feel.FEELTime{},
 						),
 					)
 					assert.Empty(t, diff,
@@ -154,21 +155,21 @@ func createExpected(t *testing.T, result testconfig.ExpectedResult) interface{} 
 			}
 			return b
 		case "dateTime":
-			datetime, err := ParseDatetime(value)
+			datetime, err := feel.ParseDatetime(value)
 			if err != nil {
 				t.Fatalf("Cannot parse expected value as FEEL datetime: %v", err)
 			}
 			return datetime
 		case "date":
-			date, err := ParseDate(value)
+			date, err := feel.ParseDate(value)
 			if err != nil {
 				t.Fatalf("Cannot parse expected value as FEEL date: %v", err)
 			}
 			return date
 		case "decimal", "double":
-			return N(value)
+			return feel.N(value)
 		case "duration":
-			dur, err := ParseDuration(value)
+			dur, err := feel.ParseDuration(value)
 			if err != nil {
 				t.Fatalf("Cannot parse expected value as FEEL duration: %v", err)
 			}
@@ -176,7 +177,7 @@ func createExpected(t *testing.T, result testconfig.ExpectedResult) interface{} 
 		case "string":
 			return value
 		case "time":
-			time, err := ParseTime(value)
+			time, err := feel.ParseTime(value)
 			if err != nil {
 				t.Fatalf("Cannot parse expected value as FEEL time: %v", err)
 			}

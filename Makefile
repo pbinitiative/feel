@@ -1,7 +1,7 @@
 RESOURCES_DIR=resources
 TCK_DIR=$(RESOURCES_DIR)/tck
 TCK_REPO=https://github.com/dmn-tck/tck.git
-TEST_CONFIG_FILE=./test-cases_feel.yaml
+TEST_CONFIG_FILE=./tck-tests/test-cases_feel.yaml
 
 GO_FILES := $(shell find . -name '*.go')
 GO_FLAGS :=
@@ -39,3 +39,8 @@ extract-testcases:
 	git clone --depth 1 $(TCK_REPO) $(TCK_DIR)
 	go run ./cmd/testcase-extractor --dir $(TCK_DIR) --output-file $(TEST_CONFIG_FILE)
 	rm -rf $(TCK_DIR)
+
+.PHONY: tck-tests
+tck-tests:
+	go test -tags tck_feel_test ./tck-tests
+
