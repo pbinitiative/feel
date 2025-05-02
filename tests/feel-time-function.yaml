@@ -1,0 +1,623 @@
+#- id: 001_bdf26fdc72
+#  description: ""
+#  tests:
+#    - feel-expression: time(null)
+#      expected:
+#        result:
+#          value: null
+#- id: 002_9d2e399b96
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,11,45,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 003_d1f0ea5bb9
+#  description: ""
+#  tests:
+#    - feel-expression: time(12,null,45,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 004_57aea91d1c
+#  description: ""
+#  tests:
+#    - feel-expression: time(12,0,null,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 005_32ea20b34f
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,null,45,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 006_e266498180
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,11,null,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 007_ee82c7bf12
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,11,45,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 008_08078c6c29
+#  description: ""
+#  tests:
+#    - feel-expression: time(12,null,null,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 009_804c21ed52
+#  description: ""
+#  tests:
+#    - feel-expression: time(12,11,null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 010_cc773bb44b
+#  description: ""
+#  tests:
+#    - feel-expression: time(12,null,null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 011_ad5b3a26b5
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,0,null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 012_3c2f416fc9
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,null,15,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 013_7f22c0bda8
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,null,null,duration("P0D"))
+#      expected:
+#        result:
+#          value: null
+#- id: 014_0dc13176e8
+#  description: ""
+#  tests:
+#    - feel-expression: time(null,null,null,null)
+#      expected:
+#        result:
+#          value: null
+#- id: 015_376d693a79
+#  description: ""
+#  tests:
+#    - feel-expression: time(12,00,00,null)
+#      expected:
+#        result:
+#          value: "12:00:00"
+#          type: time
+#- id: 016_c3cccff405
+#  description: ""
+#  tests:
+#    - feel-expression: time()
+#      expected:
+#        result:
+#          value: null
+- id: 017_f3683885f5
+  description: ""
+  tests:
+    - feel-expression: time("01:02:03")
+      expected:
+        result:
+          value: "01:02:03"
+          type: time
+- id: 018_35f1f2cce8
+  description: ""
+  tests:
+    - feel-expression: time("00:00:00")
+      expected:
+        result:
+          value: "00:00:00"
+          type: time
+- id: 019_879be89d63
+  description: ""
+  tests:
+    - feel-expression: time("11:22:33.444")
+      expected:
+        result:
+          value: "11:22:33.444"
+          type: time
+- id: 020_72b421086e
+  description: ""
+  tests:
+    - feel-expression: time("11:22:33.123456789")
+      expected:
+        result:
+          value: "11:22:33.123456789"
+          type: time
+#- id: 021_5c50fa1dff
+#  description: ""
+#  tests:
+#    - feel-expression: time("23:59:00Z")
+#      expected:
+#        result:
+#          value: 23:59:00Z
+#          type: time
+#- id: 022_55e76d3595
+#  description: ""
+#  tests:
+#    - feel-expression: time("11:00:00Z")
+#      expected:
+#        result:
+#          value: 11:00:00Z
+#          type: time
+#- id: 023_5cbbb85435
+#  description: ""
+#  tests:
+#    - feel-expression: time("00:00:00Z")
+#      expected:
+#        result:
+#          value: 00:00:00Z
+#          type: time
+- id: 024_5f7f735e8f
+  description: ""
+  tests:
+    - feel-expression: time("13:20:00+02:00")
+      expected:
+        result:
+          value: 13:20:00+02:00
+          type: time
+- id: 025_139b25b795
+  description: ""
+  tests:
+    - feel-expression: time("13:20:00-05:00")
+      expected:
+        result:
+          value: 13:20:00-05:00
+          type: time
+#- id: 026_c5208af118
+#  description: ""
+#  tests:
+#    - feel-expression: time("11:22:33-00:00")
+#      expected:
+#        result:
+#          value: 11:22:33Z
+#          type: time
+#- id: 027_45082fd26c
+#  description: ""
+#  tests:
+#    - feel-expression: time("11:22:33+00:00")
+#      expected:
+#        result:
+#          value: 11:22:33Z
+#          type: time
+#- id: 028_eaea7a943c
+#  description: ""
+#  tests:
+#    - feel-expression: string(time("00:01:00@Etc/UTC"))
+#      expected:
+#        result:
+#          value: 00:01:00@Etc/UTC
+#          type: string
+#- id: 029_f0d5c2c16a
+#  description: ""
+#  tests:
+#    - feel-expression: string(time("00:01:00@Europe/Paris"))
+#      expected:
+#        result:
+#          value: 00:01:00@Europe/Paris
+#          type: string
+#- id: 030_390d4f4648
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time("2017-08-10T10:20:00"))
+#      expected:
+#        result:
+#          value: "10:20:00"
+#          type: time
+#- id: 031_4d086a3b59
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time("2017-08-10T10:20:00+00:00"))
+#      expected:
+#        result:
+#          value: 10:20:00Z
+#          type: time
+#- id: 032_d9b0d7f931
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time("2017-08-10T10:20:00-00:00"))
+#      expected:
+#        result:
+#          value: 10:20:00Z
+#          type: time
+#- id: 033_8420160da1
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time("2017-08-10T10:20:00+01:00"))
+#      expected:
+#        result:
+#          value: 10:20:00+01:00
+#          type: time
+#- id: 034_13c312c376
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time("2017-08-10T10:20:00-01:00"))
+#      expected:
+#        result:
+#          value: 10:20:00-01:00
+#          type: time
+#- id: 035_fbfce88ac4
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time("2017-08-10T10:20:00Z"))
+#      expected:
+#        result:
+#          value: 10:20:00Z
+#          type: time
+#- id: 036_eb05fabc01
+#  description: ""
+#  tests:
+#    - feel-expression: string(time(date and time("2017-08-10T10:20:00@Europe/Paris")))
+#      expected:
+#        result:
+#          value: 10:20:00@Europe/Paris
+#          type: string
+#- id: 037_eed195f693
+#  description: ""
+#  tests:
+#    - feel-expression: string(time(date and time("2017-09-04T11:20:00@Asia/Dhaka")))
+#      expected:
+#        result:
+#          value: 11:20:00@Asia/Dhaka
+#          type: string
+#- id: 038_05b311131c
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 45, null)
+#      expected:
+#        result:
+#          value: "11:59:45"
+#          type: time
+#- id: 039_5b65992f0d
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 45, duration("PT0H"))
+#      expected:
+#        result:
+#          value: 11:59:45Z
+#          type: time
+#- id: 040_6c9d17b491
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 45, duration("PT2H"))
+#      expected:
+#        result:
+#          value: 11:59:45+02:00
+#          type: time
+#- id: 041_29a448d57e
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 45, duration("-PT2H"))
+#      expected:
+#        result:
+#          value: 11:59:45-02:00
+#          type: time
+#- id: 042_00146f2977
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 00, duration("PT2H1M"))
+#      expected:
+#        result:
+#          value: 11:59:00+02:01
+#          type: time
+#- id: 043_2edfae8414
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 00, duration("-PT2H1M"))
+#      expected:
+#        result:
+#          value: 11:59:00-02:01
+#          type: time
+#- id: 044_3073ffd026
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 00, duration("PT2H1M0S"))
+#      expected:
+#        result:
+#          value: 11:59:00+02:01
+#          type: time
+#- id: 045_ad1339e858
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 00, duration("-PT2H1M0S"))
+#      expected:
+#        result:
+#          value: 11:59:00-02:01
+#          type: time
+#- id: 046_7b80221ec1
+#  description: ""
+#  tests:
+#    - feel-expression: string(time(11, 59, 45, duration("PT2H45M55S")))
+#      expected:
+#        result:
+#          value: 11:59:45+02:45:55
+#          type: string
+#- id: 047_33cd7b9b15
+#  description: ""
+#  tests:
+#    - feel-expression: string(time(11, 59, 45, duration("-PT2H45M55S")))
+#      expected:
+#        result:
+#          value: 11:59:45-02:45:55
+#          type: string
+#- id: 048_9bedd52886
+#  description: ""
+#  tests:
+#    - feel-expression: time(11, 59, 45, duration("-PT0H"))
+#      expected:
+#        result:
+#          value: 11:59:45Z
+#          type: time
+#- id: 049_617d9e09d6
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time(date and time("2017-08-10T10:20:00"),time("23:59:01")))
+#      expected:
+#        result:
+#          value: "23:59:01"
+#          type: time
+#- id: 050_524d9a8146
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time(date and time("2017-08-10T10:20:00"),time("23:59:01.987654321")))
+#      expected:
+#        result:
+#          value: "23:59:01.987654321"
+#          type: time
+#- id: 051_a71d2a08f7
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time(date and time("2017-09-05T10:20:00"),time("09:15:30+02:00")))
+#      expected:
+#        result:
+#          value: 09:15:30+02:00
+#          type: time
+#- id: 052_d825d58888
+#  description: ""
+#  tests:
+#    - feel-expression: time(date and time(date and time("2017-09-05T10:20:00"),time("09:15:30Z")))
+#      expected:
+#        result:
+#          value: 09:15:30Z
+#          type: time
+#- id: 053_3d956966c0
+#  description: ""
+#  tests:
+#    - feel-expression: time(date("2017-08-10"))
+#      expected:
+#        result:
+#          value: 00:00:00Z
+#          type: time
+#- id: 054_fdc3094237
+#  description: ""
+#  tests:
+#    - feel-expression: time(2017)
+#      expected:
+#        result:
+#          value: null
+#- id: 055_9b47db6ea4
+#  description: ""
+#  tests:
+#    - feel-expression: time([])
+#      expected:
+#        result:
+#          value: null
+#- id: 056_a8e828d64d
+#  description: ""
+#  tests:
+#    - feel-expression: time("")
+#      expected:
+#        result:
+#          value: null
+#- id: 057_d039115cce
+#  description: ""
+#  tests:
+#    - feel-expression: time("23:59:60")
+#      expected:
+#        result:
+#          value: null
+#- id: 058_81dd4b1639
+#  description: ""
+#  tests:
+#    - feel-expression: time("24:00:01")
+#      expected:
+#        result:
+#          value: null
+#- id: 059_c7e1705fe1
+#  description: ""
+#  tests:
+#    - feel-expression: time("24:01:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 060_0cf4734fae
+#  description: ""
+#  tests:
+#    - feel-expression: time("25:00:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 061_da2717f085
+#  description: ""
+#  tests:
+#    - feel-expression: time("00:60:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 062_6cd1313fa9
+#  description: ""
+#  tests:
+#    - feel-expression: time("00:00:61")
+#      expected:
+#        result:
+#          value: null
+#- id: 063_e85c40b474
+#  description: ""
+#  tests:
+#    - feel-expression: time("7:00:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 064_df74038c67
+#  description: ""
+#  tests:
+#    - feel-expression: time("07:1:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 065_79eaef6fee
+#  description: ""
+#  tests:
+#    - feel-expression: time("07:01:2")
+#      expected:
+#        result:
+#          value: null
+#- id: 066_5116e12fd3
+#  description: ""
+#  tests:
+#    - feel-expression: time("13:20:00@xyz/abc")
+#      expected:
+#        result:
+#          value: null
+#- id: 067_8285edad7b
+#  description: ""
+#  tests:
+#    - feel-expression: time("13:20:00+19:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 068_ad528abb23
+#  description: ""
+#  tests:
+#    - feel-expression: time("13:20:00-19:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 069_5096701e2e
+#  description: ""
+#  tests:
+#    - feel-expression: time("13:20:00+5:00")
+#      expected:
+#        result:
+#          value: null
+#- id: 070_8b2e39f570
+#  description: ""
+#  tests:
+#    - feel-expression: time("13:20:00+5")
+#      expected:
+#        result:
+#          value: null
+#- id: 071_cf9417648b
+#  description: ""
+#  tests:
+#    - feel-expression: time("13:20:00+02:00@Europe/Paris")
+#      expected:
+#        result:
+#          value: null
+#- id: 072_4c8c3835e4
+#  description: ""
+#  tests:
+#    - feel-expression: time("7:20")
+#      expected:
+#        result:
+#          value: null
+#- id: 073_a5fc245959
+#  description: ""
+#  tests:
+#    - feel-expression: time("07:2")
+#      expected:
+#        result:
+#          value: null
+#- id: 074_387d4411ea
+#  description: ""
+#  tests:
+#    - feel-expression: time("11:30:00T")
+#      expected:
+#        result:
+#          value: null
+#- id: 075_1606dda03d
+#  description: ""
+#  tests:
+#    - feel-expression: time("2012T-12-2511:00:00Z")
+#      expected:
+#        result:
+#          value: null
+#- id: 076_cb117ca612
+#  description: ""
+#  tests:
+#    - feel-expression: time(24, 59, 45, null)
+#      expected:
+#        result:
+#          value: null
+#- id: 077_a4daad060c
+#  description: ""
+#  tests:
+#    - feel-expression: time(-24, 59, 45, null)
+#      expected:
+#        result:
+#          value: null
+#- id: 078_c2fe73418b
+#  description: ""
+#  tests:
+#    - feel-expression: time(23, 60, 45, null)
+#      expected:
+#        result:
+#          value: null
+#- id: 079_d2d226c3cd
+#  description: ""
+#  tests:
+#    - feel-expression: time(23, 59, 60, null)
+#      expected:
+#        result:
+#          value: null
+#- id: 080_2bbb8c86af
+#  description: ""
+#  tests:
+#    - feel-expression: time(from:date and time("2012-12-24T23:59:00"))
+#      expected:
+#        result:
+#          value: "23:59:00"
+#          type: time
+- id: 081_69f4e0231e
+  description: ""
+  tests:
+    - feel-expression: 'time(from: "12:45:00")'
+      expected:
+        result:
+          value: "12:45:00"
+          type: time
+#- id: 082_36a78e5396
+#  description: ""
+#  tests:
+#    - feel-expression: 'time(hour:11, minute:59, second:0, offset: duration("PT2H1M0S"))'
+#      expected:
+#        result:
+#          value: 11:59:00+02:01
+#          type: time
+#- id: 083_6b608254c7
+#  description: ""
+#  tests:
+#    - feel-expression: 'time(hour:11, minute:59, second:0, offset: duration("-PT2H"))'
+#      expected:
+#        result:
+#          value: 11:59:00-02:00
+#          type: time

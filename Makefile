@@ -1,15 +1,10 @@
-RESOURCES_DIR=resources
-TCK_DIR=$(RESOURCES_DIR)/tck
-TCK_REPO=https://github.com/dmn-tck/tck.git
-TEST_CONFIG_FILE=./test-cases_feel.yaml
-
 GO_FILES := $(shell find . -name '*.go')
 GO_FLAGS :=
 
 all: build
 
 test:
-	go test -v ./...
+	go test $$(go list ./... | grep -v /tests/tck)
 
 cover:
 	go test -coverprofile=coverage.out  ./...
@@ -28,14 +23,21 @@ bin/feel: ${GO_FILES}
 
 clean:
 	rm -rf build dist bin/*
-	rm -rf $(TCK_DIR)
+	rm -rf resources/
+	rm -rf tests/tck/TestCases/
 
 .PHONY: test gofmt build-cli clean
 .SECONDARY: $(buildarchdirs)
 
 .PHONY: extract-testcases
 extract-testcases:
-	mkdir -p $(RESOURCES_DIR)
-	git clone --depth 1 $(TCK_REPO) $(TCK_DIR)
-	go run ./cmd/testcase-extractor --dir $(TCK_DIR) --output-file $(TEST_CONFIG_FILE)
-	rm -rf $(TCK_DIR)
+	mkdir -p resources/
+	git clone --depth 1 https://github.com/dmn-tck/tck.git resources/tck/
+	go run ./cmd/testcase-extractor --dir resources/tck --output-dir tests/tck/
+	rm -rf resources/
+
+
+.PHONY: test-tck
+test-tck:
+	go test ./tests/tck
+

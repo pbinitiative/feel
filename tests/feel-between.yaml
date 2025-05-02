@@ -1,0 +1,301 @@
+#- id: number_001
+#  description: before
+#  tests:
+#    - feel-expression: 0 between 1 and 10
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: number_002
+  description: start
+  tests:
+    - feel-expression: 1 between 1 and 10
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_003
+  description: between
+  tests:
+    - feel-expression: 5 between 1 and 10
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_004
+  description: end
+  tests:
+    - feel-expression: 10 between 1 and 10
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: number_005
+#  description: after
+#  tests:
+#    - feel-expression: 11 between 1 and 10
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: string_001
+#  description: before
+#  tests:
+#    - feel-expression: '"a" between "b" and "d"'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: string_002
+  description: start
+  tests:
+    - feel-expression: '"b" between "b" and "d"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_003
+  description: between
+  tests:
+    - feel-expression: '"c" between "b" and "d"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_004
+  description: end
+  tests:
+    - feel-expression: '"d" between "b" and "d"'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: string_005
+#  description: after
+#  tests:
+#    - feel-expression: '"e" between "b" and "d"'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_001
+#  description: before
+#  tests:
+#    - feel-expression: date("2018-12-01") between date("2018-12-02") and date("2018-12-04")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_002
+#  description: start
+#  tests:
+#    - feel-expression: date("2018-12-02") between date("2018-12-02") and date("2018-12-04")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_003
+#  description: between
+#  tests:
+#    - feel-expression: date("2018-12-03") between date("2018-12-02") and date("2018-12-04")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_004
+#  description: end
+#  tests:
+#    - feel-expression: date("2018-12-04") between date("2018-12-02") and date("2018-12-04")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_005
+#  description: after
+#  tests:
+#    - feel-expression: date("2018-12-05") between date("2018-12-02") and date("2018-12-04")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: time_001
+  description: before
+#  tests:
+#    - feel-expression: time("10:31:00") between time("10:32:00") and time("10:34:00")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: time_002
+#  description: start
+#  tests:
+#    - feel-expression: time("10:32:00") between time("10:32:00") and time("10:34:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_003
+#  description: between
+#  tests:
+#    - feel-expression: time("10:33:00") between time("10:32:00") and time("10:34:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_004
+#  description: end
+#  tests:
+#    - feel-expression: time("10:34:00") between time("10:32:00") and time("10:34:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_005
+#  description: after
+#  tests:
+#    - feel-expression: time("10:35:00") between time("10:32:00") and time("10:34:00")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: datetime_001
+#  description: before
+#  tests:
+#    - feel-expression: date and time("2018-12-01T10:30:00") between date and time("2018-12-02T10:30:00") and date and time("2018-12-04T10:30:00")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: datetime_002
+#  description: start
+#  tests:
+#    - feel-expression: date and time("2018-12-02T10:30:00") between date and time("2018-12-02T10:30:00") and date and time("2018-12-04T10:30:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_003
+#  description: between
+#  tests:
+#    - feel-expression: date and time("2018-12-03T10:30:00") between date and time("2018-12-02T10:30:00") and date and time("2018-12-04T10:30:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_004
+#  description: end
+#  tests:
+#    - feel-expression: date and time("2018-12-04T10:30:00") between date and time("2018-12-02T10:30:00") and date and time("2018-12-04T10:30:00")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: datetime_005
+#  description: after
+#  tests:
+#    - feel-expression: date and time("2018-12-05T10:30:00") between date and time("2018-12-02T10:30:00") and date and time("2018-12-04T10:30:00")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_001
+#  description: before
+#  tests:
+#    - feel-expression: duration("P1Y") between duration("P2Y") and duration("P4Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_002
+#  description: start
+#  tests:
+#    - feel-expression: duration("P2Y") between duration("P2Y") and duration("P4Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_003
+#  description: between
+#  tests:
+#    - feel-expression: duration("P3Y") between duration("P2Y") and duration("P4Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_004
+#  description: end
+#  tests:
+#    - feel-expression: duration("P4Y") between duration("P2Y") and duration("P4Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_005
+#  description: after
+#  tests:
+#    - feel-expression: duration("P5Y") between duration("P2Y") and duration("P4Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_001
+#  description: before
+#  tests:
+#    - feel-expression: duration("P1D") between duration("P2D") and duration("P4D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_002
+#  description: start
+#  tests:
+#    - feel-expression: duration("P2D") between duration("P2D") and duration("P4D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_003
+#  description: between
+#  tests:
+#    - feel-expression: duration("P3D") between duration("P2D") and duration("P4D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_004
+#  description: end
+#  tests:
+#    - feel-expression: duration("P4D") between duration("P2D") and duration("P4D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_005
+#  description: after
+#  tests:
+#    - feel-expression: duration("P5D") between duration("P2D") and duration("P4D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: null_001
+#  description: null test value
+#  tests:
+#    - feel-expression: null between 1 and 10
+#      expected:
+#        result:
+#          value: null
+#- id: null_002
+#  description: null start value
+#  tests:
+#    - feel-expression: 2 between null and 10
+#      expected:
+#        result:
+#          value: null
+#- id: null_003
+#  description: null end value
+#  tests:
+#    - feel-expression: 2 between 1 and null
+#      expected:
+#        result:
+#          value: null

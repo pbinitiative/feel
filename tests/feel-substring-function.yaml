@@ -1,0 +1,88 @@
+- id: 001_53051b5628
+  description: ""
+  tests:
+    - feel-expression: substring("f",1)
+      expected:
+        result:
+          value: f
+          type: string
+- id: 002_03d12b93f0
+  description: ""
+  tests:
+    - feel-expression: substring("f",1,1)
+      expected:
+        result:
+          value: f
+          type: string
+- id: 003_6d06b1d2ec
+  description: ""
+  tests:
+    - feel-expression: substring("foobar",6)
+      expected:
+        result:
+          value: r
+          type: string
+- id: 004_938a24e7af
+  description: ""
+  tests:
+    - feel-expression: substring("foobar",1,6)
+      expected:
+        result:
+          value: foobar
+          type: string
+- id: 005_21fcca286c
+  description: ""
+  tests:
+    - feel-expression: substring("foobar",3)
+      expected:
+        result:
+          value: obar
+          type: string
+- id: 006_253e533bc6
+  description: ""
+  tests:
+    - feel-expression: substring("foobar",3,3)
+      expected:
+        result:
+          value: oba
+          type: string
+#- id: 007_3e021f33a8
+#  description: ""
+#  tests:
+#    - feel-expression: substring("foobar",-2,1)
+#      expected:
+#        result:
+#          value: a
+#          type: string
+#- id: 008_ddeffdc93e
+#  description: ""
+#  tests:
+#    - feel-expression: substring("foob r",-2,1)
+#      expected:
+#        result:
+#          value: ' '
+#          type: string
+#- id: 009_b52405c384
+#  description: ""
+#  tests:
+#    - feel-expression: substring("foobar",-6,6)
+#      expected:
+#        result:
+#          value: foobar
+#          type: string
+- id: 010_fbf9a89fde
+  description: ""
+  tests:
+    - feel-expression: substring("foobar",3,3.8)
+      expected:
+        result:
+          value: oba
+          type: string
+- id: 011_a559ce6410
+  description: ""
+  tests:
+    - feel-expression: substring(string:"foobar",start position :3)
+      expected:
+        result:
+          value: obar
+          type: string

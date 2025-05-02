@@ -1,0 +1,48 @@
+- id: 001_1afe6930d1
+  description: ""
+  tests:
+    - feel-expression: string length("")
+      expected:
+        result:
+          value: "0"
+          type: decimal
+- id: 002_249c23050d
+  description: ""
+  tests:
+    - feel-expression: string length("a")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: 003_e1df507dee
+  description: ""
+  tests:
+    - feel-expression: string length("abc")
+      expected:
+        result:
+          value: "3"
+          type: decimal
+- id: 004_f4c02fac3d
+  description: ""
+  tests:
+    - feel-expression: string length(string:"xyz123")
+      expected:
+        result:
+          value: "6"
+          type: decimal
+- id: 005_ca834dabac
+  description: ""
+  tests:
+    - feel-expression: string length(string:"aaaaa dddd")
+      expected:
+        result:
+          value: "10"
+          type: decimal
+- id: 006_6c4930a0eb
+  description: ""
+  tests:
+    - feel-expression: string length(string:"aaaaa dddd ")
+      expected:
+        result:
+          value: "11"
+          type: decimal

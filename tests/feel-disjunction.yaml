@@ -1,0 +1,143 @@
+- id: "001"
+  description: ""
+  tests:
+    - feel-expression: true or true
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "002"
+  description: ""
+  tests:
+    - feel-expression: true or false
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: 003_a
+  description: ""
+  tests:
+    - feel-expression: true or null
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: 003_b
+  description: ""
+  tests:
+    - feel-expression: true or 123
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: 003_c
+  description: ""
+  tests:
+    - feel-expression: true or "true"
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "004"
+  description: ""
+  tests:
+    - feel-expression: false or true
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "005"
+  description: ""
+  tests:
+    - feel-expression: false or false
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: 006_a
+#  description: ""
+#  tests:
+#    - feel-expression: false or null
+#      expected:
+#        result:
+#          value: null
+#- id: 006_b
+#  description: ""
+#  tests:
+#    - feel-expression: false or 123
+#      expected:
+#        result:
+#          value: null
+#- id: 006_c
+#  description: ""
+#  tests:
+#    - feel-expression: false or "true"
+#      expected:
+#        result:
+#          value: null
+- id: 007_a
+  description: ""
+  tests:
+    - feel-expression: null or true
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: 007_b
+  description: ""
+  tests:
+    - feel-expression: 123 or true
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: 007_c
+  description: ""
+  tests:
+    - feel-expression: '"true" or true'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: 008_a
+#  description: ""
+#  tests:
+#    - feel-expression: null or false
+#      expected:
+#        result:
+#          value: null
+#- id: 008_b
+#  description: ""
+#  tests:
+#    - feel-expression: 123 or false
+#      expected:
+#        result:
+#          value: null
+#- id: 008_c
+#  description: ""
+#  tests:
+#    - feel-expression: '"true" or false'
+#      expected:
+#        result:
+#          value: null
+#- id: 009_a
+#  description: ""
+#  tests:
+#    - feel-expression: null or null
+#      expected:
+#        result:
+#          value: null
+#- id: 009_b
+#  description: ""
+#  tests:
+#    - feel-expression: '"true" or "true"'
+#      expected:
+#        result:
+#          value: null
+#- id: 009_c
+#  description: ""
+#  tests:
+#    - feel-expression: 0 or 0
+#      expected:
+#        result:
+#          value: null

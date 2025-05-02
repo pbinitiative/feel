@@ -24,3 +24,6 @@ bin/
 .DS_Store
 .idea/
 *.iml
+
+# TCK tests configs
+/tests/tck/TestCases/

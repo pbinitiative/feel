@@ -1,0 +1,168 @@
+- id: "001"
+  description: Will join
+  tests:
+    - feel-expression: string join(["a","b","c"])
+      expected:
+        result:
+          value: abc
+          type: string
+- id: "002"
+  description: Will join (with delimiter)
+  tests:
+    - feel-expression: string join(["a","b","c"], " and ")
+      expected:
+        result:
+          value: a and b and c
+          type: string
+- id: "003"
+  description: Will join with empty delimiter
+  tests:
+    - feel-expression: string join(["a","b","c"], "")
+      expected:
+        result:
+          value: abc
+          type: string
+#- id: "004"
+#  description: Will join with null delimiter
+#  tests:
+#    - feel-expression: string join(["a","b","c"], null)
+#      expected:
+#        result:
+#          value: abc
+#          type: string
+- id: 005_a
+  description: Will join single element list
+  tests:
+    - feel-expression: string join(["a"])
+      expected:
+        result:
+          value: a
+          type: string
+- id: 005_b
+  description: Will join single element list (with delimiter)
+  tests:
+    - feel-expression: string join(["a"], "X")
+      expected:
+        result:
+          value: a
+          type: string
+- id: 006_a
+  description: Will ignore null elements in list
+  tests:
+    - feel-expression: string join(["a",null,"c"])
+      expected:
+        result:
+          value: ac
+          type: string
+- id: 006_b
+  description: Will ignore null elements in list (with delimiter)
+  tests:
+    - feel-expression: string join(["a",null,"c"], "X")
+      expected:
+        result:
+          value: aXc
+          type: string
+- id: 007_a
+  description: Will join empty list as ""
+  tests:
+    - feel-expression: string join([])
+      expected:
+        result:
+          value: ""
+          type: string
+- id: 007_b
+  description: Will join empty list as "" (with delimiter)
+  tests:
+    - feel-expression: string join([], "X")
+      expected:
+        result:
+          value: ""
+          type: string
+#- id: "008"
+#  description: No params gives null
+#  tests:
+#    - feel-expression: string join()
+#      expected:
+#        result:
+#          value: null
+#- id: "009"
+#  description: Too many params gives null
+#  tests:
+#    - feel-expression: string join(["a","c"], "X", "foo")
+#      expected:
+#        result:
+#          value: null
+- id: 010_a
+  description: Join with named param
+  tests:
+    - feel-expression: 'string join(list: ["a","c"])'
+      expected:
+        result:
+          value: ac
+          type: string
+- id: 010_b
+  description: 'Join with named params (with delimiter) '
+  tests:
+    - feel-expression: 'string join(delimiter: "X", list: ["a","c"])'
+      expected:
+        result:
+          value: aXc
+          type: string
+#- id: 011_a
+#  description: Incorrect named delimiter param gives null
+#  tests:
+#    - feel-expression: 'string join(list: ["a","c"], delimitr: "X")'
+#      expected:
+#        result:
+#          value: null
+#- id: 011_b
+#  description: Incorrect named list param gives null
+#  tests:
+#    - feel-expression: 'string join(lst: ["a","c"], delimiter: "X")'
+#      expected:
+#        result:
+#          value: null
+#- id: 012_a
+#  description: null list gives null
+#  tests:
+#    - feel-expression: string join(null)
+#      expected:
+#        result:
+#          value: null
+#- id: 012_b
+#  description: null list gives null (with delimiter)
+#  tests:
+#    - feel-expression: string join(null, "X")
+#      expected:
+#        result:
+#          value: null
+#- id: "013"
+#  description: Incorrect list type gives null
+#  tests:
+#    - feel-expression: string join([1,2,3], "X")
+#      expected:
+#        result:
+#          value: null
+#- id: "014"
+#  description: Non-list non-string list param gives null
+#  tests:
+#    - feel-expression: string join(123, "X")
+#      expected:
+#        result:
+#          value: null
+#- id: "015"
+#  description: Non-list string list param is coerced to list
+#  tests:
+#    - feel-expression: string join("a", "X")
+#      expected:
+#        result:
+#          value: a
+#          type: string
+#- id: "016"
+#  description: Non-list string named list param is coerced to list
+#  tests:
+#    - feel-expression: 'string join(list: "a", delimiter: "X")'
+#      expected:
+#        result:
+#          value: a
+#          type: string

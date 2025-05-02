@@ -1,0 +1,24 @@
+- id: decision_001
+  description: ""
+  tests:
+    - feel-expression: 1 + /* 1 + */ 1
+      expected:
+        result:
+          value: "2"
+          type: decimal
+- id: decision_002
+  description: ""
+  tests:
+    - feel-expression: "1 + // eol comment\n                1\n            "
+      expected:
+        result:
+          value: "2"
+          type: decimal
+- id: decision_003
+  description: ""
+  tests:
+    - feel-expression: "\n                /*\n                some intro waffle\n                */\n                1 + 1 // and stuff\n            "
+      expected:
+        result:
+          value: "2"
+          type: decimal

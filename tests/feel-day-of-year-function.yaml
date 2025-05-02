@@ -1,0 +1,144 @@
+- id: date_001
+  description: 'date: first day of year'
+  tests:
+    - feel-expression: day of year(@"1970-01-01")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: date_002
+  description: 'date: last day of year'
+  tests:
+    - feel-expression: day of year(@"2019-12-31")
+      expected:
+        result:
+          value: "365"
+          type: decimal
+- id: date_003
+  description: 'date: leap year has 366 days'
+  tests:
+    - feel-expression: day of year(@"2020-12-31")
+      expected:
+        result:
+          value: "366"
+          type: decimal
+- id: date_004
+  description: 'date: spec example'
+  tests:
+    - feel-expression: day of year(@"2019-09-17")
+      expected:
+        result:
+          value: "260"
+          type: decimal
+#- id: date_005
+#  description: 'date: unknown type at compile time with valid date as runtime input'
+#  tests:
+#    - feel-expression: day of year(date_input_001)
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+- id: date_006
+  description: 'date: will accept date as named param'
+  tests:
+    - feel-expression: 'day of year(date: @"2019-09-17")'
+      expected:
+        result:
+          value: "260"
+          type: decimal
+- id: datetime_001
+  description: 'datetime: first day of year'
+  tests:
+    - feel-expression: day of year(@"1970-01-01T10:10:10")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: datetime_002
+  description: 'datetime: last day of year'
+  tests:
+    - feel-expression: day of year(@"2019-12-31T10:10:10")
+      expected:
+        result:
+          value: "365"
+          type: decimal
+- id: datetime_003
+  description: 'datetime: leap year has 366 days'
+  tests:
+    - feel-expression: day of year(@"2020-12-31T10:10:10")
+      expected:
+        result:
+          value: "366"
+          type: decimal
+#- id: datetime_004
+#  description: 'datetime: unknown type at compile time with valid datetime as runtime input'
+#  tests:
+#    - feel-expression: day of year(date_input_001)
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+- id: datetime_005
+  description: 'datetime: will accept date time as named param'
+  tests:
+    - feel-expression: 'day of year(date: @"2019-09-17T10:10:10")'
+      expected:
+        result:
+          value: "260"
+          type: decimal
+#- id: null_001
+#  description: null param gives null result
+#  tests:
+#    - feel-expression: day of year(null)
+#      expected:
+#        result:
+#          value: null
+#- id: null_002
+#  description: no param gives null result
+#  tests:
+#    - feel-expression: day of year()
+#      expected:
+#        result:
+#          value: null
+#- id: null_003
+#  description: invalid param type gives null result
+#  tests:
+#    - feel-expression: day of year("foo")
+#      expected:
+#        result:
+#          value: null
+#- id: null_004
+#  description: null value named param gives null result
+#  tests:
+#    - feel-expression: 'day of year(date: null)'
+#      expected:
+#        result:
+#          value: null
+#- id: null_005
+#  description: invalid type as named param gives null result
+#  tests:
+#    - feel-expression: 'day of year(date: "foo")'
+#      expected:
+#        result:
+#          value: null
+#- id: null_006
+#  description: invalidly named param gives null result
+#  tests:
+#    - feel-expression: 'day of year(value: @"1970-01-01")'
+#      expected:
+#        result:
+#          value: null
+#- id: null_007
+#  description: unknown type at compile time with invalid type as runtime input
+#  tests:
+#    - feel-expression: day of year(date_input_001)
+#      expected:
+#        result:
+#          value: null
+#- id: null_008
+#  description: too many params gives null result
+#  tests:
+#    - feel-expression: day of year(@"1970-01-01", @"1970-01-01")
+#      expected:
+#        result:
+#          value: null

@@ -1,0 +1,135 @@
+- id: "001"
+  description: Will merge a context
+  tests:
+    - feel-expression: 'context merge([{"a": 1}])'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "1"
+                type: decimal
+- id: 001_a
+  description: Will merge empty context
+  tests:
+    - feel-expression: context merge([{}]) = {}
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: "002"
+  description: Will merge multiple contexts
+  tests:
+    - feel-expression: 'context merge([{"a": 1}, {"b": 2}])'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "1"
+                type: decimal
+          - name: b
+            expected:
+              result:
+                value: "2"
+                type: decimal
+- id: "003"
+  description: Will overwrite existing context entry
+  tests:
+    - feel-expression: 'context merge([{"a": 1}, {"a": 2}])'
+      expected:
+        components:
+          - name: a
+            expected:
+              result:
+                value: "2"
+                type: decimal
+- id: "004"
+  description: Will overwrite (not merge) nested contexts
+  tests:
+    - feel-expression: 'context merge([{"a": {"aa": 1}}, {"a": {"bb": 2}}])'
+      expected:
+        components:
+          - name: a
+            expected:
+              components:
+                - name: bb
+                  expected:
+                    result:
+                      value: "2"
+                      type: decimal
+#- id: "005"
+#  description: Null contexts param gives null
+#  tests:
+#    - feel-expression: context merge(null)
+#      expected:
+#        result:
+#          value: null
+#- id: "006"
+#  description: Too few params gives null
+#  tests:
+#    - feel-expression: context merge()
+#      expected:
+#        result:
+#          value: null
+#- id: "007"
+#  description: Too many params gives null
+#  tests:
+#    - feel-expression: context merge([],"foo")
+#      expected:
+#        result:
+#          value: null
+#- id: "008"
+#  description: named params
+#  tests:
+#    - feel-expression: 'context merge(contexts: [{"a": 1}])'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "1"
+#                type: decimal
+#- id: "009"
+#  description: Incorrect named param gives null
+#  tests:
+#    - feel-expression: 'context merge(context: [{"a": 1}])'
+#      expected:
+#        result:
+#          value: null
+#- id: "010"
+#  description: Incorrect 'contexts' type gives null
+#  tests:
+#    - feel-expression: context merge([1,2,3])
+#      expected:
+#        result:
+#          value: null
+#- id: "011"
+#  description: Non-context entry in 'contexts' gives null
+#  tests:
+#    - feel-expression: 'context merge([{"a": 1},2,{"b": 2}])'
+#      expected:
+#        result:
+#          value: null
+#- id: "012"
+#  description: Will coerce single context to list
+#  tests:
+#    - feel-expression: 'context merge({"a": 1})'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "1"
+#                type: decimal
+#- id: "013"
+#  description: Will coerce single name param entry to list
+#  tests:
+#    - feel-expression: 'context merge(contexts: {"a": 1})'
+#      expected:
+#        components:
+#          - name: a
+#            expected:
+#              result:
+#                value: "1"
+#                type: decimal

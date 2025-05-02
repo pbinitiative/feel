@@ -1,0 +1,48 @@
+#- id: "001"
+#  description: Tests FEEL decimal number constant
+#  tests:
+#    - feel-expression: ".872"
+#      expected:
+#        result:
+#          value: "0.872"
+#          type: decimal
+#- id: "002"
+#  description: Tests FEEL negative decimal number constant
+#  tests:
+#    - feel-expression: "-.872"
+#      expected:
+#        result:
+#          value: "-0.872"
+#          type: decimal
+- id: "004"
+  description: Tests FEEL number constant
+  tests:
+    - feel-expression: "50"
+      expected:
+        result:
+          value: "50"
+          type: decimal
+- id: "005"
+  description: Tests FEEL negative number constant
+  tests:
+    - feel-expression: "-50"
+      expected:
+        result:
+          value: "-50"
+          type: decimal
+- id: "007"
+  description: Tests FEEL decimal number constant
+  tests:
+    - feel-expression: "125.4321987654"
+      expected:
+        result:
+          value: "125.4321987654"
+          type: decimal
+- id: "008"
+  description: Tests FEEL negative decimal number constant
+  tests:
+    - feel-expression: "-125.4321987654"
+      expected:
+        result:
+          value: "-125.4321987654"
+          type: decimal

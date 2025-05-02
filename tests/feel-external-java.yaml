@@ -1,0 +1,140 @@
+#- id: boxed_001
+#  description: boxed external function definition
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "456"
+#          type: decimal
+- id: incorrect_001
+  description: no method on class
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: incorrect_002
+  description: no class
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+- id: incorrect_003
+  description: no matching signature on class
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+#- id: literal_001
+#  description: external function definition - single param
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "-0.88796890"
+#          type: decimal
+#- id: literal_002
+#  description: external function definition - two params - double
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "456.78"
+#          type: decimal
+#- id: literal_003
+#  description: external function definition overrides built in function
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "456"
+#          type: decimal
+#- id: literal_004
+#  description: external function definition - int
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "456"
+#          type: decimal
+#- id: literal_005
+#  description: external function definition - short
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "123"
+#          type: decimal
+#- id: literal_006
+#  description: external function definition - byte
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "3"
+#          type: decimal
+#- id: literal_007
+#  description: external function definition - char
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: a
+#          type: string
+- id: literal_007_a
+  description: external function definition - char
+  tests:
+    - feel-expression: ""
+      expected:
+        result:
+          value: null
+#- id: literal_008
+#  description: external function definition - long
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "456"
+#          type: decimal
+#- id: literal_009
+#  description: external function definition - float
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "456.78"
+#          type: decimal
+#- id: literal_010
+#  description: external function definition - string
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "123"
+#          type: decimal
+#- id: literal_011
+#  description: external function definition - string to float (Java float -> BigDecimal is sometimes not quite exact)
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "1234.56"
+#          type: decimal
+#- id: literal_012
+#  description: external function definition - string to double (Java double -> BigDecimal is sometimes not quite exact)
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: "1234.56"
+#          type: decimal
+#- id: varargs_001
+#  description: external function definition - varargs func
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        result:
+#          value: foo bar
+#          type: string

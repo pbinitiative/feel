@@ -1,0 +1,101 @@
+#- id: decision_001
+#  description: no param
+#  tests:
+#    - feel-expression: get value()
+#      expected:
+#        result:
+#          value: null
+#- id: decision_002
+#  description: only one param
+#  tests:
+#    - feel-expression: 'get value({a: "foo"})'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_003
+#  description: too many params
+#  tests:
+#    - feel-expression: 'get value({a: "foo"}, "a", "bar")'
+#      expected:
+#        result:
+#          value: null
+- id: decision_004
+  description: get a value
+  tests:
+    - feel-expression: 'get value({a: "foo"}, "a")'
+      expected:
+        result:
+          value: foo
+          type: string
+#- id: decision_005
+#  description: not a map as first param
+#  tests:
+#    - feel-expression: get value("foo", "foo")
+#      expected:
+#        result:
+#          value: null
+#- id: decision_006
+#  description: not a string as second param
+#  tests:
+#    - feel-expression: 'get value({a: "foo"}, 123)'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_007
+#  description: named params
+#  tests:
+#    - feel-expression: 'get value(key:"a", m:{a: "foo"})'
+#      expected:
+#        result:
+#          value: foo
+#          type: string
+#- id: decision_008
+#  description: badly named params
+#  tests:
+#    - feel-expression: 'get value(k:"a", m:{a: "foo"})'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_009
+#  description: null map param
+#  tests:
+#    - feel-expression: get value(null, "a")
+#      expected:
+#        result:
+#          value: null
+#- id: decision_010
+#  description: null key param
+#  tests:
+#    - feel-expression: 'get value({a: "foo"}, null)'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_011
+#  description: null context param
+#  tests:
+#    - feel-expression: get value(null, null)
+#      expected:
+#        result:
+#          value: null
+#- id: decision_012
+#  description: null item value stored in context
+#  tests:
+#    - feel-expression: 'get value({a: null}, "a")'
+#      expected:
+#        result:
+#          value: null
+#- id: decision_013
+#  description: non literal key of string type
+#  tests:
+#    - feel-expression: 'get value({a: "foo"}, input_001)'
+#      expected:
+#        result:
+#          value: foo
+#          type: string
+#- id: decision_014
+#  description: non literal key of incorrect type
+#  tests:
+#    - feel-expression: 'get value({a: "foo"}, input_001)'
+#      expected:
+#        result:
+#          value: null

@@ -1,0 +1,346 @@
+- id: "001"
+  description: creation of list
+  tests:
+    - feel-expression: '[1,2,3]'
+      expected:
+        results:
+          - result:
+              value: "1"
+              type: decimal
+          - result:
+              value: "2"
+              type: decimal
+          - result:
+              value: "3"
+              type: decimal
+#- id: 001_a
+#  description: creation of empty list
+#  tests:
+#    - feel-expression: '[]'
+#      expected:
+#        results: []
+#- id: "002"
+#  description: access of index 0
+#  tests:
+#    - feel-expression: '[1,2,3][0]'
+#      expected:
+#        result:
+#          value: null
+#- id: "003"
+#  description: access of index > size
+#  tests:
+#    - feel-expression: '[1,2,3][4]'
+#      expected:
+#        result:
+#          value: null
+- id: "004"
+  description: access of first element
+  tests:
+    - feel-expression: '[1,2,3][1]'
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: "005"
+  description: access of last element
+  tests:
+    - feel-expression: '[1,2,3][3]'
+      expected:
+        result:
+          value: "3"
+          type: decimal
+#- id: "006"
+#  description: access of negative element
+#  tests:
+#    - feel-expression: '[1,2,3][-1]'
+#      expected:
+#        result:
+#          value: "3"
+#          type: decimal
+#- id: "007"
+#  description: access of negative element
+#  tests:
+#    - feel-expression: '[1,2,3][-3]'
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+#- id: "008"
+#  description: access of negative element > -size
+#  tests:
+#    - feel-expression: '[1,2,3][-4]'
+#      expected:
+#        result:
+#          value: null
+#- id: "009"
+#  description: true boolean index element gives entire list
+#  tests:
+#    - feel-expression: '[1,2,3][true]'
+#      expected:
+#        results:
+#          - result:
+#              value: "1"
+#              type: decimal
+#          - result:
+#              value: "2"
+#              type: decimal
+#          - result:
+#              value: "3"
+#              type: decimal
+#- id: "010"
+#  description: false boolean index element gives empty list
+#  tests:
+#    - feel-expression: '[1,2,3][false]'
+#      expected:
+#        results: []
+#- id: "011"
+#  description: filter expression using item
+#  tests:
+#    - feel-expression: '[1,2,3][item >= 2]'
+#      expected:
+#        results:
+#          - result:
+#              value: "2"
+#              type: decimal
+#          - result:
+#              value: "3"
+#              type: decimal
+#- id: "012"
+#  description: true filter expression on non list - boolean
+#  tests:
+#    - feel-expression: true[true]
+#      expected:
+#        results:
+#          - result:
+#              value: "true"
+#              type: boolean
+#- id: "013"
+#  description: false filter expression on non list - boolean
+#  tests:
+#    - feel-expression: true[false]
+#      expected:
+#        results: []
+#- id: "014"
+#  description: true filter expression on non list - number
+#  tests:
+#    - feel-expression: 100[true]
+#      expected:
+#        results:
+#          - result:
+#              value: "100"
+#              type: decimal
+#- id: "015"
+#  description: false filter expression on non list - number
+#  tests:
+#    - feel-expression: 100[false]
+#      expected:
+#        results: []
+#- id: "016"
+#  description: true filter expression on non list - string
+#  tests:
+#    - feel-expression: '"foo"[true]'
+#      expected:
+#        results:
+#          - result:
+#              value: foo
+#              type: string
+#- id: "017"
+#  description: false filter expression on non list - string
+#  tests:
+#    - feel-expression: '"foo"[false]'
+#      expected:
+#        results: []
+#- id: "018"
+#  description: index of 1 on non list - boolean
+#  tests:
+#    - feel-expression: true[1]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: "019"
+#  description: index of 1 on non list - number
+#  tests:
+#    - feel-expression: 100[1]
+#      expected:
+#        result:
+#          value: "100"
+#          type: decimal
+#- id: "020"
+#  description: index of 1 on non list - string
+#  tests:
+#    - feel-expression: '"foo"[1]'
+#      expected:
+#        result:
+#          value: foo
+#          type: string
+#- id: "021"
+#  description: index of 0 on non list - boolean
+#  tests:
+#    - feel-expression: true[0]
+#      expected:
+#        result:
+#          value: null
+#- id: "022"
+#  description: index of 0 on non list - number
+#  tests:
+#    - feel-expression: 100[0]
+#      expected:
+#        result:
+#          value: null
+#- id: "023"
+#  description: index of 0 on non list - string
+#  tests:
+#    - feel-expression: '"foo"[0]'
+#      expected:
+#        result:
+#          value: null
+#- id: "024"
+#  description: filter on context using item
+#  tests:
+#    - feel-expression: '[{a: 1}, {a: 2}, {a: 3}][item.a >= 2]'
+#      expected:
+#        results:
+#          - components:
+#              - name: a
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+#          - components:
+#              - name: a
+#                expected:
+#                  result:
+#                    value: "3"
+#                    type: decimal
+#- id: "025"
+#  description: filter on context using property name
+#  tests:
+#    - feel-expression: '[{a: 1}, {a: 2}, {a: 3}][a >= 2]'
+#      expected:
+#        results:
+#          - components:
+#              - name: a
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+#          - components:
+#              - name: a
+#                expected:
+#                  result:
+#                    value: "3"
+#                    type: decimal
+#- id: "026"
+#  description: filter on context using property 'item' name
+#  tests:
+#    - feel-expression: '[{item: 1}, {item: 2}, {item: 3}][item >= 2]'
+#      expected:
+#        results:
+#          - components:
+#              - name: item
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+#          - components:
+#              - name: item
+#                expected:
+#                  result:
+#                    value: "3"
+#                    type: decimal
+#- id: "027"
+#  description: filter on scalars (10.3.2.5 - example 1)
+#  tests:
+#    - feel-expression: '[ 1, 2, 3, 4 ][ item > 2 ]'
+#      expected:
+#        results:
+#          - result:
+#              value: "3"
+#              type: decimal
+#          - result:
+#              value: "4"
+#              type: decimal
+#- id: "028"
+#  description: filter on property name (10.3.2.5 - example 2)
+#  tests:
+#    - feel-expression: '[ { x: 1, y: 2 }, { x: 2, y: 3 } ][ x = 1 ]'
+#      expected:
+#        results:
+#          - components:
+#              - name: x
+#                expected:
+#                  result:
+#                    value: "1"
+#                    type: decimal
+#              - name: "y"
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+#- id: "029"
+#  description: filter on property name + null value (10.3.2.5 - example 3)
+#  tests:
+#    - feel-expression: '[ { x: 1, y: 2 }, { x: null, y: 3 } ][ x < 2 ]'
+#      expected:
+#        results:
+#          - components:
+#              - name: x
+#                expected:
+#                  result:
+#                    value: "1"
+#                    type: decimal
+#              - name: "y"
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+#- id: "030"
+#  description: path expression (10.3.2.5 - example 4)
+#  tests:
+#    - feel-expression: '[ { x: 1, y: 2 }, { x: 2, y: 3 } ].y'
+#      expected:
+#        results:
+#          - result:
+#              value: "2"
+#              type: decimal
+#          - result:
+#              value: "3"
+#              type: decimal
+#- id: "031"
+#  description: filter / non-member matching (empty)
+#  tests:
+#    - feel-expression: '[ { x: 1 } ][ y > 1 ]'
+#      expected:
+#        results: []
+#- id: "032"
+#  description: filter / non-member matching (single result)
+#  tests:
+#    - feel-expression: '[ { x: 1 }, { y: 2 } ][ y > 1 ]'
+#      expected:
+#        results:
+#          - components:
+#              - name: "y"
+#                expected:
+#                  result:
+#                    value: "2"
+#                    type: decimal
+#- id: "033"
+#  description: path expression / no match
+#  tests:
+#    - feel-expression: '[ { x: 1 } ].y'
+#      expected:
+#        results:
+#          - result:
+#              value: null
+#- id: "034"
+#  description: path expression / partial match
+#  tests:
+#    - feel-expression: '[ { x: 1 }, { y: 2 } ].y'
+#      expected:
+#        results:
+#          - result:
+#              value: null
+#          - result:
+#              value: "2"
+#              type: decimal

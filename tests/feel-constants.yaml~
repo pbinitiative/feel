@@ -1,0 +1,28 @@
+- description: Tests FEEL string constants
+  tests:
+    - feel-expression: '"foo bar"'
+      expected:
+        result:
+            value: foo bar
+            type: string
+- description: Tests FEEL unicode string constant
+  tests:
+    - feel-expression: '"šomeÚnicodeŠtriňg"'
+      expected:
+        result:
+            value: šomeÚnicodeŠtriňg
+            type: string
+- description: Tests FEEL unicode string constant
+  tests:
+    - feel-expression: '"横綱"'
+      expected:
+        result:
+            value: 横綱
+            type: string
+- description: Tests FEEL long string constant
+  tests:
+    - feel-expression: '"thisIsSomeLongStringThatMustBeProcessedSoHopefullyThisTestPassWithItAndIMustWriteSomethingMoreSoItIsLongerAndLongerAndLongerAndLongerAndLongerTillItIsReallyLong"'
+      expected:
+        result:
+            value: thisIsSomeLongStringThatMustBeProcessedSoHopefullyThisTestPassWithItAndIMustWriteSomethingMoreSoItIsLongerAndLongerAndLongerAndLongerAndLongerTillItIsReallyLong
+            type: string

@@ -1,0 +1,151 @@
+- id: date_001
+  description: 'date: during year 2019-09-17'
+  tests:
+    - feel-expression: week of year(@"2019-09-17")
+      expected:
+        result:
+          value: "38"
+          type: decimal
+- id: date_002
+  description: 'date: @"2003-12-29"'
+  tests:
+    - feel-expression: week of year(@"2003-12-29")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: date_003
+  description: 'date: @"2003-12-31"'
+  tests:
+    - feel-expression: week of year(@"2003-12-31")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: date_004
+  description: 'date: @"2004-01-01"'
+  tests:
+    - feel-expression: week of year(@"2004-01-01")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: date_005
+  description: 'date: @"2010-01-01"'
+  tests:
+    - feel-expression: week of year(@"2010-01-01")
+      expected:
+        result:
+          value: "53"
+          type: decimal
+#- id: date_006
+#  description: 'date: unknown type at compile time with valid date as runtime input'
+#  tests:
+#    - feel-expression: week of year(date_input_001)
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+- id: date_007
+  description: 'date: will accept date as named param'
+  tests:
+    - feel-expression: 'week of year(date: @"2019-09-17")'
+      expected:
+        result:
+          value: "38"
+          type: decimal
+#- id: date_008
+#  description: 'date: spec examples '
+#  tests:
+#    - feel-expression: ""
+#      expected:
+#        results:
+#          - result:
+#              value: "53"
+#              type: decimal
+#          - result:
+#              value: "1"
+#              type: decimal
+#          - result:
+#              value: "1"
+#              type: decimal
+- id: datetime_001
+  description: 'datetime: first day of year'
+  tests:
+    - feel-expression: week of year(@"1970-01-01T10:10:10")
+      expected:
+        result:
+          value: "1"
+          type: decimal
+#- id: datetime_004
+#  description: 'datetime: unknown type at compile time with valid datetime as runtime input'
+#  tests:
+#    - feel-expression: week of year(date_input_001)
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+- id: datetime_005
+  description: 'datetime: will accept date time as named param'
+  tests:
+    - feel-expression: 'week of year(date: @"2019-09-17T10:10:10")'
+      expected:
+        result:
+          value: "38"
+          type: decimal
+#- id: null_001
+#  description: null param gives null result
+#  tests:
+#    - feel-expression: week of year(null)
+#      expected:
+#        result:
+#          value: null
+#- id: null_002
+#  description: no param gives null result
+#  tests:
+#    - feel-expression: week of year()
+#      expected:
+#        result:
+#          value: null
+#- id: null_003
+#  description: invalid param type gives null result
+#  tests:
+#    - feel-expression: week of year("foo")
+#      expected:
+#        result:
+#          value: null
+#- id: null_004
+#  description: null value named param gives null result
+#  tests:
+#    - feel-expression: 'week of year(date: null)'
+#      expected:
+#        result:
+#          value: null
+#- id: null_005
+#  description: invalid type as named param gives null result
+#  tests:
+#    - feel-expression: 'week of year(date: "foo")'
+#      expected:
+#        result:
+#          value: null
+#- id: null_006
+#  description: invalidly named param gives null result
+#  tests:
+#    - feel-expression: 'week of year(value: @"1970-01-01")'
+#      expected:
+#        result:
+#          value: null
+#- id: null_007
+#  description: unknown type at compile time with invalid type as runtime input
+#  tests:
+#    - feel-expression: week of year(date_input_001)
+#      expected:
+#        result:
+#          value: null
+#- id: null_008
+#  description: too many params gives null result
+#  tests:
+#    - feel-expression: week of year(@"1970-01-01", @"1970-01-01")
+#      expected:
+#        result:
+#          value: null

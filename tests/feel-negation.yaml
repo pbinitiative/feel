@@ -1,0 +1,44 @@
+- id: "001"
+  description: ""
+  tests:
+    - feel-expression: not(true)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: "002"
+  description: ""
+  tests:
+    - feel-expression: not(false)
+      expected:
+        result:
+          value: "true"
+          type: boolean
+#- id: 003_a
+#  description: ""
+#  tests:
+#    - feel-expression: not(null)
+#      expected:
+#        result:
+#          value: null
+#- id: 003_b
+#  description: ""
+#  tests:
+#    - feel-expression: not(0)
+#      expected:
+#        result:
+#          value: null
+#- id: 003_c
+#  description: ""
+#  tests:
+#    - feel-expression: not(1)
+#      expected:
+#        result:
+#          value: null
+#- id: 003_d
+#  description: ""
+#  tests:
+#    - feel-expression: not("true")
+#      expected:
+#        result:
+#          value: null

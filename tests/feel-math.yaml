@@ -1,0 +1,255 @@
+- id: "001"
+  description: Tests FEEL addition of number literals
+  tests:
+    - feel-expression: 10+5
+      expected:
+        result:
+          value: "15"
+          type: decimal
+- id: "002"
+  description: Tests FEEL addition of negative number literals
+  tests:
+    - feel-expression: -10+-5
+      expected:
+        result:
+          value: "-15"
+          type: decimal
+- id: "003"
+  description: Tests FEEL addition of negative number literals with brakets
+  tests:
+    - feel-expression: (-10)+(-5)
+      expected:
+        result:
+          value: "-15"
+          type: decimal
+#- id: "004"
+#  description: Tests FEEL subtraction of number literals
+#  tests:
+#    - feel-expression: 10-5
+#      expected:
+#        result:
+#          value: "5"
+#          type: decimal
+- id: "005"
+  description: Tests FEEL subtraction of negative number literals
+  tests:
+    - feel-expression: -10--5
+      expected:
+        result:
+          value: "-5"
+          type: decimal
+- id: "006"
+  description: Tests FEEL subtraction of negative number literals with brakets
+  tests:
+    - feel-expression: (-10)-(-5)
+      expected:
+        result:
+          value: "-5"
+          type: decimal
+- id: "007"
+  description: Tests FEEL addition and subtraction of number literals with brakets
+  tests:
+    - feel-expression: (10+20)-(-5+3)
+      expected:
+        result:
+          value: "32"
+          type: decimal
+- id: "008"
+  description: Tests FEEL multiplication of number literals
+  tests:
+    - feel-expression: 10*5
+      expected:
+        result:
+          value: "50"
+          type: decimal
+- id: "009"
+  description: Tests FEEL multiplication of negative number literals
+  tests:
+    - feel-expression: -10*-5
+      expected:
+        result:
+          value: "50"
+          type: decimal
+- id: "010"
+  description: Tests FEEL multiplication of negative number literals with brakets
+  tests:
+    - feel-expression: (-10)*(-5)
+      expected:
+        result:
+          value: "50"
+          type: decimal
+- id: "011"
+  description: Tests FEEL addition and multiplication of number literals with brakets
+  tests:
+    - feel-expression: (10+5)*(-5*3)
+      expected:
+        result:
+          value: "-225"
+          type: decimal
+- id: "012"
+  description: Tests FEEL division of number literals
+  tests:
+    - feel-expression: 10/5
+      expected:
+        result:
+          value: "2"
+          type: decimal
+- id: "013"
+  description: Tests FEEL division of negative number literals
+  tests:
+    - feel-expression: -10/-5
+      expected:
+        result:
+          value: "2"
+          type: decimal
+- id: "014"
+  description: Tests FEEL division of negative number literals with brakets
+  tests:
+    - feel-expression: (-10)/(-5)
+      expected:
+        result:
+          value: "2"
+          type: decimal
+- id: "015"
+  description: Tests FEEL addition and division of number literals with brakets
+  tests:
+    - feel-expression: (10+20)/(-5*3)
+      expected:
+        result:
+          value: "-2"
+          type: decimal
+#- id: "016"
+#  description: Tests FEEL division by zero
+#  tests:
+#    - feel-expression: (10+20)/0
+#      expected:
+#        result:
+#          value: null
+#- id: "017"
+#  description: Tests FEEL potency of number literal
+#  tests:
+#    - feel-expression: 10**5
+#      expected:
+#        result:
+#          value: "100000"
+#          type: decimal
+#- id: "018"
+#  description: Tests FEEL negative potency of number literal
+#  tests:
+#    - feel-expression: 10**-5
+#      expected:
+#        result:
+#          value: "0.00001"
+#          type: decimal
+#- id: "019"
+#  description: Tests FEEL potency of number literal with brakets
+#  tests:
+#    - feel-expression: (5+2)**5
+#      expected:
+#        result:
+#          value: "16807"
+#          type: decimal
+#- id: "020"
+#  description: Tests FEEL addition and potency of number literals
+#  tests:
+#    - feel-expression: 5+2**5
+#      expected:
+#        result:
+#          value: "37"
+#          type: decimal
+#- id: "021"
+#  description: Tests FEEL addition and potency of number literals
+#  tests:
+#    - feel-expression: 5+2**5+3
+#      expected:
+#        result:
+#          value: "40"
+#          type: decimal
+#- id: "022"
+#  description: Tests FEEL addition and potency of number literals with brakets
+#  tests:
+#    - feel-expression: 5+2**(5+3)
+#      expected:
+#        result:
+#          value: "261"
+#          type: decimal
+#- id: "023"
+#  description: Tests FEEL addition with null
+#  tests:
+#    - feel-expression: 10+null
+#      expected:
+#        result:
+#          value: null
+#- id: "024"
+#  description: Tests FEEL addition with null
+#  tests:
+#    - feel-expression: null + 10
+#      expected:
+#        result:
+#          value: null
+#- id: "025"
+#  description: Tests FEEL subtraction with null
+#  tests:
+#    - feel-expression: 10 - null
+#      expected:
+#        result:
+#          value: null
+#- id: "026"
+#  description: Tests FEEL subtraction with null
+#  tests:
+#    - feel-expression: null - 10
+#      expected:
+#        result:
+#          value: null
+#- id: "027"
+#  description: Tests FEEL multiplication with null
+#  tests:
+#    - feel-expression: 10 * null
+#      expected:
+#        result:
+#          value: null
+#- id: "028"
+#  description: Tests FEEL multiplication with null
+#  tests:
+#    - feel-expression: null * 10
+#      expected:
+#        result:
+#          value: null
+#- id: "029"
+#  description: Tests FEEL division with null
+#  tests:
+#    - feel-expression: 10 / null
+#      expected:
+#        result:
+#          value: null
+#- id: "030"
+#  description: Tests FEEL division with null
+#  tests:
+#    - feel-expression: null / 10
+#      expected:
+#        result:
+#          value: null
+- id: "031"
+  description: Tests FEEL arithmetics with spaces between number literals
+  tests:
+    - feel-expression: 10 + 20 / -5 - 3
+      expected:
+        result:
+          value: "3"
+          type: decimal
+#- id: "032"
+#  description: Tests FEEL arithmetics with spaces between number literals and brakets
+#  tests:
+#    - feel-expression: 10 + 20 / (-5 - 3)
+#      expected:
+#        result:
+#          value: "7.5"
+#          type: decimal
+#- id: "033"
+#  description: Tests FEEL arithmetics with decimal number literals
+#  tests:
+#    - feel-expression: 1.2*10**3
+#      expected:
+#        result:
+#          value: "1200"
+#          type: decimal

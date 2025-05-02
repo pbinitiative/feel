@@ -1,0 +1,2192 @@
+- id: number_001
+  description: 'number: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: 1 in [2,3,1]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_001_a
+  description: 'number: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: 1 in [2,3,4]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: number_002
+#  description: 'number: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: 1 in [[2..4], [1..3]]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: number_002_a
+  description: 'number: e1 in [e2,e3,…] (ranges)'
+  tests:
+    - feel-expression: 5 in [[2..4], [1..3]]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: number_003
+#  description: 'number: e1 in <=e2'
+#  tests:
+#    - feel-expression: 1 in <= 10
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_003_1
+#  description: 'number: e1 in <=e2'
+#  tests:
+#    - feel-expression: 10 in <= 10
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_003_a
+#  description: 'number: e1 in <=e2'
+#  tests:
+#    - feel-expression: 11 in <= 10
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: number_004
+#  description: 'number: e1 in <e2'
+#  tests:
+#    - feel-expression: 1 in < 10
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_004_a
+#  description: 'number: e1 in <e2'
+#  tests:
+#    - feel-expression: 10 in < 10
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: number_005
+#  description: 'number: e1 in >=e2'
+#  tests:
+#    - feel-expression: 11 in >= 10
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_005_1
+#  description: 'number: e1 in >=e2'
+#  tests:
+#    - feel-expression: 10 in >= 10
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_005_a
+#  description: 'number: e1 in >=e2'
+#  tests:
+#    - feel-expression: 9 in >= 10
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: number_006
+#  description: 'number: e1 in >e2'
+#  tests:
+#    - feel-expression: 11 in > 10
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_006_a
+#  description: 'number: e1 in >e2'
+#  tests:
+#    - feel-expression: 10 in > 10
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: number_007_a
+  description: 'number: e1 in (e2..e3)'
+  tests:
+    - feel-expression: 1 in (2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_007_b
+  description: 'number: e1 in (e2..e3)'
+  tests:
+    - feel-expression: 2 in (2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_007_c
+  description: 'number: e1 in (e2..e3)'
+  tests:
+    - feel-expression: 3 in (2..4)
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_007_d
+  description: 'number: e1 in (e2..e3)'
+  tests:
+    - feel-expression: 4 in (2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_007_e
+  description: 'number: e1 in (e2..e3)'
+  tests:
+    - feel-expression: 5 in (2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_008_a
+  description: 'number: e1 in (e2..e3]'
+  tests:
+    - feel-expression: 1 in (2..4]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_008_b
+  description: 'number: e1 in (e2..e3]'
+  tests:
+    - feel-expression: 2 in (2..4]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_008_c
+  description: 'number: e1 in (e2..e3]'
+  tests:
+    - feel-expression: 3 in (2..4]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_008_d
+  description: 'number: e1 in (e2..e3]'
+  tests:
+    - feel-expression: 4 in (2..4]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_008_e
+  description: 'number: e1 in (e2..e3]'
+  tests:
+    - feel-expression: 5 in (2..4]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_009_a
+  description: 'number: e1 in [e2..e3)'
+  tests:
+    - feel-expression: 1 in [2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_009_b
+  description: 'number: e1 in [e2..e3)'
+  tests:
+    - feel-expression: 2 in [2..4)
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_009_c
+  description: 'number: e1 in [e2..e3)'
+  tests:
+    - feel-expression: 3 in [2..4)
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_009_d
+  description: 'number: e1 in [e2..e3)'
+  tests:
+    - feel-expression: 4 in [2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_009_e
+  description: 'number: e1 in [e2..e3)'
+  tests:
+    - feel-expression: 5 in [2..4)
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_010_a
+  description: 'number: e1 in [e2..e3]'
+  tests:
+    - feel-expression: 1 in [2..4]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: number_010_b
+  description: 'number: e1 in [e2..e3]'
+  tests:
+    - feel-expression: 2 in [2..4]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_010_c
+  description: 'number: e1 in [e2..e3]'
+  tests:
+    - feel-expression: 3 in [2..4]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_010_d
+  description: 'number: e1 in [e2..e3]'
+  tests:
+    - feel-expression: 4 in [2..4]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: number_010_e
+  description: 'number: e1 in [e2..e3]'
+  tests:
+    - feel-expression: 5 in [2..4]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: number_011
+#  description: 'number: e1 in e2'
+#  tests:
+#    - feel-expression: 1 in 1
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_014
+#  description: 'number: e1 in unary tests'
+#  tests:
+#    - feel-expression: 10 in (1, < 5, >=10)
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: number_014_a
+#  description: 'number: e1 in unary tests'
+#  tests:
+#    - feel-expression: 10 in (1, 5, 9)
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: string_001
+  description: 'string: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: '"a" in ["b","c","a"]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_001_a
+  description: 'string: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: '"a" in ["b","c","d"]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: string_002
+#  description: 'string: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: '"b" in [["f".."h"], ["a".."c"]]'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: string_002_a
+  description: 'string: e1 in [e2,e3,…] (ranges)'
+  tests:
+    - feel-expression: '"i" in [["f".."h"], ["a".."c"]]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: string_003
+#  description: 'string: e1 in <=e2'
+#  tests:
+#    - feel-expression: '"a" in <= "b"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_003_1
+#  description: 'string: e1 in <=e2'
+#  tests:
+#    - feel-expression: '"b" in <= "b"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_003_a
+#  description: 'string: e1 in <=e2'
+#  tests:
+#    - feel-expression: '"c" in <= "b"'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: string_004
+#  description: 'string: e1 in <e2'
+#  tests:
+#    - feel-expression: '"a" in < "b"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_004_a
+#  description: 'string: e1 in <e2'
+#  tests:
+#    - feel-expression: '"b" in < "b"'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: string_005
+#  description: 'string: e1 in >=e2'
+#  tests:
+#    - feel-expression: '"b" in >= "a"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_005_1
+#  description: 'string: e1 in >=e2'
+#  tests:
+#    - feel-expression: '"b" in >= "b"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_005_a
+#  description: 'string: e1 in >=e2'
+#  tests:
+#    - feel-expression: '"a" in >= "b"'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: string_006
+#  description: 'string: e1 in >e2'
+#  tests:
+#    - feel-expression: '"b" in > "a"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_006_a
+#  description: 'string: e1 in >e2'
+#  tests:
+#    - feel-expression: '"b" in > "b"'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: string_007_a
+  description: 'string: e1 in (e2..e3)'
+  tests:
+    - feel-expression: '"a" in ("b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_007_b
+  description: 'string: e1 in (e2..e3)'
+  tests:
+    - feel-expression: '"b" in ("b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_007_c
+  description: 'string: e1 in (e2..e3)'
+  tests:
+    - feel-expression: '"c" in ("b".."d")'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_007_d
+  description: 'string: e1 in (e2..e3)'
+  tests:
+    - feel-expression: '"d" in ("b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_007_e
+  description: 'string: e1 in (e2..e3)'
+  tests:
+    - feel-expression: '"e" in ("b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_008_a
+  description: 'string: e1 in (e2..e3]'
+  tests:
+    - feel-expression: '"a" in ("b".."d"]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_008_b
+  description: 'string: e1 in (e2..e3]'
+  tests:
+    - feel-expression: '"b" in ("b".."d"]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_008_c
+  description: 'string: e1 in (e2..e3]'
+  tests:
+    - feel-expression: '"c" in ("b".."d"]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_008_d
+  description: 'string: e1 in (e2..e3]'
+  tests:
+    - feel-expression: '"d" in ("b".."d"]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_008_e
+  description: 'string: e1 in (e2..e3]'
+  tests:
+    - feel-expression: '"e" in ("b".."d"]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_009_a
+  description: 'string: e1 in [e2..e3)'
+  tests:
+    - feel-expression: '"a" in ["b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_009_b
+  description: 'string: e1 in [e2..e3)'
+  tests:
+    - feel-expression: '"b" in ["b".."d")'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_009_c
+  description: 'string: e1 in [e2..e3)'
+  tests:
+    - feel-expression: '"c" in ["b".."d")'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_009_d
+  description: 'string: e1 in [e2..e3)'
+  tests:
+    - feel-expression: '"d" in ["b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_009_e
+  description: 'string: e1 in [e2..e3)'
+  tests:
+    - feel-expression: '"e" in ["b".."d")'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_010_a
+  description: 'string: e1 in [e2..e3]'
+  tests:
+    - feel-expression: '"a" in ["b".."d"]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: string_010_b
+  description: 'string: e1 in [e2..e3]'
+  tests:
+    - feel-expression: '"b" in ["b".."d"]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_010_c
+  description: 'string: e1 in [e2..e3]'
+  tests:
+    - feel-expression: '"c" in ["b".."d"]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_010_d
+  description: 'string: e1 in [e2..e3]'
+  tests:
+    - feel-expression: '"d" in ["b".."d"]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: string_010_e
+  description: 'string: e1 in [e2..e3]'
+  tests:
+    - feel-expression: '"e" in ["b".."d"]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: string_011
+#  description: 'string: e1 in e2'
+#  tests:
+#    - feel-expression: '"a" in "a"'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_014
+#  description: 'string: e1 in unary tests'
+#  tests:
+#    - feel-expression: '"d" in ("c", < "c", >="d")'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: string_014_a
+#  description: 'string: e1 in unary tests'
+#  tests:
+#    - feel-expression: '"d" in ("c", >="e")'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: boolean_001
+  description: 'boolean: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: true in [true, false]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: boolean_001_a
+  description: 'boolean: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: true in [false, 2, 3]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: boolean_011
+#  description: 'boolean: e1 in e2'
+#  tests:
+#    - feel-expression: true in true
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: boolean_014
+#  description: 'boolean: e1 in unary tests'
+#  tests:
+#    - feel-expression: true in (false, true)
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: boolean_014_a
+#  description: 'boolean: e1 in unary tests'
+#  tests:
+#    - feel-expression: true in (false, false)
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_001
+#  description: 'date: e1 in [e2,e3,…] (endpoints)'
+#  tests:
+#    - feel-expression: date("2018-12-08") in [date("2018-12-08"),date("2018-12-09"),date("2018-12-10")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_001_a
+#  description: 'date: e1 in [e2,e3,…] (endpoints)'
+#  tests:
+#    - feel-expression: date("2018-12-11") in [date("2018-12-08"),date("2018-12-09"),date("2018-12-10")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_002
+#  description: 'date: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: date("2018-12-11") in [[date("2018-12-05") .. date("2018-12-07")], [date("2018-12-10") .. date("2018-12-12")]]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: date_002_a
+  description: 'date: e1 in [e2,e3,…] (ranges)'
+  tests:
+    - feel-expression: date("2018-12-04") in [[date("2018-12-05") .. date("2018-12-07")], [date("2018-12-10") .. date("2018-12-12")]]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: date_003
+#  description: 'date: e1 in <=e2'
+#  tests:
+#    - feel-expression: date("2018-12-04") in <= date("2018-12-05")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_003_1
+#  description: 'date: e1 in <=e2'
+#  tests:
+#    - feel-expression: date("2018-12-04") in <= date("2018-12-04")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_003_a
+#  description: 'date: e1 in <=e2'
+#  tests:
+#    - feel-expression: date("2018-12-05") in <= date("2018-12-04")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_004
+#  description: 'date: e1 in <e2'
+#  tests:
+#    - feel-expression: date("2018-12-01") in < date("2018-12-10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_004_a
+#  description: 'date: e1 in <e2'
+#  tests:
+#    - feel-expression: date("2018-12-10") in < date("2018-12-10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_005
+#  description: 'date: e1 in >=e2'
+#  tests:
+#    - feel-expression: date("2018-12-11") in >= date("2018-12-10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_005_1
+#  description: 'date: e1 in >=e2'
+#  tests:
+#    - feel-expression: date("2018-12-10") in >= date("2018-12-10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_005_a
+#  description: 'string: e1 in >=e2'
+#  tests:
+#    - feel-expression: date("2018-12-09") in >= date("2018-12-10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_006
+#  description: 'date: e1 in >e2'
+#  tests:
+#    - feel-expression: date("2018-12-11") in > date("2018-12-10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_006_a
+#  description: 'string: e1 in >e2'
+#  tests:
+#    - feel-expression: date("2018-12-10") in > date("2018-12-10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_007_a
+#  description: 'date: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-01") in (date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_007_b
+#  description: 'date: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-02") in (date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_007_c
+#  description: 'date: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-03") in (date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_007_d
+#  description: 'date: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-04") in (date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_007_e
+#  description: 'date: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-05") in (date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_008_a
+#  description: 'date: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-01") in (date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_008_b
+#  description: 'date: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-02") in (date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_008_c
+#  description: 'date: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-03") in (date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_008_d
+#  description: 'date: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-04") in (date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_008_e
+#  description: 'date: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-05") in (date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_009_a
+#  description: 'date: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-01") in [date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_009_b
+#  description: 'date: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-02") in [date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_009_c
+#  description: 'date: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-03") in [date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_009_d
+#  description: 'date: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-04") in [date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_009_e
+#  description: 'date: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: date("2018-12-05") in [date("2018-12-02")..date("2018-12-04"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_010_a
+#  description: 'date: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-01") in [date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_010_b
+#  description: 'date: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-02") in [date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_010_c
+#  description: 'date: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-03") in [date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_010_d
+#  description: 'date: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-04") in [date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_010_e
+#  description: 'date: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: date("2018-12-05") in [date("2018-12-02")..date("2018-12-04")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: date_011
+#  description: 'date: e1 in e2'
+#  tests:
+#    - feel-expression: date("2018-12-05") in date("2018-12-05")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_014
+#  description: 'date: e1 in unary tests'
+#  tests:
+#    - feel-expression: date("2018-12-05") in (date("2018-12-04"), >=date("2018-12-05"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: date_014_a
+#  description: 'date: e1 in unary tests'
+#  tests:
+#    - feel-expression: date("2018-12-05") in (date("2018-12-04"), >=date("2018-12-06"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: time_001
+#  description: 'time: e1 in [e2,e3,…] (endpoints)'
+#  tests:
+#    - feel-expression: time("10:30:08") in [time("10:30:08"),time("10:30:09"),time("10:30:10")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_001_a
+#  description: 'time: e1 in [e2,e3,…] (endpoints)'
+#  tests:
+#    - feel-expression: time("10:30:11") in [time("10:30:08"),time("10:30:09"),time("10:30:10")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: time_002
+#  description: 'time: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: time("10:30:11") in [[time("10:30:05") .. time("10:30:07")], [time("10:30:10") .. time("10:30:12")]]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: time_002_a
+  description: 'time: e1 in [e2,e3,…] (ranges)'
+  tests:
+    - feel-expression: time("10:30:04") in [[time("10:30:05") .. time("10:30:07")], [time("10:30:10") .. time("10:30:12")]]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: time_003
+#  description: 'time: e1 in <=e2'
+#  tests:
+#    - feel-expression: time("10:30:04") in <= time("10:30:05")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_003_1
+#  description: 'time: e1 in <=e2'
+#  tests:
+#    - feel-expression: time("10:30:04") in <= time("10:30:04")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_003_a
+#  description: 'time: e1 in <=e2'
+#  tests:
+#    - feel-expression: time("10:30:05") in <= time("10:30:04")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: time_004
+#  description: 'time: e1 in <e2'
+#  tests:
+#    - feel-expression: time("10:30:01") in < time("10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_004_a
+#  description: 'time: e1 in <e2'
+#  tests:
+#    - feel-expression: time("10:30:10") in < time("10:30:10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: time_005
+#  description: 'time: e1 in >=e2'
+#  tests:
+#    - feel-expression: time("10:30:11") in >= time("10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_005_1
+#  description: 'time: e1 in >=e2'
+#  tests:
+#    - feel-expression: time("10:30:10") in >= time("10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_005_a
+#  description: 'time: e1 in >=e2'
+#  tests:
+#    - feel-expression: time("10:30:09") in >= time("10:30:10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: time_006
+#  description: 'time: e1 in >e2'
+#  tests:
+#    - feel-expression: time("10:30:11") in > time("10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_006_a
+#  description: 'time: e1 in >e2'
+#  tests:
+#    - feel-expression: time("10:30:10") in > time("10:30:10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: time_007_a
+  description: 'time: e1 in (e2..e3)'
+  tests:
+    - feel-expression: time("10:30:01") in (time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_007_b
+  description: 'time: e1 in (e2..e3)'
+  tests:
+    - feel-expression: time("10:30:02") in (time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_007_c
+  description: 'time: e1 in (e2..e3)'
+  tests:
+    - feel-expression: time("10:30:03") in (time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_007_d
+  description: 'time: e1 in (e2..e3)'
+  tests:
+    - feel-expression: time("10:30:04") in (time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_007_e
+  description: 'time: e1 in (e2..e3)'
+  tests:
+    - feel-expression: time("10:30:05") in (time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_008_a
+  description: 'time: e1 in (e2..e3]'
+  tests:
+    - feel-expression: time("10:30:01") in (time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_008_b
+  description: 'time: e1 in (e2..e3]'
+  tests:
+    - feel-expression: time("10:30:02") in (time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_008_c
+  description: 'time: e1 in (e2..e3]'
+  tests:
+    - feel-expression: time("10:30:03") in (time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_008_d
+  description: 'time: e1 in (e2..e3]'
+  tests:
+    - feel-expression: time("10:30:04") in (time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_008_e
+  description: 'time: e1 in (e2..e3]'
+  tests:
+    - feel-expression: time("10:30:05") in (time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_009_a
+  description: 'time: e1 in [e2..e3)'
+  tests:
+    - feel-expression: time("10:30:01") in [time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_009_b
+  description: 'time: e1 in [e2..e3)'
+  tests:
+    - feel-expression: time("10:30:02") in [time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_009_c
+  description: 'time: e1 in [e2..e3)'
+  tests:
+    - feel-expression: time("10:30:03") in [time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_009_d
+  description: 'time: e1 in [e2..e3)'
+  tests:
+    - feel-expression: time("10:30:04") in [time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_009_e
+  description: 'time: e1 in [e2..e3)'
+  tests:
+    - feel-expression: time("10:30:05") in [time("10:30:02")..time("10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_010_a
+  description: 'time: e1 in [e2..e3]'
+  tests:
+    - feel-expression: time("10:30:01") in [time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: time_010_b
+  description: 'time: e1 in [e2..e3]'
+  tests:
+    - feel-expression: time("10:30:02") in [time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_010_c
+  description: 'time: e1 in [e2..e3]'
+  tests:
+    - feel-expression: time("10:30:03") in [time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_010_d
+  description: 'time: e1 in [e2..e3]'
+  tests:
+    - feel-expression: time("10:30:04") in [time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: time_010_e
+  description: 'time: e1 in [e2..e3]'
+  tests:
+    - feel-expression: time("10:30:05") in [time("10:30:02")..time("10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: time_011
+#  description: 'time: e1 in e2'
+#  tests:
+#    - feel-expression: time("10:30:05") in time("10:30:05")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_014
+#  description: 'time: e1 in unary tests'
+#  tests:
+#    - feel-expression: time("10:30:05") in (time("10:30:04"), >=time("10:30:05"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: time_014_a
+#  description: 'time: e1 in unary tests'
+#  tests:
+#    - feel-expression: time("10:30:05") in (time("10:30:04"), >=time("10:30:06"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: dateTime_001
+  description: 'dateTime: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:08") in [date and time("2018-12-08T10:30:08"),date and time("2018-12-08T10:30:09"),date and time("2018-12-08T10:30:10")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_001_a
+  description: 'dateTime: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:11") in [date and time("2018-12-08T10:30:08"),date and time("2018-12-08T10:30:09"),date and time("2018-12-08T10:30:10")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: dateTime_002
+#  description: 'dateTime: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:11") in [[date and time("2018-12-08T10:30:05") .. date and time("2018-12-08T10:30:07")], [date and time("2018-12-08T10:30:10") .. date and time("2018-12-08T10:30:12")]]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: dateTime_002_a
+  description: 'dateTime: e1 in [e2,e3,…] (ranges)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:04") in [[date and time("2018-12-08T10:30:05") .. date and time("2018-12-08T10:30:07")], [date and time("2018-12-08T10:30:10") .. date and time("2018-12-08T10:30:12")]]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: dateTime_003
+#  description: 'dateTime: e1 in <=e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:04") in <= date and time("2018-12-08T10:30:05")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_003_1
+#  description: 'dateTime: e1 in <=e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:04") in <= date and time("2018-12-08T10:30:04")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_003_a
+#  description: 'dateTime: e1 in <=e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:05") in <= date and time("2018-12-08T10:30:04")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dateTime_004
+#  description: 'dateTime: e1 in <e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:01") in < date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_004_a
+#  description: 'dateTime: e1 in <e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:10") in < date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dateTime_005
+#  description: 'dateTime: e1 in >=e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:11") in >= date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_005_1
+#  description: 'dateTime: e1 in >=e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:10") in >= date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_005_a
+#  description: 'dateTime: e1 in >=e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:09") in >= date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dateTime_006
+#  description: 'dateTime: e1 in >e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:11") in > date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_006_a
+#  description: 'dateTime: e1 in >e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:10") in > date and time("2018-12-08T10:30:10")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: dateTime_007_a
+  description: 'dateTime: e1 in (e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:01") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_007_b
+  description: 'dateTime: e1 in (e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:02") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_007_c
+  description: 'dateTime: e1 in (e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:03") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_007_d
+  description: 'dateTime: e1 in (e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:04") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_007_e
+  description: 'dateTime: e1 in (e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:05") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_008_a
+  description: 'dateTime: e1 in (e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:01") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_008_b
+  description: 'dateTime: e1 in (e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:02") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_008_c
+  description: 'dateTime: e1 in (e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:03") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_008_d
+  description: 'dateTime: e1 in (e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:04") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_008_e
+  description: 'dateTime: e1 in (e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:05") in (date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_009_a
+  description: 'dateTime: e1 in [e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:01") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_009_b
+  description: 'dateTime: e1 in [e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:02") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_009_c
+  description: 'dateTime: e1 in [e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:03") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_009_d
+  description: 'dateTime: e1 in [e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:04") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_009_e
+  description: 'dateTime: e1 in [e2..e3)'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:05") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04"))
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_010_a
+  description: 'dateTime: e1 in [e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:01") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: dateTime_010_b
+  description: 'dateTime: e1 in [e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:02") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_010_c
+  description: 'dateTime: e1 in [e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:03") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_010_d
+  description: 'dateTime: e1 in [e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:04") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: dateTime_010_e
+  description: 'dateTime: e1 in [e2..e3]'
+  tests:
+    - feel-expression: date and time("2018-12-08T10:30:05") in [date and time("2018-12-08T10:30:02")..date and time("2018-12-08T10:30:04")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: dateTime_011
+#  description: 'dateTime: e1 in e2'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:05") in date and time("2018-12-08T10:30:05")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_014
+#  description: 'dateTime: e1 in unary tests'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:05") in (date and time("2018-12-08T10:30:04"), >=date and time("2018-12-08T10:30:05"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dateTime_014_a
+#  description: 'dateTime: e1 in unary tests'
+#  tests:
+#    - feel-expression: date and time("2018-12-08T10:30:05") in (date and time("2018-12-08T10:30:04"), >=date and time("2018-12-08T10:30:06"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: list_001
+  description: 'list: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: '[1,2,3] in [[1,2,3,4], [1,2,3]]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: list_001_a
+  description: 'list: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: '[1,2,3,5] in [[1,2,3,4], [1,2,3]]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+- id: list_011_a
+  description: 'list: e1 in e2'
+  tests:
+    - feel-expression: '[1,2,3] in [[1,2,3], [1,2,3,4]]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: list_011_b
+  description: 'list: e1 in e2'
+  tests:
+    - feel-expression: '[1,2,2] in [[1,2,3], [1,2,3,4]]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: list_014_a
+#  description: 'list: e1 in unary tests'
+#  tests:
+#    - feel-expression: '[1,2,3] in ([[1,2,3,4]], [[1,2,3,5]])'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: context_001
+  description: 'context: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: '{a: "foo"} in [{b: "bar"}, {a: "foo"}]'
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: context_001_a
+  description: 'context: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: '{c: "baz"} in [{b: "bar"}, {a: "foo"}]'
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: context_011
+#  description: 'context: e1 in e2'
+#  tests:
+#    - feel-expression: '{a: "foo"} in {a: "foo"}'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: context_014
+#  description: 'context: e1 in unary tests'
+#  tests:
+#    - feel-expression: '{a: "foo"} in ({a: "bar"}, {a: "foo"})'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: context_014_a
+#  description: 'context: e1 in unary tests'
+#  tests:
+#    - feel-expression: '{a: "foo"} in ({a: "bar"}, {a: "baz"})'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+- id: ym_duration_001
+  description: 'ym_duration: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: duration("P8Y") in [duration("P8Y"),duration("P9Y"),duration("P10Y")]
+      expected:
+        result:
+          value: "true"
+          type: boolean
+- id: ym_duration_001_a
+  description: 'ym_duration: e1 in [e2,e3,…] (endpoints)'
+  tests:
+    - feel-expression: duration("P11Y") in [duration("P8Y"),duration("P9Y"),duration("P10Y")]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: ym_duration_002
+#  description: 'ym_duration: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: duration("P11Y") in [[duration("P5Y") .. duration("P7Y")], [duration("P10Y") .. duration("P12Y")]]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+- id: ym_duration_002_a
+  description: 'ym_duration: e1 in [e2,e3,…] (ranges)'
+  tests:
+    - feel-expression: duration("P4Y") in [[duration("P5Y") .. duration("P7Y")], [duration("P10Y") .. duration("P12Y")]]
+      expected:
+        result:
+          value: "false"
+          type: boolean
+#- id: ym_duration_003
+#  description: 'ym_duration: e1 in <=e2'
+#  tests:
+#    - feel-expression: duration("P4Y") in <= duration("P5Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_003_1
+#  description: 'ym_duration: e1 in <=e2'
+#  tests:
+#    - feel-expression: duration("P4Y") in <= duration("P4Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_003_a
+#  description: 'ym_duration: e1 in <=e2'
+#  tests:
+#    - feel-expression: duration("P5Y") in <= duration("P4Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_004
+#  description: 'ym_duration: e1 in <e2'
+#  tests:
+#    - feel-expression: duration("P1Y") in < duration("P10Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_004_a
+#  description: 'ym_duration: e1 in <e2'
+#  tests:
+#    - feel-expression: duration("P10Y") in < duration("P10Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_005
+#  description: 'ym_duration: e1 in >=e2'
+#  tests:
+#    - feel-expression: duration("P11Y") in >= duration("P10Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_005_1
+#  description: 'ym_duration: e1 in >=e2'
+#  tests:
+#    - feel-expression: duration("P10Y") in >= duration("P10Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_005_a
+#  description: 'ym_duration: e1 in >=e2'
+#  tests:
+#    - feel-expression: duration("P9Y") in >= duration("P10Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_006
+#  description: 'ym_duration: e1 in >e2'
+#  tests:
+#    - feel-expression: duration("P11Y") in > duration("P10Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_006_a
+#  description: 'ym_duration: e1 in >e2'
+#  tests:
+#    - feel-expression: duration("P10Y") in > duration("P10Y")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_007_a
+#  description: 'ym_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P1Y") in (duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_007_b
+#  description: 'ym_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P2Y") in (duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_007_c
+#  description: 'ym_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P3Y") in (duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_007_d
+#  description: 'ym_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P4Y") in (duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_007_e
+#  description: 'ym_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P5Y") in (duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_008_a
+#  description: 'ym_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P1Y") in (duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_008_b
+#  description: 'ym_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P2Y") in (duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_008_c
+#  description: 'ym_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P3Y") in (duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_008_d
+#  description: 'ym_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P4Y") in (duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_008_e
+#  description: 'ym_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P5Y") in (duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_009_a
+#  description: 'ym_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P1Y") in [duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_009_b
+#  description: 'ym_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P2Y") in [duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_009_c
+#  description: 'ym_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P3Y") in [duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_009_d
+#  description: 'ym_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P4Y") in [duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_009_e
+#  description: 'ym_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P5Y") in [duration("P2Y")..duration("P4Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_010_a
+#  description: 'ym_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P1Y") in [duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_010_b
+#  description: 'ym_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P2Y") in [duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_010_c
+#  description: 'ym_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P3Y") in [duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_010_d
+#  description: 'ym_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P4Y") in [duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_010_e
+#  description: 'ym_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P5Y") in [duration("P2Y")..duration("P4Y")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: ym_duration_011
+#  description: 'ym_duration: e1 in e2'
+#  tests:
+#    - feel-expression: duration("P5Y") in duration("P5Y")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_014
+#  description: 'ym_duration: e1 in unary tests'
+#  tests:
+#    - feel-expression: duration("P5Y") in (duration("P4Y"), >=duration("P5Y"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: ym_duration_014_a
+#  description: 'ym_duration: e1 in unary tests'
+#  tests:
+#    - feel-expression: duration("P5Y") in (duration("P4Y"), >=duration("P6Y"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_001
+#  description: 'dt_duration: e1 in [e2,e3,…] (endpoints)'
+#  tests:
+#    - feel-expression: duration("P8D") in [duration("P8D"),duration("P9D"),duration("P10D")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_001_a
+#  description: 'dt_duration: e1 in [e2,e3,…] (endpoints)'
+#  tests:
+#    - feel-expression: duration("P11D") in [duration("P8D"),duration("P9D"),duration("P10D")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_002
+#  description: 'dt_duration: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: duration("P11D") in [[duration("P5D") .. duration("P7D")], [duration("P10D") .. duration("P12D")]]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_002_a
+#  description: 'dt_duration: e1 in [e2,e3,…] (ranges)'
+#  tests:
+#    - feel-expression: duration("P4D") in [[duration("P5D") .. duration("P7D")], [duration("P10D") .. duration("P12D")]]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_003
+#  description: 'dt_duration: e1 in <=e2'
+#  tests:
+#    - feel-expression: duration("P4D") in <= duration("P5D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_003_1
+#  description: 'dt_duration: e1 in <=e2'
+#  tests:
+#    - feel-expression: duration("P4D") in <= duration("P4D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_003_a
+#  description: 'dt_duration: e1 in <=e2'
+#  tests:
+#    - feel-expression: duration("P5D") in <= duration("P4D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_004
+#  description: 'dt_duration: e1 in <e2'
+#  tests:
+#    - feel-expression: duration("P1D") in < duration("P10D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_004_a
+#  description: 'dt_duration: e1 in <e2'
+#  tests:
+#    - feel-expression: duration("P10D") in < duration("P10D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_005
+#  description: 'dt_duration: e1 in >=e2'
+#  tests:
+#    - feel-expression: duration("P11D") in >= duration("P10D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_005_1
+#  description: 'dt_duration: e1 in >=e2'
+#  tests:
+#    - feel-expression: duration("P10D") in >= duration("P10D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_005_a
+#  description: 'dt_duration: e1 in >=e2'
+#  tests:
+#    - feel-expression: duration("P9D") in >= duration("P10D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_006
+#  description: 'dt_duration: e1 in >e2'
+#  tests:
+#    - feel-expression: duration("P11D") in > duration("P10D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_006_a
+#  description: 'dt_duration: e1 in >e2'
+#  tests:
+#    - feel-expression: duration("P10D") in > duration("P10D")
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_007_a
+#  description: 'dt_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P1D") in (duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_007_b
+#  description: 'dt_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P2D") in (duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_007_c
+#  description: 'dt_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P3D") in (duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_007_d
+#  description: 'dt_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P4D") in (duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_007_e
+#  description: 'dt_duration: e1 in (e2..e3)'
+#  tests:
+#    - feel-expression: duration("P5D") in (duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_008_a
+#  description: 'dt_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P1D") in (duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_008_b
+#  description: 'dt_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P2D") in (duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_008_c
+#  description: 'dt_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P3D") in (duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_008_d
+#  description: 'dt_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P4D") in (duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_008_e
+#  description: 'dt_duration: e1 in (e2..e3]'
+#  tests:
+#    - feel-expression: duration("P5D") in (duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_009_a
+#  description: 'dt_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P1D") in [duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_009_b
+#  description: 'dt_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P2D") in [duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_009_c
+#  description: 'dt_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P3D") in [duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_009_d
+#  description: 'dt_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P4D") in [duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_009_e
+#  description: 'dt_duration: e1 in [e2..e3)'
+#  tests:
+#    - feel-expression: duration("P5D") in [duration("P2D")..duration("P4D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_010_a
+#  description: 'dt_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P1D") in [duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_010_b
+#  description: 'dt_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P2D") in [duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_010_c
+#  description: 'dt_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P3D") in [duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_010_d
+#  description: 'dt_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P4D") in [duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_010_e
+#  description: 'dt_duration: e1 in [e2..e3]'
+#  tests:
+#    - feel-expression: duration("P5D") in [duration("P2D")..duration("P4D")]
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: dt_duration_011
+#  description: 'dt_duration: e1 in e2'
+#  tests:
+#    - feel-expression: duration("P5D") in duration("P5D")
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_014
+#  description: 'dt_duration: e1 in unary tests'
+#  tests:
+#    - feel-expression: duration("P5D") in (duration("P4D"), >=duration("P5D"))
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: dt_duration_014_a
+#  description: 'dt_duration: e1 in unary tests'
+#  tests:
+#    - feel-expression: duration("P5D") in (duration("P4D"), >=duration("P6D"))
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean

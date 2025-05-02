@@ -1,4 +1,4 @@
-package model
+package tck
 
 import (
 	"encoding/xml"
@@ -99,13 +99,9 @@ func (simpleType *AnySimpleType) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 		return err
 	}
 	if simpleTypeNode.Nil {
-		simpleType.Content = nil
+		simpleType.Content = nil // Treat empty string as nil
 	} else {
-		if simpleTypeNode.Value != "" {
-			simpleType.Content = &simpleTypeNode.Value
-		} else {
-			simpleType.Content = nil // Treat empty string as nil
-		}
+		simpleType.Content = &simpleTypeNode.Value
 	}
 	simpleType.Type = simpleTypeNode.Type
 	return nil

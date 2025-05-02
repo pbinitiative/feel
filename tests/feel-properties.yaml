@@ -1,0 +1,522 @@
+- id: context_001
+  description: ""
+  tests:
+    - feel-expression: '{a: "foo"}.a'
+      expected:
+        result:
+          value: foo
+          type: string
+- id: date_001
+  description: date - year
+  tests:
+    - feel-expression: date("2018-12-10").year
+      expected:
+        result:
+          value: "2018"
+          type: decimal
+#- id: date_002
+#  description: date - month
+#  tests:
+#    - feel-expression: date("2018-12-10").month
+#      expected:
+#        result:
+#            value: "12"
+#            type: decimal
+- id: date_003
+  description: date - day
+  tests:
+    - feel-expression: date("2018-12-10").day
+      expected:
+        result:
+          value: "10"
+          type: decimal
+#- id: date_004
+#  description: date - weekday
+#  tests:
+#    - feel-expression: date("2018-12-10").weekday
+#      expected:
+#        result:
+#            value: "1"
+#            type: decimal
+- id: dateTime_001
+  description: dateTime -  year
+  tests:
+    - feel-expression: date and time("2018-12-10T10:30:01").year
+      expected:
+        result:
+          value: "2018"
+          type: decimal
+#- id: dateTime_002
+#  description: dateTime -  month
+#  tests:
+#    - feel-expression: date and time("2018-12-10T10:30:01").month
+#      expected:
+#        result:
+#            value: "12"
+#            type: decimal
+- id: dateTime_003
+  description: dateTime -  day
+  tests:
+    - feel-expression: date and time("2018-12-10T10:30:01").day
+      expected:
+        result:
+          value: "10"
+          type: decimal
+#- id: dateTime_004
+#  description: dateTime -  weekday
+#  tests:
+#    - feel-expression: date and time("2018-12-10T10:30:01").weekday
+#      expected:
+#        result:
+#            value: "1"
+#            type: decimal
+- id: dateTime_005
+  description: dateTime -  hour
+  tests:
+    - feel-expression: date and time("2018-12-10T10:30:01").hour
+      expected:
+        result:
+          value: "10"
+          type: decimal
+#- id: dateTime_005_a
+#  description: dateTime -  hour when no time specified
+#  tests:
+#    - feel-expression: date and time("2018-12-10").hour
+#      expected:
+#        result:
+#            value: "0"
+#            type: decimal
+- id: dateTime_006
+  description: dateTime -  minute
+  tests:
+    - feel-expression: date and time("2018-12-10T10:30:01").minute
+      expected:
+        result:
+          value: "30"
+          type: decimal
+#- id: dateTime_006_a
+#  description: dateTime -  minute when no time specified
+#  tests:
+#    - feel-expression: date and time("2018-12-10").minute
+#      expected:
+#        result:
+#            value: "0"
+#            type: decimal
+- id: dateTime_007
+  description: dateTime -  second
+  tests:
+    - feel-expression: date and time("2018-12-10T10:30:01").second
+      expected:
+        result:
+          value: "1"
+          type: decimal
+#- id: dateTime_007_a
+#  description: dateTime -  second when no time specified
+#  tests:
+#    - feel-expression: date and time("2018-12-10").second
+#      expected:
+#        result:
+#            value: "0"
+#            type: decimal
+#- id: dateTime_008
+#  description: dateTime -  time offset when set
+#  tests:
+#    - feel-expression: date and time("2018-12-10T10:30:00+05:00").time offset
+#      expected:
+#        result:
+#            value: PT5H
+#            type: duration
+#- id: dateTime_008_a
+#  description: dateTime -  time offset when not set
+#  tests:
+#    - feel-expression: date and time("2018-12-10T10:30:00").time offset
+#      expected:
+#        result:
+#            value: null
+#- id: dateTime_009
+#  description: dateTime -  timezone when set
+#  tests:
+#    - feel-expression: date and time("2018-12-10T10:30:00@Etc/UTC").timezone
+#      expected:
+#        result:
+#            value: Etc/UTC
+#            type: string
+#- id: dateTime_009_a
+#  description: dateTime -  timezone when not set
+#  tests:
+#    - feel-expression: date and time("2018-12-10T10:30:00").timezone
+#      expected:
+#        result:
+#            value: null
+- id: time_001
+  description: time -  hour
+  tests:
+    - feel-expression: time("10:30:01").hour
+      expected:
+        result:
+          value: "10"
+          type: decimal
+- id: time_002
+  description: time -  minute
+  tests:
+    - feel-expression: time("10:30:01").minute
+      expected:
+        result:
+          value: "30"
+          type: decimal
+- id: time_003
+  description: time -  second
+  tests:
+    - feel-expression: time("10:30:01").second
+      expected:
+        result:
+          value: "1"
+          type: decimal
+#- id: time_004
+#  description: time -  time offset when set
+#  tests:
+#    - feel-expression: time("10:30:00+05:00").time offset
+#      expected:
+#        result:
+#          value: PT5H
+#          type: duration
+#- id: time_004_a
+#  description: time -  time offset when not set
+#  tests:
+#    - feel-expression: time("10:30:00").time offset
+#      expected:
+#        result:
+#          value: null
+#- id: time_005_a
+#  description: time -  timezone when not set
+#  tests:
+#    - feel-expression: time("10:30:00").timezone
+#      expected:
+#        result:
+#          value: null
+- id: ym_duration_001
+  description: ym duration -  years
+  tests:
+    - feel-expression: duration("P1Y2M").years
+      expected:
+        result:
+          value: "1"
+          type: decimal
+- id: ym_duration_001_a
+  description: ym duration - years not set
+  tests:
+    - feel-expression: duration("P2M").years
+      expected:
+        result:
+          value: "0"
+          type: decimal
+- id: ym_duration_002
+  description: ym duration - month
+  tests:
+    - feel-expression: duration("P2M").months
+      expected:
+        result:
+          value: "2"
+          type: decimal
+- id: ym_duration_002_a
+  description: ym duration - months not set
+  tests:
+    - feel-expression: duration("P1Y").months
+      expected:
+        result:
+          value: "0"
+          type: decimal
+#- id: ym_duration_003
+#  description: ym duration - days is null
+#  tests:
+#    - feel-expression: duration("P1Y").days
+#      expected:
+#        result:
+#          value: null
+#- id: ym_duration_004
+#  description: ym duration - hours is null
+#  tests:
+#    - feel-expression: duration("P1Y").hours
+#      expected:
+#        result:
+#          value: null
+#- id: ym_duration_005
+#  description: ym duration - minutes is null
+#  tests:
+#    - feel-expression: duration("P1Y").minutes
+#      expected:
+#        result:
+#          value: null
+#- id: ym_duration_006
+#  description: ym duration - seconds is null
+#  tests:
+#    - feel-expression: duration("P1Y").seconds
+#      expected:
+#        result:
+#          value: null
+#- id: dt_duration_001
+#  description: dt duration - years is null
+#  tests:
+#    - feel-expression: duration("P1D").years
+#      expected:
+#        result:
+#            value: null
+#- id: dt_duration_002
+#  description: dt duration - months is null
+#  tests:
+#    - feel-expression: duration("P1D").months
+#      expected:
+#        result:
+#            value: null
+#- id: dt_duration_003
+#  description: dt duration - days
+#  tests:
+#    - feel-expression: duration("P1D").days
+#      expected:
+#        result:
+#            value: "1"
+#            type: decimal
+- id: dt_duration_003_a
+  description: dt duration - days is not set
+  tests:
+    - feel-expression: duration("PT2H").days
+      expected:
+        result:
+          value: "0"
+          type: decimal
+- id: dt_duration_004
+  description: dt duration - hours
+  tests:
+    - feel-expression: duration("PT2H").hours
+      expected:
+        result:
+          value: "2"
+          type: decimal
+#- id: dt_duration_004_a
+#  description: dt duration - hours is not set
+#  tests:
+#    - feel-expression: duration("P1D").hours
+#      expected:
+#        result:
+#          value: "0"
+#          type: decimal
+- id: dt_duration_005
+  description: dt duration - minutes
+  tests:
+    - feel-expression: duration("PT2M").minutes
+      expected:
+        result:
+          value: "2"
+          type: decimal
+#- id: dt_duration_005_a
+#  description: dt duration - minutes is not set
+#  tests:
+#    - feel-expression: duration("P1D").minutes
+#      expected:
+#        result:
+#          value: "0"
+#          type: decimal
+- id: dt_duration_006
+  description: dt duration - seconds
+  tests:
+    - feel-expression: duration("PT2S").seconds
+      expected:
+        result:
+          value: "2"
+          type: decimal
+#- id: dt_duration_006_a
+#  description: dt duration - seconds is not set
+#  tests:
+#    - feel-expression: duration("P1D").seconds
+#      expected:
+#        result:
+#          value: "0"
+#          type: decimal
+#- id: range_001
+#  description: range - start
+#  tests:
+#    - feel-expression: '[1..10].start'
+#      expected:
+#        result:
+#          value: "1"
+#          type: decimal
+#- id: range_002
+#  description: range - end
+#  tests:
+#    - feel-expression: '[1..10].end'
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: range_003
+#  description: range - start included
+#  tests:
+#    - feel-expression: '[1..10].start included'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_004
+#  description: range - start included '(' syntax
+#  tests:
+#    - feel-expression: (1..10].start included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_005
+#  description: range - start included ']' syntax
+#  tests:
+#    - feel-expression: ']1..10].start included'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_006
+#  description: range - end included
+#  tests:
+#    - feel-expression: '[1..10].end included'
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_007
+#  description: 'range - end included '')'' syntax '
+#  tests:
+#    - feel-expression: '[1..10).end included'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_008
+#  description: range - end included '[' syntax
+#  tests:
+#    - feel-expression: '[1..10[.end included'
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_009
+#  description: 'range - start: LT unary syntax'
+#  tests:
+#    - feel-expression: (< 10).start
+#      expected:
+#        result:
+#          value: null
+#- id: range_010
+#  description: 'range - start: LE unary syntax'
+#  tests:
+#    - feel-expression: (<= 10).start
+#      expected:
+#        result:
+#          value: null
+#- id: range_011
+#  description: 'range - start: GT unary syntax'
+#  tests:
+#    - feel-expression: (> 10).start
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: range_012
+#  description: 'range - start: GE unary syntax'
+#  tests:
+#    - feel-expression: (>= 10).start
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: range_013
+#  description: 'range - end: LT unary syntax'
+#  tests:
+#    - feel-expression: (< 10).end
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: range_014
+#  description: 'range - end: LE unary syntax'
+#  tests:
+#    - feel-expression: (<= 10).end
+#      expected:
+#        result:
+#          value: "10"
+#          type: decimal
+#- id: range_015
+#  description: 'range - end: GT unary syntax'
+#  tests:
+#    - feel-expression: (> 10).end
+#      expected:
+#        result:
+#          value: null
+#- id: range_016
+#  description: 'range - end: GE unary syntax'
+#  tests:
+#    - feel-expression: (>= 10).end
+#      expected:
+#        result:
+#          value: null
+#- id: range_017
+#  description: 'range - start included: LT unary syntax'
+#  tests:
+#    - feel-expression: (< 10).start included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_018
+#  description: 'range - start included: LE unary syntax'
+#  tests:
+#    - feel-expression: (<= 10).start included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_019
+#  description: 'range - start included: GT unary syntax'
+#  tests:
+#    - feel-expression: (> 10).start included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_020
+#  description: 'range - start included: GE unary syntax'
+#  tests:
+#    - feel-expression: (>= 10).start included
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_021
+#  description: 'range - end included: LT unary syntax'
+#  tests:
+#    - feel-expression: (< 10).end included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_022
+#  description: 'range - end included: LE unary syntax'
+#  tests:
+#    - feel-expression: (<= 10).end included
+#      expected:
+#        result:
+#          value: "true"
+#          type: boolean
+#- id: range_023
+#  description: 'range - end included: GT unary syntax'
+#  tests:
+#    - feel-expression: (> 10).end included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
+#- id: range_024
+#  description: 'range - end included: GE unary syntax'
+#  tests:
+#    - feel-expression: (>= 10).end included
+#      expected:
+#        result:
+#          value: "false"
+#          type: boolean
