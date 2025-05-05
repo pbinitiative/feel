@@ -1,0 +1,994 @@
+- id: during
+  tests:
+    - context:
+        - variable: duringPRT
+          feel-expression: during( 5, [1..10] )
+        - variable: duringPRF
+          feel-expression: during( 12, [1..10] )
+        - variable: duringPRT2
+          feel-expression: during( 1, [1..10] )
+        - variable: duringPRT3
+          feel-expression: during( 10, [1..10] )
+        - variable: duringPRF2
+          feel-expression: during( 1, (1..10] )
+        - variable: duringPRF3
+          feel-expression: during( 10, [1..10) )
+        - variable: duringRRT
+          feel-expression: during( [4..6], [1..10] )
+        - variable: duringRRT2
+          feel-expression: during( [1..5], [1..10] )
+        - variable: duringRRT3
+          feel-expression: during( (1..5], (1..10] )
+        - variable: duringRRT4
+          feel-expression: during( (1..10), [1..10] )
+        - variable: duringRRT5
+          feel-expression: during( [5..10), [1..10) )
+        - variable: duringRRT6
+          feel-expression: during( [1..10), [1..10] )
+        - variable: duringRRT7
+          feel-expression: during( (1..10], [1..10] )
+        - variable: duringRRT8
+          feel-expression: during( [1..10], [1..10] )
+      expected:
+        components:
+          - name: duringPRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringPRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: duringPRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringPRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringPRF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: duringPRF3
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: duringRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT4
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT5
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT6
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT7
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: duringRRT8
+            expected:
+              result:
+                value: "true"
+                type: boolean
+- id: after
+  tests:
+    - context:
+        - variable: afterPPT
+          feel-expression: after( 10, 5 )
+        - variable: afterPPF
+          feel-expression: after( 5, 10 )
+        - variable: afterPRT
+          feel-expression: after( 12, [1..10] )
+        - variable: afterPRT2
+          feel-expression: after( 10, [1..10) )
+        - variable: afterPRF
+          feel-expression: after( 10, [1..10] )
+        - variable: afterRPF
+          feel-expression: after( [11..20], 12 )
+        - variable: afterRPT
+          feel-expression: after( [11..20], 10 )
+        - variable: afterRPT2
+          feel-expression: after( (11..20], 11 )
+        - variable: afterRPF2
+          feel-expression: after( [11..20], 11 )
+        - variable: afterRRT
+          feel-expression: after( [11..20], [1..10] )
+        - variable: afterRRF
+          feel-expression: after( [1..10], [11..20] )
+        - variable: afterRRT2
+          feel-expression: after( [11..20], [1..11) )
+        - variable: afterRRT3
+          feel-expression: after( (11..20], [1..11] )
+      expected:
+        components:
+          - name: afterPPT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterPPF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: afterPRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterPRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterPRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: afterRPF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: afterRPT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterRPT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterRPF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: afterRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterRRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: afterRRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: afterRRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+- id: started by
+  tests:
+    - context:
+        - variable: startedbyRPT
+          feel-expression: started by( [1..10], 1 )
+        - variable: startedbyRPF
+          feel-expression: started by( (1..10], 1 )
+        - variable: startedbyRPF2
+          feel-expression: started by( [1..10], 2 )
+        - variable: startedbyRRT
+          feel-expression: started by( [1..10], [1..5] )
+        - variable: startedbyRRT2
+          feel-expression: started by( (1..10], (1..5] )
+        - variable: startedbyRRF
+          feel-expression: started by( [1..10], (1..5] )
+        - variable: startedbyRRF2
+          feel-expression: started by( (1..10], [1..5] )
+        - variable: startedbyRRT3
+          feel-expression: started by( [1..10], [1..10] )
+        - variable: startedbyRRT4
+          feel-expression: started by( [1..10], [1..10) )
+        - variable: startedbyRRT5
+          feel-expression: started by( (1..10), (1..10) )
+      expected:
+        components:
+          - name: startedbyRPT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startedbyRPF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startedbyRPF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startedbyRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startedbyRRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startedbyRRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startedbyRRF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startedbyRRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startedbyRRT4
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startedbyRRT5
+            expected:
+              result:
+                value: "true"
+                type: boolean
+- id: includes
+  tests:
+    - context:
+        - variable: includesRPT
+          feel-expression: includes( [1..10], 5 )
+        - variable: includesRPF
+          feel-expression: includes( [1..10], 12 )
+        - variable: includesRPT2
+          feel-expression: includes( [1..10], 1 )
+        - variable: includesRPT3
+          feel-expression: includes( [1..10], 10 )
+        - variable: includesRPF2
+          feel-expression: includes( (1..10], 1 )
+        - variable: includesRPF3
+          feel-expression: includes( [1..10), 10 )
+        - variable: includesRRT
+          feel-expression: includes( [1..10], [4..6] )
+        - variable: includesRRT2
+          feel-expression: includes( [1..10], [1..5] )
+        - variable: includesRRT3
+          feel-expression: includes( (1..10], (1..5] )
+        - variable: includesRRT4
+          feel-expression: includes( [1..10], (1..10) )
+        - variable: includesRRT5
+          feel-expression: includes( [1..10), [5..10) )
+        - variable: includesRRT6
+          feel-expression: includes( [1..10], [1..10) )
+        - variable: includesRRT7
+          feel-expression: includes( [1..10], (1..10] )
+        - variable: includesRRT8
+          feel-expression: includes( [1..10], [1..10] )
+      expected:
+        components:
+          - name: includesRPT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRPF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: includesRPT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRPT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRPF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: includesRPF3
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: includesRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT4
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT5
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT6
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT7
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: includesRRT8
+            expected:
+              result:
+                value: "true"
+                type: boolean
+- id: met by
+  tests:
+    - context:
+        - variable: metbyRRT
+          feel-expression: met by( [5..10], [1..5] )
+        - variable: metbyRRF
+          feel-expression: met by( [5..10],  [1..5) )
+        - variable: metbyRRF2
+          feel-expression: met by( (5..10], [1..5] )
+        - variable: metbyRRF3
+          feel-expression: met by( [6..10], [1..5] )
+      expected:
+        components:
+          - name: metbyRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: metbyRRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: metbyRRF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: metbyRRF3
+            expected:
+              result:
+                value: "false"
+                type: boolean
+- id: before
+  tests:
+    - context:
+        - variable: beforePPT
+          feel-expression: before( 1, 10 )
+        - variable: beforPPF
+          feel-expression: before( 10, 1 )
+        - variable: beforePRF
+          feel-expression: before( 1, [1..10] )
+        - variable: beforePRT
+          feel-expression: before( 1, (1..10] )
+        - variable: beforePRT2
+          feel-expression: before( 1, [5..10] )
+        - variable: beforeRPF
+          feel-expression: before( [1..10], 10 )
+        - variable: beforeRPT
+          feel-expression: before( [1..10), 10 )
+        - variable: beforeRPT2
+          feel-expression: before( [1..10], 15 )
+        - variable: beforeRRT
+          feel-expression: before( [1..10], [15..20] )
+        - variable: beforeRRF
+          feel-expression: before( [1..10], [10..20] )
+        - variable: beforeRRT2
+          feel-expression: before( [1..10), [10..20] )
+        - variable: beforeRRT3
+          feel-expression: before( [1..10], (10..20] )
+      expected:
+        components:
+          - name: beforePPT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforPPF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: beforePRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: beforePRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforePRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforeRPF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: beforeRPT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforeRPT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforeRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforeRRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: beforeRRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: beforeRRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+#- id: overlaps
+#  tests:
+#    - context:
+#        - variable: overlapsRRT
+#          feel-expression: overlaps( [1..5], [3..8] )
+#        - variable: overlapsRRT2
+#          feel-expression: overlaps( [3..8], [1..5] )
+#        - variable: overlapsRRT3
+#          feel-expression: overlaps( [1..8], [3..5] )
+#        - variable: overlapsRRT4
+#          feel-expression: overlaps( [3..5], [1..8] )
+#        - variable: overlapsRRF
+#          feel-expression: overlaps( [1..5], [6..8] )
+#        - variable: overlapsRRF2
+#          feel-expression: overlaps( [6..8], [1..5] )
+#        - variable: overlapsRRT5
+#          feel-expression: overlaps( [1..5], [5..8] )
+#        - variable: overlapsRRF3
+#          feel-expression: overlaps( [1..5], (5..8] )
+#        - variable: overlapsRRF4
+#          feel-expression: overlaps( [1..5), [5..8] )
+#        - variable: overlapsRRF5
+#          feel-expression: overlaps( [1..5), (5..8] )
+#        - variable: overlapsRRT6
+#          feel-expression: overlaps( [5..8], [1..5] )
+#        - variable: overlapsRRF6
+#          feel-expression: overlaps( (5..8], [1..5] )
+#        - variable: overlapsRRF7
+#          feel-expression: overlaps( [5..8], [1..5) )
+#        - variable: overlapsRRF8
+#          feel-expression: overlaps( (5..8], [1..5) )
+#      expected:
+#        components:
+#          - name: overlapsRRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsRRT2
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsRRT3
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsRRT4
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsRRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRF2
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRT5
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsRRF3
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRF4
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRF5
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRT6
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsRRF6
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRF7
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsRRF8
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#- id: overlaps before
+#  tests:
+#    - context:
+#        - variable: overlapsbeforeRRT
+#          feel-expression: overlaps before( [1..5], [3..8] )
+#        - variable: overlapsbeforeRRF
+#          feel-expression: overlaps before( [1..5], [6..8] )
+#        - variable: overlapsbeforeRRT2
+#          feel-expression: overlaps before( [1..5], [5..8] )
+#        - variable: overlapsbeforeRRF2
+#          feel-expression: overlaps before( [1..5], (5..8] )
+#        - variable: overlapsbeforeRRF3
+#          feel-expression: overlaps before( [1..5), [5..8] )
+#        - variable: overlapsbeforeRRT3
+#          feel-expression: overlaps before( [1..5), (1..5] )
+#        - variable: overlapsbeforeRRT4
+#          feel-expression: overlaps before( [1..5], (1..5] )
+#        - variable: overlapsbeforeRRF4
+#          feel-expression: overlaps before( [1..5), [1..5] )
+#        - variable: overlapsbeforeRRF5
+#          feel-expression: overlaps before( [1..5], [1..5] )
+#      expected:
+#        components:
+#          - name: overlapsbeforeRRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsbeforeRRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsbeforeRRT2
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsbeforeRRF2
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsbeforeRRF3
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsbeforeRRT3
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsbeforeRRT4
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsbeforeRRF4
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsbeforeRRF5
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#- id: finishes
+#  tests:
+#    - context:
+#        - variable: fnishesPRT
+#          feel-expression: finishes( 10, [1..10] )
+#        - variable: finishesPRF
+#          feel-expression: finishes( 10, [1..10) )
+#        - variable: finishesRRT
+#          feel-expression: finishes( [5..10], [1..10] )
+#        - variable: finishesRRF
+#          feel-expression: finishes( [5..10), [1..10] )
+#        - variable: finishesRRT2
+#          feel-expression: finishes( [5..10), [1..10) )
+#        - variable: finishesRRF2
+#          feel-expression: finishes( [1..10], [1..10] )
+#        - variable: finishesRRT3
+#          feel-expression: finishes( (1..10], [1..10] )
+#      expected:
+#        components:
+#          - name: fnishesPRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishesPRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: finishesRRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishesRRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: finishesRRT2
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishesRRF2
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishesRRT3
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#- id: finished by
+#  tests:
+#    - context:
+#        - variable: finishedbyRPT
+#          feel-expression: finished by( [1..10], 10 )
+#        - variable: finishedbyRPF
+#          feel-expression: finished by( [1..10), 10 )
+#        - variable: finishedbyRRT
+#          feel-expression: finished by( [1..10], [5..10] )
+#        - variable: finishedbyRRF
+#          feel-expression: finished by( [1..10], [5..10) )
+#        - variable: finishedbyRRT2
+#          feel-expression: finished by( [1..10), [5..10) )
+#        - variable: finishedbyRRT3
+#          feel-expression: finished by( [1..10], (1..10] )
+#        - variable: finishedbyRRT4
+#          feel-expression: finished by( [1..10], [1..10] )
+#      expected:
+#        components:
+#          - name: finishedbyRPT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishedbyRPF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: finishedbyRRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishedbyRRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: finishedbyRRT2
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishedbyRRT3
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: finishedbyRRT4
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+- id: starts
+  tests:
+    - context:
+        - variable: startsPRT
+          feel-expression: starts( 1, [1..10] )
+        - variable: startsPRF
+          feel-expression: starts( 1, (1..10] )
+        - variable: startsPRF2
+          feel-expression: starts( 2, [1..10] )
+        - variable: startsRRT
+          feel-expression: starts( [1..5], [1..10] )
+        - variable: startsRRT2
+          feel-expression: starts( (1..5], (1..10] )
+        - variable: startsRRF
+          feel-expression: starts( (1..5], [1..10] )
+        - variable: startsRRF2
+          feel-expression: starts( [1..5], (1..10] )
+        - variable: startsRRT3
+          feel-expression: starts( [1..10], [1..10] )
+        - variable: startsRRT4
+          feel-expression: starts( [1..10), [1..10] )
+        - variable: startsRRT5
+          feel-expression: starts( (1..10), (1..10) )
+      expected:
+        components:
+          - name: startsPRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startsPRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startsPRF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startsRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startsRRT2
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startsRRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startsRRF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: startsRRT3
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startsRRT4
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: startsRRT5
+            expected:
+              result:
+                value: "true"
+                type: boolean
+#- id: coincides
+#  tests:
+#    - context:
+#        - variable: coincidesPPT
+#          feel-expression: coincides( 5, 5 )
+#        - variable: coincidesPPF
+#          feel-expression: coincides( 3, 4 )
+#        - variable: coincidesRRT
+#          feel-expression: coincides( [1..5], [1..5] )
+#        - variable: coincidesRRF
+#          feel-expression: coincides( (1..5), [1..5] )
+#        - variable: coincidesRRF2
+#          feel-expression: coincides( [1..5], [2..6] )
+#      expected:
+#        components:
+#          - name: coincidesPPT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: coincidesPPF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: coincidesRRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: coincidesRRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: coincidesRRF2
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#- id: overlaps after
+#  tests:
+#    - context:
+#        - variable: overlapsafterRRT
+#          feel-expression: overlaps after( [3..8], [1..5])
+#        - variable: overlapsafterRRF
+#          feel-expression: overlaps after( [6..8], [1..5])
+#        - variable: overlapsafterRRT2
+#          feel-expression: overlaps after( [5..8], [1..5])
+#        - variable: overlapsafterRRF2
+#          feel-expression: overlaps after( (5..8], [1..5])
+#        - variable: overlapsafterRRF3
+#          feel-expression: overlaps after( [5..8], [1..5))
+#        - variable: overlapsafterRRT3
+#          feel-expression: overlaps after( (1..5], [1..5) )
+#        - variable: overlapsafterRRT4
+#          feel-expression: overlaps after( (1..5], [1..5] )
+#        - variable: overlapsafterRRF4
+#          feel-expression: overlaps after( [1..5], [1..5) )
+#        - variable: overlapsafterRRF5
+#          feel-expression: overlaps after( [1..5], [1..5] )
+#      expected:
+#        components:
+#          - name: overlapsafterRRT
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsafterRRF
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsafterRRT2
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsafterRRF2
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsafterRRF3
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsafterRRT3
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsafterRRT4
+#            expected:
+#              result:
+#                value: "true"
+#                type: boolean
+#          - name: overlapsafterRRF4
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+#          - name: overlapsafterRRF5
+#            expected:
+#              result:
+#                value: "false"
+#                type: boolean
+- id: mmets
+  tests:
+    - context:
+        - variable: meetsRRT
+          feel-expression: meets( [1..5], [5..10] )
+        - variable: meetsRRF
+          feel-expression: meets( [1..5), [5..10] )
+        - variable: meetsRRF2
+          feel-expression: meets( [1..5], (5..10] )
+        - variable: meetsRRF3
+          feel-expression: meets( [1..5], [6..10] )
+      expected:
+        components:
+          - name: meetsRRT
+            expected:
+              result:
+                value: "true"
+                type: boolean
+          - name: meetsRRF
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: meetsRRF2
+            expected:
+              result:
+                value: "false"
+                type: boolean
+          - name: meetsRRF3
+            expected:
+              result:
+                value: "false"
+                type: boolean

@@ -209,16 +209,37 @@ func compileTest(tckTestCase *tck.TestCase, dmnDecisionsMap map[string]*dmn.Deci
 	for _, tckResult := range tckTestCase.ResultNodes {
 		dmnDecision := dmnDecisionsMap[tckResult.NameAttr]
 
+		context := compileContext(dmnDecision.Context)
 		expectedResult := compileExpectedResult(tckResult.Expected)
 		tests = append(
 			tests,
 			testconfig.Test{
+				Context:        &context,
 				FeelExpression: dmnDecision.LiteralExpression,
 				ExpectedResult: expectedResult,
 			},
 		)
 	}
 	return tests
+}
+
+func compileContext(dmnContext *dmn.Context) []testconfig.ContextEntry {
+	if dmnContext == nil {
+		return nil
+	}
+
+	var contextEntries = make([]testconfig.ContextEntry, 0)
+	for _, dmnCe := range dmnContext.ContextEntries {
+		contextEntries = append(
+			contextEntries,
+			testconfig.ContextEntry{
+				Variable:       dmnCe.Variable.Name,
+				FeelExpression: dmnCe.LiteralExpression,
+			},
+		)
+	}
+
+	return contextEntries
 }
 
 // Strip namespace prefix from `valueType`, if not `nil`.
@@ -244,7 +265,6 @@ func mapDmnDecisionsByName(tckDecisions []*dmn.Decision) map[string]*dmn.Decisio
 func saveTestConfigs(testConfigs []tcktestconfig.TestConfig, outputDir string) {
 
 	for _, testConfig := range testConfigs {
-
 		testConfigFilename := strings.TrimSuffix(
 			testConfig.Model.Name,
 			filepath.Ext(testConfig.Model.Name),
@@ -263,12 +283,12 @@ func saveTestConfigs(testConfigs []tcktestconfig.TestConfig, outputDir string) {
 			os.Exit(1)
 		}
 
-		defer func(outputFile *os.File) {
+		defer func() {
 			err := outputFile.Close()
 			if err != nil {
 				printError("Error closing output file: %v\n", err)
 			}
-		}(outputFile)
+		}()
 
 		_, err = outputFile.Write(yamlData)
 		if err != nil {
