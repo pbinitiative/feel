@@ -7,13 +7,27 @@ import (
 
 type TestCase struct {
 	Id          string `yaml:"id"`
-	Description string `yaml:"description"`
+	Description string `yaml:"description,omitempty"`
 	Tests       []Test `yaml:"tests"`
 }
 
 type Test struct {
-	FeelExpression string `yaml:"feel-expression"`
+	Context        *[]ContextEntry `yaml:"context,omitempty"`
+	FeelExpression *string         `yaml:"feel-expression,omitempty"`
 	ExpectedResult `yaml:"expected"`
+}
+
+type ContextEntry struct {
+	Variable       string `xml:"variable"`
+	FeelExpression string `yaml:"feel-expression"`
+}
+
+func (ce ContextEntry) String() string {
+	return fmt.Sprintf(
+		"%s: %s",
+		ce.Variable,
+		ce.FeelExpression,
+	)
 }
 
 type ExpectedResult struct {

@@ -31,34 +31,71 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 	for _, testCase := range testCases {
 		for _, test := range testCase.Tests {
 			testName := fmt.Sprintf(
-				"description: %s, expression: %s",
+				"file: %s, id: %s, description: %s",
+				testConfigFile,
+				testCase.Id,
 				testCase.Description,
-				test.FeelExpression,
 			)
 			t.Run(testName, func(t *testing.T) {
 				log.Default().Println(testName)
 
-				result, err := SafeCall(
-					func() (any, error) {
-						return feel.EvalString(test.FeelExpression)
-					})
+				var result any
+				var err error
 
-				if err != nil {
-					t.Fatalf(
-						"Failed: %v"+
-							"\nfile: %v"+
-							"\nid: %s"+
-							"\ndescription: %s"+
-							"\nexpression: %s"+
-							"\nexpected:"+
-							"\n\t%v",
-						err,
-						testConfigFile,
-						testCase.Id,
-						testCase.Description,
-						test.FeelExpression,
-						test.ExpectedResult,
-					)
+				switch {
+				case test.Context != nil:
+					result, err = SafeCall(
+						func() (any, error) {
+							resultMap := make(map[string]any)
+							for _, ce := range *test.Context {
+								result, err := feel.EvalString(ce.FeelExpression)
+								if err != nil {
+									t.Fatalf(
+										"Failed: %v"+
+											"\nfile: %v"+
+											"\nid: %s"+
+											"\ndescription: %s"+
+											"\nvariable: %s"+
+											"\nexpression: %s"+
+											"\nexpected:"+
+											"\n\t%v",
+										err,
+										testConfigFile,
+										testCase.Id,
+										testCase.Description,
+										ce.Variable,
+										ce.FeelExpression,
+										test.ExpectedResult,
+									)
+								}
+								resultMap[ce.Variable] = result
+							}
+
+							return resultMap, nil
+						})
+				case test.FeelExpression != nil:
+					result, err = SafeCall(
+						func() (any, error) {
+							return feel.EvalString(*test.FeelExpression)
+						})
+
+					if err != nil {
+						t.Fatalf(
+							"Failed: %v"+
+								"\nfile: %v"+
+								"\nid: %s"+
+								"\ndescription: %s"+
+								"\nexpression: %s"+
+								"\nexpected:"+
+								"\n\t%v",
+							err,
+							testConfigFile,
+							testCase.Id,
+							testCase.Description,
+							*test.FeelExpression,
+							test.ExpectedResult,
+						)
+					}
 				}
 
 				expected := CreateExpected(t, test.ExpectedResult)
@@ -73,19 +110,38 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 						feel.FEELTime{},
 					),
 				)
-				assert.Empty(t, diff,
-					"\nfile: %s"+
-						"\nid: %s"+
-						"\ndescription: %s"+
-						"\nexpression: %s"+
-						"\nexpected:"+
-						"\n\t%v",
-					testConfigFile,
-					testCase.Id,
-					testCase.Description,
-					test.FeelExpression,
-					test.ExpectedResult,
-				)
+				switch {
+				case test.Context != nil:
+					assert.Empty(t, diff,
+						"file: %v"+
+							"\ntestcase:"+
+							"\n\tid: %s"+
+							"\n\tdescription: %s"+
+							"\n\tcontext: %s"+
+							"\n\texpected:"+
+							" \n\t\t%v",
+						testConfigFile,
+						testCase.Id,
+						testCase.Description,
+						*test.Context,
+						test.ExpectedResult,
+					)
+				case test.FeelExpression != nil:
+					assert.Empty(t, diff,
+						"file: %v"+
+							"\ntestcase:"+
+							"\n\tid: %s"+
+							"\n\tdescription: %s"+
+							"\n\texpression: %s"+
+							"\n\texpected:"+
+							" \n\t\t%v",
+						testConfigFile,
+						testCase.Id,
+						testCase.Description,
+						*test.FeelExpression,
+						test.ExpectedResult,
+					)
+				}
 			})
 		}
 	}

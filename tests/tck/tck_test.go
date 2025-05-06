@@ -33,38 +33,78 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 		for _, testCase := range testConfig.TestCases {
 			for _, test := range testCase.Tests {
 				testName := fmt.Sprintf(
-					"model: '%s', testCase: '%s, %s', expression: '%s'",
+					"model: '%s', testCase: {id: '%s', description: '%s'}",
 					testConfig.Model.Name,
 					testCase.Id, testCase.Description,
-					test.FeelExpression,
 				)
 				t.Run(testName, func(t *testing.T) {
 					log.Default().Println(testName)
 
-					result, err := tests.SafeCall(
-						func() (any, error) {
-							return feel.EvalString(test.FeelExpression)
-						})
+					var result any
+					var err error
 
-					if err != nil {
-						t.Fatalf(
-							"Failed: %v"+
-								"\ndir: %s"+
-								"\nmodel: %s"+
-								"\ntestcase:"+
-								"\n\tid: %s"+
-								"\n\tdescription: %s"+
-								"\n\texpression: %s"+
-								"\n\texpected:"+
-								" \n\t\t%v",
-							err,
-							testConfig.Model.Dir,
-							testConfig.Model.Name,
-							testCase.Id,
-							testCase.Description,
-							test.FeelExpression,
-							test.ExpectedResult,
-						)
+					switch {
+					case test.Context != nil:
+						result, err = tests.SafeCall(
+							func() (any, error) {
+								resultMap := make(map[string]any)
+								for _, ce := range *test.Context {
+									result, err := feel.EvalString(ce.FeelExpression)
+									if err != nil {
+
+										t.Fatalf(
+											"Failed: %v"+
+												"\ndir: %s"+
+												"\nmodel: %s"+
+												"\ntestcase:"+
+												"\n\tid: %s"+
+												"\n\tdescription: %s"+
+												"\n\tvariable: %s"+
+												"\n\texpression: %s"+
+												"\n\texpected:"+
+												" \n\t\t%v",
+											err,
+											testConfig.Model.Dir,
+											testConfig.Model.Name,
+											testCase.Id,
+											testCase.Description,
+											ce.Variable,
+											ce.FeelExpression,
+											test.ExpectedResult,
+										)
+
+									}
+									resultMap[ce.Variable] = result
+								}
+
+								return resultMap, nil
+							})
+					case test.FeelExpression != nil:
+						result, err = tests.SafeCall(
+							func() (any, error) {
+								return feel.EvalString(*test.FeelExpression)
+							})
+
+						if err != nil {
+							t.Fatalf(
+								"Failed: %v"+
+									"\ndir: %s"+
+									"\nmodel: %s"+
+									"\ntestcase:"+
+									"\n\tid: %s"+
+									"\n\tdescription: %s"+
+									"\n\texpression: %s"+
+									"\n\texpected:"+
+									" \n\t\t%v",
+								err,
+								testConfig.Model.Dir,
+								testConfig.Model.Name,
+								testCase.Id,
+								testCase.Description,
+								*test.FeelExpression,
+								test.ExpectedResult,
+							)
+						}
 					}
 
 					expected := tests.CreateExpected(t, test.ExpectedResult)
@@ -79,22 +119,43 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 							feel.FEELTime{},
 						),
 					)
-					assert.Empty(t, diff,
-						"\ndir: %s"+
-							"\nmodel: %s"+
-							"\ntestcase:"+
-							"\n\tid: %s"+
-							"\n\tdescription: %s"+
-							"\n\texpression: %s"+
-							"\n\texpected:"+
-							" \n\t\t%v",
-						testConfig.Model.Dir,
-						testConfig.Model.Name,
-						testCase.Id,
-						testCase.Description,
-						test.FeelExpression,
-						test.ExpectedResult,
-					)
+
+					switch {
+					case test.Context != nil:
+						assert.Empty(t, diff,
+							"\ndir: %s"+
+								"\nmodel: %s"+
+								"\ntestcase:"+
+								"\n\tid: %s"+
+								"\n\tdescription: %s"+
+								"\n\tcontext: %s"+
+								"\n\texpected:"+
+								" \n\t\t%v",
+							testConfig.Model.Dir,
+							testConfig.Model.Name,
+							testCase.Id,
+							testCase.Description,
+							*test.Context,
+							test.ExpectedResult,
+						)
+					case test.FeelExpression != nil:
+						assert.Empty(t, diff,
+							"\ndir: %s"+
+								"\nmodel: %s"+
+								"\ntestcase:"+
+								"\n\tid: %s"+
+								"\n\tdescription: %s"+
+								"\n\texpression: %s"+
+								"\n\texpected:"+
+								" \n\t\t%v",
+							testConfig.Model.Dir,
+							testConfig.Model.Name,
+							testCase.Id,
+							testCase.Description,
+							*test.FeelExpression,
+							test.ExpectedResult,
+						)
+					}
 				})
 			}
 		}
