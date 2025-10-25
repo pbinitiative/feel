@@ -12,7 +12,5 @@ func Test_builtin_misc_today_just_returns_a_date(t *testing.T) {
 
 	now := time.Now()
 	date := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
-	expected := FEELDate{t: date}
-
-	assert.Equal(t, &expected, actual)
+	assert.Equal(t, date, actual)
 }

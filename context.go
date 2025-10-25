@@ -1,5 +1,7 @@
 package feel
 
+import "reflect"
+
 func contextGetByKeys(ctx map[string]any, keys []string) (any, bool) {
 	for i, key := range keys {
 		if i == len(keys)-1 {
@@ -83,25 +85,29 @@ func installContextFunctions(prelude *Prelude) {
 			Keys    []string       `json:"key"`
 		}
 
-		argsByKey := getvalueByKey{}
-
-		if err := decodeKWArgs(kwargs, &argsByKey); err != nil {
-			argsByKeys := getvalueByKeys{}
-			if err := decodeKWArgs(kwargs, &argsByKeys); err != nil {
-				return nil, err
+		if key, ok := kwargs["key"].(string); ok {
+			argsByKey := getvalueByKey{
+				Context: map[string]any{},
+				Key:     key,
 			}
-
-			if v, ok := contextGetByKeys(argsByKeys.Context, argsByKeys.Keys); ok {
-				return v, nil
-			} else {
-				return null, nil
+			if err := getContextMap(kwargs["context"], argsByKey.Context); err == nil {
+				if v, ok := argsByKey.Context[argsByKey.Key]; ok {
+					return dereferencePtr(v), nil
+				} else {
+					return null, nil
+				}
 			}
+		}
+
+		argsByKeys := getvalueByKeys{}
+		if err := decodeKWArgs(kwargs, &argsByKeys); err != nil {
+			return nil, err
+		}
+
+		if v, ok := contextGetByKeys(argsByKeys.Context, argsByKeys.Keys); ok {
+			return v, nil
 		} else {
-			if v, ok := argsByKey.Context[argsByKey.Key]; ok {
-				return v, nil
-			} else {
-				return null, nil
-			}
+			return null, nil
 		}
 	}).Required("context", "key"))
 
@@ -155,4 +161,26 @@ func installContextFunctions(prelude *Prelude) {
 		return merged, nil
 	}).Required("contextx"))
 
+}
+
+// dereferencePtr dereference pointer.
+// If the value is a pointer to any internal feel objects they will remain as is,
+// any other value will be dereferenced if it is a pointer
+func dereferencePtr(val any) any {
+	if val == nil {
+		return null
+	}
+	switch val.(type) {
+	// Don't dereference
+	case *Number, *NullValue, *FEELDate, *FEELDatetime, *FEELDuration, *FEELTime:
+		return val
+	}
+	v := reflect.ValueOf(val)
+	for v.Kind() == reflect.Ptr {
+		if v.IsNil() {
+			return null
+		}
+		v = v.Elem()
+	}
+	return v.Interface()
 }

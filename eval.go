@@ -3,6 +3,7 @@ package feel
 import (
 	"encoding/json"
 	"errors"
+	"reflect"
 )
 
 // values
@@ -613,5 +614,61 @@ func EvalStringWithScope(input string, scope Scope) (any, error) {
 		intp.Push(scope)
 	}
 	r, err := ast.Eval(intp)
-	return r, err
+	if err != nil || r == nil {
+		return r, err
+	}
+	return unwrapFEELValue(r)
+}
+
+func unwrapFEELValue(v any) (any, error) {
+	switch val := v.(type) {
+	case *Number:
+		return val.Float64(), nil
+	case *FEELDate:
+		return val.Date(), nil
+	case *FEELTime:
+		return val.Time(), nil
+	case *FEELDatetime:
+		return val.Date(), nil
+	case *FEELDuration:
+		return val.Duration(), nil
+	case *NullValue:
+		return nil, nil
+	default:
+		rv := reflect.ValueOf(val)
+		switch rv.Kind() {
+		case reflect.Slice, reflect.Array:
+			result := make([]any, rv.Len())
+			for i := 0; i < rv.Len(); i++ {
+				uv, err := unwrapFEELValue(rv.Index(i).Interface())
+				if err != nil {
+					return nil, err
+				}
+				result[i] = uv
+			}
+			return result, nil
+		case reflect.Map:
+			result := make(map[string]any, rv.Len())
+			for _, key := range rv.MapKeys() {
+				mapVal, err := unwrapFEELValue(rv.MapIndex(key).Interface())
+				if err != nil {
+					return nil, err
+				}
+
+				if uk, err := unwrapFEELValue(key.Interface()); err == nil {
+					if sk, ok := uk.(string); ok {
+						result[sk] = mapVal
+					} else {
+						return nil, errors.New("map keys must be strings")
+					}
+				} else {
+					return nil, err
+				}
+
+			}
+			return result, nil
+		default:
+			return val, nil
+		}
+	}
 }

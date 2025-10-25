@@ -3,10 +3,12 @@ package feel
 import (
 	"errors"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"math"
+	"reflect"
 	"sort"
 	"strings"
+
+	"github.com/mitchellh/mapstructure"
 )
 
 func toFEELIndex(idx int) int {
@@ -15,6 +17,74 @@ func toFEELIndex(idx int) int {
 
 func fromFEELIndex(idx int) int {
 	return idx - 1
+}
+
+// getContextMap takes any input type and puts each value in the output map.
+// If the input is a struct it will use the json tag if available, else the field name will remain as defined on the struct
+// If the input is a map, each key value of the map will be copied to the output map
+func getContextMap(input any, output map[string]any) error {
+	if output == nil {
+		return errors.New("output map cannot be nil")
+	}
+
+	v := reflect.ValueOf(input)
+	if !v.IsValid() {
+		return errors.New("input is invalid")
+	}
+
+	// Dereference pointer if needed
+	if v.Kind() == reflect.Ptr {
+		if v.IsNil() {
+			return errors.New("input is a nil pointer")
+		}
+		v = v.Elem()
+	}
+
+	if v.Kind() == reflect.Map {
+		// Add all key-value pairs from the input map to the output map
+		for iter := v.MapRange(); iter.Next(); {
+			key := iter.Key()
+			value := iter.Value()
+			if keyStr, ok := key.Interface().(string); ok {
+				output[keyStr] = value.Interface()
+			}
+		}
+	}
+	if v.Kind() == reflect.Struct {
+
+		t := v.Type()
+		for i := 0; i < v.NumField(); i++ {
+			fieldType := t.Field(i)
+			if fieldType.PkgPath != "" {
+				continue // skip unexported fields
+			}
+
+			fieldVal := v.Field(i)
+			if !fieldVal.CanInterface() {
+				continue // skip if value can't be interfaced
+			}
+
+			// Use json tag if available
+			jsonTag := fieldType.Tag.Get("json")
+			if jsonTag == "-" {
+				continue // skip fields explicitly ignored
+			}
+
+			key := fieldType.Name
+			if jsonTag != "" {
+				// Handle tag options like "name,omitempty"
+				if commaIdx := strings.Index(jsonTag, ","); commaIdx != -1 {
+					key = jsonTag[:commaIdx]
+				} else {
+					key = jsonTag
+				}
+			}
+
+			output[key] = fieldVal.Interface()
+		}
+	}
+
+	return nil
 }
 
 func decodeKWArgs(input map[string]any, output any) error {
@@ -34,8 +104,14 @@ func extractList(args map[string]any, argName string) ([]any, error) {
 	if v, ok := args[argName]; ok {
 		if listV, ok := v.([]any); ok {
 			if len(listV) == 1 {
-				if aList, ok := listV[0].([]any); ok {
-					return aList, nil
+				elem := listV[0]
+				rv := reflect.ValueOf(elem)
+				if rv.Kind() == reflect.Slice || rv.Kind() == reflect.Array {
+					result := make([]any, rv.Len())
+					for i := 0; i < rv.Len(); i++ {
+						result[i] = rv.Index(i).Interface()
+					}
+					return result, nil
 				}
 			}
 			return listV, nil
