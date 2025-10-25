@@ -1,5 +1,7 @@
 package feel
 
+import "reflect"
+
 func contextGetByKeys(ctx map[string]any, keys []string) (any, bool) {
 	for i, key := range keys {
 		if i == len(keys)-1 {
@@ -98,7 +100,7 @@ func installContextFunctions(prelude *Prelude) {
 			}
 		} else {
 			if v, ok := argsByKey.Context[argsByKey.Key]; ok {
-				return v, nil
+				return dereferencePtr(v), nil
 			} else {
 				return null, nil
 			}
@@ -155,4 +157,26 @@ func installContextFunctions(prelude *Prelude) {
 		return merged, nil
 	}).Required("contextx"))
 
+}
+
+// dereferencePtr dereference pointer.
+// If the value is a pointer to any internal feel objects they will remain as is,
+// any other value will be dereferenced if it is a pointer
+func dereferencePtr(val any) any {
+	if val == nil {
+		return null
+	}
+	switch val.(type) {
+	// Don't dereference
+	case *Number, *NullValue, *FEELDate, *FEELDatetime, *FEELDuration, *FEELTime:
+		return val
+	}
+	v := reflect.ValueOf(val)
+	for v.Kind() == reflect.Ptr {
+		if v.IsNil() {
+			return null
+		}
+		v = v.Elem()
+	}
+	return v.Interface()
 }
