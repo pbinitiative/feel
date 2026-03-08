@@ -107,7 +107,11 @@ func installContextFunctions(prelude *Prelude) {
 		if v, ok := contextGetByKeys(argsByKeys.Context, argsByKeys.Keys); ok {
 			return v, nil
 		} else {
-			return null, nil
+			if v, ok := argsByKey.Context[argsByKey.Key]; ok {
+				return dereferencePtr(v), nil
+			} else {
+				return null, nil
+			}
 		}
 	}).Required("context", "key"))
 
