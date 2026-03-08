@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
 
 // SafeCall wraps a function to recover from panics and return errors
@@ -54,33 +55,48 @@ func CreateExpected(t *testing.T, result testconfig.ExpectedResult) interface{} 
 			}
 			return b
 		case "dateTime":
-			datetime, err := feel.ParseDatetime(value)
-			if err != nil {
-				t.Fatalf("Cannot parse expected value as FEEL datetime: %v", err)
+			formats := []string{
+				"2006-01-02T15:04:05",
+				"2006-01-02T15:04:05-07:00",
+				"2006-01-02T15:04:05@MST",
 			}
-			return datetime
+			for _, format := range formats {
+				if datetime, err := time.Parse(format, value); err == nil {
+					return datetime
+				}
+			}
+			t.Fatalf("Cannot parse expected value as datetime: %s", value)
 		case "date":
-			date, err := feel.ParseDate(value)
+			date, err := time.Parse(time.DateOnly, value)
 			if err != nil {
-				t.Fatalf("Cannot parse expected value as FEEL date: %v", err)
+				t.Fatalf("Cannot parse expected value as date: %v", err)
 			}
 			return date
 		case "decimal", "double":
-			return feel.N(value)
+			f, err := strconv.ParseFloat(value, 64)
+			if err != nil {
+t.Fatalf("Cannot parse expected value as float: %v", err)
+			}
+			return f
 		case "duration":
 			dur, err := feel.ParseDuration(value)
 			if err != nil {
-				t.Fatalf("Cannot parse expected value as FEEL duration: %v", err)
+				t.Fatalf("Cannot parse expected value as duration: %v", err)
 			}
-			return dur
+			return dur.Duration() // A bit of a cheat here because go does have a std lib that can read ISO duration
 		case "string":
 			return value
 		case "time":
-			time, err := feel.ParseTime(value)
-			if err != nil {
-				t.Fatalf("Cannot parse expected value as FEEL time: %v", err)
+			formats := []string{
+				"15:04:05Z07:00",
+				time.TimeOnly,
 			}
-			return time
+			for _, format := range formats {
+				if datetime, err := time.Parse(format, value); err == nil {
+					return datetime
+				}
+			}
+			t.Fatalf("Cannot parse expected value as datetime: %s", value)
 
 		default:
 			t.Fatalf(

@@ -44,7 +44,7 @@ func runFeelTests(t *testing.T, testConfigFile string) {
 					var err error
 
 					switch {
-					case test.Context != nil:
+					case test.Context != nil && len(*test.Context) > 0:
 						result, err = tests.SafeCall(
 							func() (any, error) {
 								resultMap := make(map[string]any)

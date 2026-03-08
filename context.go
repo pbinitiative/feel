@@ -85,25 +85,29 @@ func installContextFunctions(prelude *Prelude) {
 			Keys    []string       `json:"key"`
 		}
 
-		argsByKey := getvalueByKey{}
-
-		if err := decodeKWArgs(kwargs, &argsByKey); err != nil {
-			argsByKeys := getvalueByKeys{}
-			if err := decodeKWArgs(kwargs, &argsByKeys); err != nil {
-				return nil, err
+		if key, ok := kwargs["key"].(string); ok {
+			argsByKey := getvalueByKey{
+				Context: map[string]any{},
+				Key:     key,
 			}
-
-			if v, ok := contextGetByKeys(argsByKeys.Context, argsByKeys.Keys); ok {
-				return v, nil
-			} else {
-				return null, nil
+			if err := getContextMap(kwargs["context"], argsByKey.Context); err == nil {
+				if v, ok := argsByKey.Context[argsByKey.Key]; ok {
+					return dereferencePtr(v), nil
+				} else {
+					return null, nil
+				}
 			}
+		}
+
+		argsByKeys := getvalueByKeys{}
+		if err := decodeKWArgs(kwargs, &argsByKeys); err != nil {
+			return nil, err
+		}
+
+		if v, ok := contextGetByKeys(argsByKeys.Context, argsByKeys.Keys); ok {
+			return dereferencePtr(v), nil
 		} else {
-			if v, ok := argsByKey.Context[argsByKey.Key]; ok {
-				return dereferencePtr(v), nil
-			} else {
-				return null, nil
-			}
+			return null, nil
 		}
 	}).Required("context", "key"))
 
