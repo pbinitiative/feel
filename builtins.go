@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/mitchellh/mapstructure"
 	"math"
+	"reflect"
 	"sort"
 	"strings"
 )
@@ -34,8 +35,14 @@ func extractList(args map[string]any, argName string) ([]any, error) {
 	if v, ok := args[argName]; ok {
 		if listV, ok := v.([]any); ok {
 			if len(listV) == 1 {
-				if aList, ok := listV[0].([]any); ok {
-					return aList, nil
+				elem := listV[0]
+				rv := reflect.ValueOf(elem)
+				if rv.Kind() == reflect.Slice || rv.Kind() == reflect.Array {
+					result := make([]any, rv.Len())
+					for i := 0; i < rv.Len(); i++ {
+						result[i] = rv.Index(i).Interface()
+					}
+					return result, nil
 				}
 			}
 			return listV, nil

@@ -267,6 +267,8 @@ func Test_EvalStringWithScopeStruct(t *testing.T) {
 		BoolPtr   *bool
 		Nested    ScopeStruct
 		NestedPtr *ScopeStruct
+		List      []any
+		ListPtr   *[]any
 	}
 
 	ptrString := "bar"
@@ -288,6 +290,8 @@ func Test_EvalStringWithScopeStruct(t *testing.T) {
 		{name: "Access ScopeObj.Bool", expression: `get value(struct, "Bool")`, scope: Scope{"struct": ScopeObj{Bool: true}}, expect: true},
 		{name: "Access ScopeObj.BoolPtr true", expression: `get value(struct, "BoolPtr")`, scope: Scope{"struct": ScopeObj{BoolPtr: &ptrBoolTrue}}, expect: true},
 		{name: "Access ScopeObj.BoolPtr false", expression: `get value(struct, "BoolPtr")`, scope: Scope{"struct": ScopeObj{BoolPtr: &ptrBoolFalse}}, expect: false},
+		{name: "Access ScopeObj.List false", expression: `get value(struct, "List")`, scope: Scope{"struct": ScopeObj{List: []any{1, 2}}}, expect: []any{1, 2}},
+		{name: "Access ScopeObj.ListPtr false", expression: `get value(struct, "ListPtr")`, scope: Scope{"struct": ScopeObj{ListPtr: &[]any{1, 2}}}, expect: []any{1, 2}},
 
 		// Pointer to ScopeObj tests
 		{name: "Access *ScopeObj.Str", expression: `get value(struct, "Str")`, scope: Scope{"struct": &ScopeObj{Str: "foo"}}, expect: "foo"},
@@ -297,6 +301,8 @@ func Test_EvalStringWithScopeStruct(t *testing.T) {
 		{name: "Access *ScopeObj.Bool", expression: `get value(struct, "Bool")`, scope: Scope{"struct": &ScopeObj{Bool: true}}, expect: true},
 		{name: "Access *ScopeObj.BoolPtr true", expression: `get value(struct, "BoolPtr")`, scope: Scope{"struct": &ScopeObj{BoolPtr: &ptrBoolTrue}}, expect: true},
 		{name: "Access *ScopeObj.BoolPtr false", expression: `get value(struct, "BoolPtr")`, scope: Scope{"struct": &ScopeObj{BoolPtr: &ptrBoolFalse}}, expect: false},
+		{name: "Access *ScopeObj.List false", expression: `get value(struct, "List")`, scope: Scope{"struct": &ScopeObj{List: []any{1, 2}}}, expect: []any{1, 2}},
+		{name: "Access *ScopeObj.ListPtr false", expression: `get value(struct, "ListPtr")`, scope: Scope{"struct": &ScopeObj{ListPtr: &[]any{1, 2}}}, expect: []any{1, 2}},
 
 		// ScopeStruct fields via Nested
 		{name: "Access Nested.Str", expression: `get value(get value(struct, "Nested"), "Str")`, scope: Scope{"struct": ScopeObj{Nested: ScopeStruct{Str: "foo"}}}, expect: "foo"},
