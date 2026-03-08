@@ -75,7 +75,7 @@ func CreateExpected(t *testing.T, result testconfig.ExpectedResult) interface{} 
 		case "decimal", "double":
 			f, err := strconv.ParseFloat(value, 64)
 			if err != nil {
-				t.Fatalf("Cannot parse expected value as date: %v", err)
+t.Fatalf("Cannot parse expected value as float: %v", err)
 			}
 			return f
 		case "duration":
